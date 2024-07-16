@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div
+      class="container d-flex flex-column justify-content-center align-items-center"
+    >
+      <div style="width: 250px; max-width: 350px">
+        <div class="popup" style="display: none">
+          <div class="popup-icon">
+            <img src="" alt="icon" />
+          </div>
+          <div class="message"></div>
+          <div class="close-icon">
+            <img src="../icons/close.svg" class="close-svg" alt="close icon" />
+          </div>
+        </div>
+        <div id="login" class="mt-2">
+          <form id="loginForm" class="form">
+            <p class="form-title">Login</p>
+            <div class="input-container">
+              <input
+                class="form-control"
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="E-mail"
+              />
+              <span> </span>
+            </div>
+            <div class="input-container">
+              <input
+                class="form-control"
+                type="password"
+                id="senha"
+                name="senha"
+                required
+                placeholder="Senha"
+              />
+            </div>
+            <button type="submit" class="submit">Logar</button>
+            <p class="signup-link">
+              Não tem Login?
+              <a id="mostrarCadastro" href="">Cadastre-se</a>
+            </p>
+          </form>
+        </div>
+
+        <div id="cadastro" class="mt-2" style="display: none">
+          <form id="cadastroForm" class="form">
+            <p class="form-title">Cadastrar</p>
+            <div class="input-container">
+              <input
+                class="form-control"
+                type="text"
+                id="nome"
+                name="nome"
+                required
+                placeholder="Nome"
+              />
+              <span> </span>
+            </div>
+            <div class="input-container">
+              <input
+                class="form-control"
+                type="email"
+                id="novo-email"
+                name="novo-email"
+                required
+                placeholder="E-mail"
+              />
+              <span> </span>
+            </div>
+            <div class="input-container">
+              <input
+                class="form-control"
+                type="password"
+                id="nova_senha"
+                name="nova_senha"
+                required
+                placeholder="Senha"
+              />
+            </div>
+            <div class="checkbox-container">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="tipo_admin"
+                name="tipo_admin"
+              />
+              <label class="form-check-label" for="tipo_admin">
+                É administrador
+              </label>
+            </div>
+            <div class="input-container" id="input_admin" style="display: none">
+              <input
+                class="form-control"
+                type="password"
+                id="password_admin"
+                name="password_admin"
+                placeholder="Senha do administrador"
+              />
+            </div>
+            <button type="submit" class="submit">Cadastrar</button>
+            <p class="signup-link">
+              Já tem Login?
+              <a id="mostrarLogin" href="">Logar-se</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $("#loginForm").submit(function (event) {
+        event.preventDefault();
+        var email = $("#email").val();
+        var senha = $("#senha").val();
+        var logar = new AjaxRequest("logar.php");
+
+        // Envia a solicitação AJAX
+        logar
+          .send({ email: email, senha: senha })
+          .then(function (response) {
+            // Manipula a resposta em caso de sucesso
+            if (response.success) {
+              window.location.href = "home.html";
+            } else {
+              $(".popup").show().find(".message").text(response.message);
+              $(".popup").removeClass("sucess-popup").addClass("error-popup");
+              $(".popup-icon img").attr("src", "../icons/sucess.svg");
+            }
+          })
+          .catch(function (error) {
+            // Manipula o erro
+            $(".popup")
+              .show()
+              .find(".message")
+              .text(
+                "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente."
+              );
+            $(".popup").removeClass("sucess-popup").addClass("error-popup");
+            $(".popup-icon img").attr("src", "../icons/error.svg");
+          });
+      });
+
+      $("#cadastroForm").submit(function (event) {
+        event.preventDefault();
+        var nome = $("#nome").val();
+        var email = $("#novo-email").val();
+        var senha = $("#nova_senha").val();
+        if ($("#tipo_admin").is(":checked")) {
+          var password_admin = $("#password_admin").val();
+          tipo_admin = true;
+        } else {
+          password_admin = "";
+          tipo_admin = false;
+        }
+        var cadastrar = new AjaxRequest("cadastrar.php");
+
+        cadastrar
+          .send({
+            nome: nome,
+            email: email,
+            senha: senha,
+            tipo_admin: tipo_admin,
+            password_admin: password_admin,
+          })
+          .then(function (response) {
+            // Manipula a resposta em caso de sucesso
+            if (response.status == "success") {
+              $(".popup").show().find(".message").text(response.message);
+              $(".popup").removeClass("error-popup").addClass("sucess-popup");
+              $(".popup-icon img").attr("src", "../icons/sucess.svg");
+              $("#login, #cadastro").toggle();
+            } else {
+              $(".popup").show().find(".message").text(response.message);
+              $(".popup").removeClass("sucess-popup").addClass("error-popup");
+              $(".popup-icon img").attr("src", "../icons/error.svg");
+            }
+          })
+          .catch(function (error) {
+            // Manipula o erro
+            $(".popup")
+              .show()
+              .find(".message")
+              .text("Ocorreu um erro. Por favor, tente novamente.");
+            $(".popup").removeClass("sucess-popup").addClass("error-popup");
+            $(".popup-icon img").attr("src", "../icons/error.svg");
+          });
+      });
+
+      $("#mostrarCadastro, #mostrarLogin").click(function (event) {
+        event.preventDefault();
+        $("#login, #cadastro").toggle();
+      });
+      $(".close-svg").click(function () {
+        $(".popup").hide();
+      });
+      $("#tipo_admin").click(function () {
+        $("#input_admin").toggle();
+      });
+      $('input[type="email"]').on("input", function () {
+        this.value = this.value.toLowerCase();
+      });
+      $("#nome").on("input", function () {
+        this.value = this.value.toUpperCase();
+      });
+    </script>
+    <script src="../js/AjaxRequest.js"></script>
+  </body>
+</html>

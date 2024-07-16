@@ -1,0 +1,149 @@
+:root {
+  --cor-fundo-form: #f58a33;
+  --cor-titulo-form: #000;
+  --cor-botao-form: #4f46e5;
+  --cor-text-botao-form: #ffffff;
+  --cor-fundo-input-form: #ffffff;
+  --cor-bord-input-botao: #e5e7eb;
+  --cor-link: #6b7280;
+  --cor-popup-box: rgba(0, 0, 0, 1);
+  --cor-form-box1: rgba(0, 0, 0, 0.1);
+  --cor-form-box2: rgba(0, 0, 0, 0.05);
+  --cor-input-container-box: rgba(0, 0, 0, 0.05);
+  --cor-popup-sucess-fundo: #edfbd8;
+  --cor-popup-sucess-border: #84d65a;
+  --cor-popup-sucess-text: #2b641e;
+  --cor-popup-error-fundo: #fef2f2;
+  --cor-popup-error-border: #f87171;
+  --cor-popup-error-text: #991b1b;
+}
+
+.form {
+  background-color: var(--cor-fundo-form);
+  display: block;
+  padding: 1rem;
+  max-width: 350px;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px var(--cor-form-box1),
+    0 4px 6px -2px var(--cor-form-box2);
+}
+
+.form-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--cor-titulo-form);
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input,
+.form button {
+  outline: none;
+  border: 1px solid var(--cor-bord-input-botao);
+  margin: 8px 0;
+}
+
+.input-container input {
+  background-color: var(--cor-fundo-input-form);
+  padding: 1rem;
+  padding-right: 3rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 var(--cor-input-container-box);
+}
+
+.submit {
+  display: block;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  background-color: var(--cor-botao-form);
+  color: var(--cor-text-botao-form);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 95%;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+}
+
+.checkbox-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  width: 100%;
+}
+
+.checkbox-container input[type="checkbox"] {
+  outline: none;
+  border: 1px solid var(--cor-bord-input-botao);
+}
+
+.checkbox-container label {
+  margin: 0;
+}
+
+.signup-link {
+  color: var(--cor-link);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+
+.signup-link a {
+  text-decoration: underline;
+}
+
+.popup {
+  box-shadow: 4px 4px 10px -10px var(--cor-popup-box);
+  max-width: 350px;
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  border-radius: 4px;
+  padding: 5px 0;
+  font-weight: 300;
+}
+.popup svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.popup-icon svg {
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+.close-icon {
+  margin-left: auto;
+}
+.close-svg {
+  cursor: pointer;
+}
+
+/*SEPERATE STYLES*/
+
+/* SUCCESS */
+.sucess-popup {
+  background-color: var(--cor-popup-sucess-fundo);
+  border: solid 1px var(--cor-popup-sucess-border);
+  color: var(--cor-popup-sucess-text);
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* ERROR */
+.error-popup {
+  background-color: var(--cor-popup-error-fundo);
+  border: solid 1px var(--cor-popup-error-border);
+  color: var(--cor-popup-error-text);
+  font-size: 9px;
+  font-weight: bold;
+}

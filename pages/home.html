@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu Responsivo</title>
+    <link rel="stylesheet" href="../css/home.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#"
+        ><img class="img-logo" src="../icons/shops.png" alt="Logo"
+      /></a>
+      <button class="hamburger">
+        <img src="../icons/burger-menu.png" alt="Menu" />
+      </button>
+      <div id="menu">
+        <a href="#">Produtos Disponíveis</a>
+        <a href="#">Histórico de Compras</a>
+        <a href="#">Carrinho</a>
+        <a href="#">Dados do Usuário</a>
+        <a href="#">Sair</a>
+      </div>
+    </div>
+    <div style="padding: 80px">
+      <!-- Conteúdo da página aqui -->
+    </div>
+    <script>
+      $(document).ready(function () {
+        $(".hamburger").click(function () {
+          $("#menu").toggle();
+        });
+      });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>

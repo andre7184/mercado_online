@@ -1,0 +1,84 @@
+<style>
+  /* COMMON STYLES*/
+  .popup {
+    margin: 10px;
+    box-shadow: 4px 4px 10px -10px rgba(0, 0, 0, 1);
+    width: 300px;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-weight: 300;
+  }
+  .popup svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .popup-icon svg {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+  }
+  .close-icon {
+    margin-left: auto;
+  }
+  .close-svg {
+    cursor: pointer;
+  }
+
+  /*SEPERATE STYLES*/
+
+  /* SUCCESS */
+  .sucess-popup {
+    background-color: #edfbd8;
+    border: solid 1px #84d65a;
+    color: #2b641e;
+  }
+
+  /* ERROR */
+  .error-popup {
+    background-color: #fef2f2;
+    border: solid 1px #f87171;
+    color: #991b1b;
+  }
+</style>
+<div class="popup-container">
+  <div class="popup" style="display: none">
+    <div class="popup-icon">
+      <img src="" alt="icon" />
+    </div>
+    <div class="message">lorem ipsum dolor sit amet</div>
+    <div class="close-icon">
+      <img src="../icons/close.svg" class="close-svg" alt="close icon" />
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var isSuccess = false; // Substitua isso pela sua condição
+
+  if (isSuccess) {
+    $(".popup")
+      .show()
+      .find(".message")
+      .text("Ocorreu um erro ao tentar fazer login.");
+    $(".popup").removeClass("error-popup").addClass("sucess-popup");
+    $(".popup-icon img")
+      .attr("src", "../icons/sucess.svg")
+      .attr("alt", "sucess icon");
+  } else {
+    $(".popup")
+      .show()
+      .find(".message")
+      .text("Ocorreu um erro ao tentar fazer login.");
+    $(".popup").removeClass("sucess-popup").addClass("error-popup");
+    $(".popup-icon img")
+      .attr("src", "../icons/error.svg")
+      .attr("alt", "error icon");
+  }
+  $(".close-svg").click(function () {
+    $(".popup").hide();
+    $(".popup").removeClass("sucess-popup error-popup");
+  });
+</script>
