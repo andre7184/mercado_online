@@ -2,7 +2,7 @@
 class Autenticacao {
     private $usuario;
 
-    public function __construct($usuario){
+    public function __construct($usuario = null){
         $this->usuario = $usuario;
         session_start();
     }
