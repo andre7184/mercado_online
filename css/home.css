@@ -33,7 +33,7 @@ body {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  margin-right: 15px;
+  margin-right: 10px;
   width: 100%;
 }
 .navbar div a {
