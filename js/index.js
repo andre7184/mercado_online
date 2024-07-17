@@ -1,7 +1,7 @@
-pagina_atual='inicial.html';
+pagina_atual = "home.html";
 $(document).ready(function () {
   // Cria uma nova instância da classe AjaxRequest
-  var ajaxRequest = new AjaxRequest("verifica_login.php");
+  var ajaxRequest = new AjaxRequest("pages/verifica_login.php");
   // Envia a requisição
   ajaxRequest
     .send()
@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 });
 function logout() {
-  var ajaxRequest = new AjaxRequest("verifica_login.php");
+  var ajaxRequest = new AjaxRequest("pages/verifica_login.php");
   ajaxRequest
     .send({ action: "logout" })
     .then(function (response) {
