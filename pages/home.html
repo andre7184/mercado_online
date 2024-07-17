@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Loja On-line</title>
+    <title>Mercado On-line</title>
     <link rel="stylesheet" href="../css/home.css" />
   </head>
   <body>
@@ -18,60 +18,11 @@
       </label>
       <div id="menu"></div>
     </div>
-    <div style="padding: 80px">
+    <div id="conteudo" style="padding: 80px">
       <!-- Conteúdo da página aqui -->
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/AjaxRequest.js"></script>
-    <script>
-      $(document).ready(function () {
-        // Cria uma nova instância da classe AjaxRequest
-        var ajaxRequest = new AjaxRequest("verifica_login.php");
-        // Envia a requisição
-        ajaxRequest
-          .send()
-          .then(function (response) {
-            if (response.login !== "logado") {
-              window.location.href = "login.html";
-            } else {
-              // Se o usuário for um administrador, mostra o menu de administrador
-              if (response.admin === "sim") {
-                document.getElementById("menu").innerHTML = `
-                    <a href="#">Produtos</a>
-                    <a href="#">Histórico de Vendas</a>
-                    <a href="#">Usuários</a>
-                    <a href="#">Editar Dados</a>
-                    <a href="#" onclick="logout(); return false;">Sair</a>
-                `;
-              } else {
-                // Se o usuário não for um administrador, mostra o menu comum
-                document.getElementById("menu").innerHTML = `
-                    <a href="#">Produtos Disponíveis</a>
-                    <a href="#">Histórico de Compras</a>
-                    <a href="#">Carrinho</a>
-                    <a href="#">Dados do Usuário</a>
-                    <a href="#" onclick="logout(); return false;">Sair</a>
-                `;
-              }
-            }
-          })
-          .catch(function (error) {
-            console.error("Erro na requisição AJAX:", error);
-          });
-      });
-      function logout() {
-        var ajaxRequest = new AjaxRequest("verifica_login.php");
-        ajaxRequest
-          .send({ action: "logout" })
-          .then(function (response) {
-            if (response.status === "logged_out") {
-              window.location.href = "login.html"; // Redireciona o usuário para a página de login após o logout
-            }
-          })
-          .catch(function (error) {
-            alert("Erro ao fazer logout. Por favor, tente novamente.");
-          });
-      }
-    </script>
+    <script src="../js/home.js"></script>
   </body>
 </html>
