@@ -1,4 +1,4 @@
-pagina_atual = "home.html";
+var isMainPage = true;
 $(document).ready(function () {
   // Cria uma nova instância da classe AjaxRequest
   var ajaxRequest = new AjaxRequest("pages/verifica_login.php");
@@ -31,9 +31,19 @@ $(document).ready(function () {
         $(".menu-link").click(function (e) {
           e.preventDefault();
           pagina_atual = $(this).attr("href");
+          localStorage.setItem("pagina_atual", pagina_atual); // Armazena a página atual no localStorage
           $("#conteudo").load(pagina_atual);
         });
-        $("#conteudo").load(pagina_atual);
+        var pagina_atual = localStorage.getItem("pagina_atual"); // Obtém a página atual do localStorage
+        if (pagina_atual) {
+          $("#conteudo").load(pagina_atual, function () {
+            $(this).find('meta[http-equiv="refresh"]').remove();
+          });
+        } else {
+          $("#conteudo").load("home.html", function () {
+            $(this).find('meta[http-equiv="refresh"]').remove();
+          });
+        }
       }
     })
     .catch(function (error) {
