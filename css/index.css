@@ -1,13 +1,11 @@
-:root {
-  --cor-fundo-navbar: #f58a33;
-  --cor-titulo-form: #000;
-  --cor-text-links: #4f46e5;
-}
-body {
-  font-family: Arial, sans-serif;
+@import url("cores.css");
+
+body, html {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
+
 .navbar {
   background-color: var(--cor-fundo-navbar);
   padding: 5px;
@@ -18,7 +16,7 @@ body {
   z-index: 1;
 }
 .navbar a {
-  color: #fff;
+  color: var(--cor-text-link-navbar);
   text-decoration: none;
   margin-right: 10px;
   font-size: 14px;
@@ -62,7 +60,7 @@ label span {
   height: 5px;
   width: 100%;
   border-radius: 30px;
-  background: #f16234;
+  background: var(--cor-hamburguer);
   transition: 0.25s ease-in-out;
 }
 
@@ -100,17 +98,16 @@ label span:nth-child(3) {
     flex-direction: column;
     position: absolute;
     right: 0;
-    top: 100%; /* Faz com que o menu comece logo abaixo do navbar */
-    background-color: var(--cor-fundo-navbar); /* Faz com que o menu tenha a mesma cor de fundo do navbar */
-    width: 100%; /* Faz com que o menu tenha a mesma largura do navbar */
+    top: 100%;
+    background-color: var(--cor-fundo-navbar);
+    width: 100%;
     padding: 0;
-    border: 1px solid #ccc;
+    border: 1px solid var(--cor-border-menu);
   }
-  
-  
+
   #menu a {
     display: block;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--cor-border-menu);
     padding: 5px 10px;
   }
 }
@@ -132,11 +129,20 @@ label span:nth-child(3) {
     padding: 0;
   }
   #menu a {
-    border-bottom: none;
+    border: none;
     padding: 0;
   }
 }
+
 .content {
   margin-top: 50px;
   padding: 30px;
+}
+
+#conteudo {
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

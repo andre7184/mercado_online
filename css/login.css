@@ -1,22 +1,4 @@
-:root {
-  --cor-fundo-form: #f58a33;
-  --cor-titulo-form: #000;
-  --cor-botao-form: #4f46e5;
-  --cor-text-botao-form: #ffffff;
-  --cor-fundo-input-form: #ffffff;
-  --cor-bord-input-botao: #e5e7eb;
-  --cor-link: #6b7280;
-  --cor-popup-box: rgba(0, 0, 0, 1);
-  --cor-form-box1: rgba(0, 0, 0, 0.1);
-  --cor-form-box2: rgba(0, 0, 0, 0.05);
-  --cor-input-container-box: rgba(0, 0, 0, 0.05);
-  --cor-popup-sucess-fundo: #edfbd8;
-  --cor-popup-sucess-border: #84d65a;
-  --cor-popup-sucess-text: #2b641e;
-  --cor-popup-error-fundo: #fef2f2;
-  --cor-popup-error-border: #f87171;
-  --cor-popup-error-text: #991b1b;
-}
+@import url('cores.css');
 
 .form {
   background-color: var(--cor-fundo-form);
