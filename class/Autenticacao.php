@@ -8,7 +8,9 @@ class Autenticacao {
     }
 
     public function login($email, $senha){
-        if ($this->usuario->verificaLogin($email, $senha)) {
+        $userId = $this->usuario->verificaLogin($email, $senha);
+        if ($userId) {
+            $_SESSION['id'] = $userId;
             $_SESSION['email'] = $email;
             $_SESSION['admin'] = $this->usuario->Admin($email);
             return true;

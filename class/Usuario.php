@@ -24,8 +24,8 @@ class Usuario {
         if($stmt->rowCount() > 0){
             // O e-mail está registrado, agora vamos verificar a senha
             if(password_verify($senha, $userRow['senha'])){
-                // A senha está correta
-                return true;
+                // A senha está correta, retorna o ID do usuário
+                return $userRow['id'];
             } else {
                 // A senha está incorreta
                 return false;
