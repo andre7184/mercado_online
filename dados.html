@@ -1,3 +1,17 @@
-
-<link rel="stylesheet" type="text/css" href="css/dados.css">
-<h1>Dados do usuário</h1>
+<script src="js/dados.js"></script>
+<link rel="stylesheet" type="text/css" href="css/dados.css" />
+<div class="user-info">
+  <h1>Dados do Usuário</h1>
+  <p>Nome do Usuário: <span id="nome" class="conteudo"></span></p>
+  <p>Email do Usuário: <span id="email" class="conteudo"></span></p>
+  <p>Tipo de Usuário: <span id="tipo_admin" class="conteudo"></span></p>
+  <p>
+    <span id="tipo_transacao"></span> Efetuadas:
+    <span id="quantidade" class="conteudo"></span>
+    <a id="historico_link" class="small-button">Abrir Histórico</a>
+  </p>
+  <button id="alterar_dados">Alterar Dados</button>
+</div>
+<script type="text/javascript">
+  if (typeof isMainPage === 'undefined') {window.location.href = 'index.html';}
+</script>
