@@ -25,43 +25,43 @@
 }
 
 .user-info a,
-.user-info button {
+.user-info .link {
+  /* Adicione a classe .link aqui */
   color: var(--cor-text-links);
   text-decoration: none;
   display: inline-block;
   margin-top: 10px;
   border-radius: 5px; /* Adiciona bordas arredondadas */
+  padding: 10px 20px; /* Adicione o padding aqui */
+  border: none; /* Adicione a borda aqui */
+  background-color: var(--cor-fundo-navbar); /* Adicione a cor de fundo aqui */
+  color: var(--cor-text-link-navbar); /* Adicione a cor do texto aqui */
+  cursor: pointer; /* Adicione o cursor aqui */
 }
 
-.user-info button {
-  padding: 10px 20px;
-  border: none;
-  background-color: var(--cor-fundo-navbar);
-  color: var(--cor-text-link-navbar);
-  cursor: pointer;
-}
-
-.user-info button:hover {
+.user-info a:hover,
+.user-info .link:hover {
+  /* Adicione a classe .link aqui */
   background-color: var(--cor-fundo-input-form);
   color: var(--cor-fundo-navbar);
   border: 1px solid var(--cor-fundo-navbar);
 }
 
 .user-info a.small-button {
-    display: inline-block;
-    padding: 5px 10px;
-    text-decoration: none;
-    background-color: var(--cor-text-links);
-    color: var(--cor-fundo-input-form);
-    border-radius: 5px;
-    font-size: 0.8em;
-  }
-  
-  .user-info a.small-button:hover {
-    background-color: var(--cor-fundo-input-form);
-    color: var(--cor-fundo-navbar);
-    border: 1px solid var(--cor-fundo-navbar);
-  }
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  background-color: var(--cor-text-links);
+  color: var(--cor-fundo-input-form);
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.user-info a.small-button:hover {
+  background-color: var(--cor-fundo-input-form);
+  color: var(--cor-fundo-navbar);
+  border: 1px solid var(--cor-fundo-navbar);
+}
 
 /* Regras de mídia para telas menores (menos de 600px) */
 @media only screen and (max-width: 600px) {

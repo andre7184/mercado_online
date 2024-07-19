@@ -1,0 +1,32 @@
+<script src="js/alterar_dados_usuario.js"></script>
+<link rel="stylesheet" type="text/css" href="css/alterar_dados_usuario.css" />
+<div class="user-info">
+  <h1>Alterar Dados do Usuário</h1>
+<form action="alterar_dados_usuario.php" method="post" onsubmit="return
+alterarDadosUsuario();">
+    <div class="form-group"></div>
+    <label for="nome">Nome</label>
+    <input type="text" class="form-control" id="nome" name="nome"
+    placeholder="Nome" value="<?php echo $nome; ?>" required>
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" name="email"
+    placeholder="Email" value="<?php echo $email; ?>" required>
+    <label for="senha">Senha</label>
+    <input type="password" class="form-control" id="senha" name="senha"
+    placeholder="Senha" value="<?php echo $senha; ?>" required>
+    <label for="senha2">Confirme a Senha</label>
+    <input type="password" class="form-control" id="senha2" name="senha
+    2" placeholder="Confirme a Senha" value="<?php echo $senha2
+    ?>" required>
+    \end{code}
+    \end{code}
+    <button type="submit" class="btn btn-primary">Alterar Dados</button>
+    \end{code}
+    
+</form>
+</div>
+<script type="text/javascript">
+  if (typeof isMainPage === "undefined") {
+    window.location.href = "index.html";
+  }
+</script>

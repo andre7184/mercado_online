@@ -134,6 +134,10 @@ label span:nth-child(3) {
   }
 }
 
+.menu-link.active {
+  color: var(--cor-text-links); /* Substitua '--cor-link-ativo' pela cor desejada */
+}
+
 .content {
   margin-top: 50px;
   padding: 30px;

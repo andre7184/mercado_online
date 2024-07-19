@@ -1,4 +1,4 @@
-@import url('cores.css');
+@import url("cores.css");
 
 .form {
   background-color: var(--cor-fundo-form);
@@ -10,12 +10,36 @@
     0 4px 6px -2px var(--cor-form-box2);
 }
 
+.form a:hover {
+  color: var(--cor-fundo-input-form); /* Substitua '--cor-link-hover' pela cor desejada */
+}
+
+.form button:hover {
+  background-color: var(--cor-titulo-form); /* Substitua '--cor-botao-hover' pela cor desejada */
+  color: var(--cor-fundo-form); /* Substitua '--cor-texto-botao-hover' pela cor desejada */
+  cursor: pointer;
+}
+
 .form-title {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 600;
+  margin: 2px;
+  font-size: 1.5rem; /* Aumenta o tamanho da fonte */
+  line-height: 2rem; /* Aumenta o espaçamento entre as linhas */
+  font-weight: 700; /* Torna o texto mais negrito */
   text-align: center;
   color: var(--cor-titulo-form);
+  text-transform: uppercase; /* Transforma o texto em maiúsculas */
+  letter-spacing: 1px; /* Adiciona espaçamento entre as letras */
+}
+
+.meu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .input-container {
@@ -30,6 +54,7 @@
 }
 
 .input-container input {
+  box-sizing: border-box;
   background-color: var(--cor-fundo-input-form);
   padding: 1rem;
   padding-right: 3rem;

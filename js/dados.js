@@ -25,27 +25,17 @@ $(document).ready(function () {
         document.getElementById("historico_link").href =
           "historico_compras.html";
       }
-      $("#historico_link").click(function (e) {
+      $(".link").click(function (e) {
         e.preventDefault();
         pagina_atual = $(this).attr("href");
+        $(".menu-link").removeClass("active"); // Remove a classe 'active' de todos os links
+        $('a[href="' + pagina_atual + '"]').addClass('active');
         localStorage.setItem('pagina_atual', pagina_atual); // Armazena a página atual no localStorage
         $("#conteudo").load(pagina_atual);
       });
+      
     })
     .catch(function (error) {
       console.error("Ocorreu um erro ao buscar os dados do usuário:", error);
     });
 });
-function logout() {
-  var ajaxRequest = new AjaxRequest("pages/verifica_login.php");
-  ajaxRequest
-    .send({ action: "logout" })
-    .then(function (response) {
-      if (response.status === "logged_out") {
-        window.location.href = "login.html"; // Redireciona o usuário para a página de login após o logout
-      }
-    })
-    .catch(function (error) {
-      alert("Erro ao fazer logout. Por favor, tente novamente.");
-    });
-}
