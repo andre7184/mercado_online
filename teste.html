@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minha Página</title>
+    <style>
+      .table {
+        width: 100%;
+        background: rgb(44, 44, 44);
+        font-family: "Courier New", Courier, monospace;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .table__title {
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-bottom: 1px solid rgb(167, 159, 159);
+        font-size: 0.95rem;
+      }
+
+      .table__data {
+        font-size: 0.8rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: 1px solid rgb(203, 203, 203);
+      }
+
+      .table__row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .table__column {
+        flex: 1; /* Isso fará com que cada coluna se expanda para preencher o espaço disponível */
+        border-right: 1px solid rgb(203, 203, 203);
+        text-align: end;
+      }
+
+      /* Remove a borda direita da última coluna */
+      .table__column:last-child {
+        border-right: none;
+      }
+
+      .table__item {
+        padding: 3px 0;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .table__column .table__item {
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+      }
+
+      .table__item:nth-child(even) {
+        background: rgb(234, 235, 234);
+      }
+
+      /* Nova classe para os títulos das colunas */
+      .table__column-title {
+        color: red; /* Escolha a cor que você quiser */
+      }
+
+      /* Estilos para telas pequenas */
+      @media (max-width: 500px) {
+        .table__row {
+          flex-direction: column;
+        }
+        .table__column {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid rgb(203, 203, 203);
+        }
+        .table__column:last-child {
+          border-bottom: none;
+        }
+        .table__column .table__item {
+          display: flex; /* Isso fará com que os itens sejam exibidos lado a lado */
+          flex-direction: row; /* Altere a direção de flexão para linha */
+          justify-content: space-between; /* Isso alinhará os itens em lados opostos */
+        }
+        .table__column-title {
+          flex-basis: 50%; /* Isso garantirá que o título ocupe metade do espaço disponível */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="table">
+      <div class="table__title">table</div>
+      <div class="table__data">
+        <div class="table__column">
+          <div class="table__item table__column-title">couna1</div>
+          <div class="table__item">linha1-couna1</div>
+          <div class="table__item">linha2-couna1</div>
+          <div class="table__item">linha3-couna1</div>
+        </div>
+        <div class="table__column">
+          <div class="table__item table__column-title">coluna2</div>
+          <div class="table__item">linha1-coluna2</div>
+          <div class="table__item">linha2-coluna2</div>
+          <div class="table__item">linha3-coluna2</div>
+        </div>
+        <div class="table__column">
+          <div class="table__item table__column-title">coluna3</div>
+          <div class="table__item">linha1-coluna3</div>
+          <div class="table__item">linha2-coluna3</div>
+          <div class="table__item">linha3-coluna3</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

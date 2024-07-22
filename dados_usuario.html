@@ -1,5 +1,5 @@
-<script src="js/dados.js"></script>
-<link rel="stylesheet" type="text/css" href="css/dados.css" />
+<script src="js/dados_usuario.js"></script>
+<link rel="stylesheet" type="text/css" href="css/dados_usuario.css" />
 <div class="user-info">
   <h1>Dados do Usuário</h1>
   <p>Nome do Usuário: <span id="nome" class="conteudo"></span></p>
@@ -8,9 +8,18 @@
   <p>
     <span id="tipo_transacao"></span> Efetuadas:
     <span id="quantidade" class="conteudo"></span>
-    <a id="historico_link" class="small-button link">Abrir Histórico</a>
+    <a
+      id="historico_link"
+      class="small-button link"
+      onclick="abrirPagina('historico.html');"
+      >Abrir Histórico</a
+    >
   </p>
-  <a id="alterar_dados" class="link" href="alterar_dados_usuario.html"
+  <a
+    id="alterar_dados"
+    class="link"
+    href="#"
+    onclick="abrirPagina('editar_dados_usuario.html');"
     >Alterar Dados</a
   >
 </div>

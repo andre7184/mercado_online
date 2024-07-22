@@ -1,0 +1,79 @@
+@import url("cores.css");
+
+.user-info {
+  background-color: var(--cor-fundo-input-form);
+  padding: 20px;
+  width: 90%; /* Ocupa 90% da largura da tela */
+  box-sizing: border-box; /* Inclui padding e borda na largura total */
+  text-align: center;
+}
+
+.user-info h1 {
+  color: var(--cor-titulo-form);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.user-info p {
+  color: var(--cor-titulo-form);
+  word-wrap: break-word; /* Quebra de linha para palavras longas */
+}
+
+.user-info .conteudo {
+  font-weight: bold; /* Faz o conteúdo em negrito */
+  color: #000; /* Cor do conteúdo */
+}
+
+.user-info a,
+.user-info .link {
+  /* Adicione a classe .link aqui */
+  color: var(--cor-text-links);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+  padding: 10px 20px; /* Adicione o padding aqui */
+  border: none; /* Adicione a borda aqui */
+  background-color: var(--cor-fundo-navbar); /* Adicione a cor de fundo aqui */
+  color: var(--cor-text-link-navbar); /* Adicione a cor do texto aqui */
+  cursor: pointer; /* Adicione o cursor aqui */
+}
+
+.user-info a:hover,
+.user-info .link:hover {
+  /* Adicione a classe .link aqui */
+  background-color: var(--cor-fundo-input-form);
+  color: var(--cor-fundo-navbar);
+  border: 1px solid var(--cor-fundo-navbar);
+}
+
+.user-info a.small-button {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  background-color: var(--cor-text-links);
+  color: var(--cor-fundo-input-form);
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.user-info a.small-button:hover {
+  background-color: var(--cor-fundo-input-form);
+  color: var(--cor-fundo-navbar);
+  border: 1px solid var(--cor-fundo-navbar);
+}
+
+/* Regras de mídia para telas menores (menos de 600px) */
+@media only screen and (max-width: 600px) {
+  .user-info {
+    width: 100%; /* Ocupa 100% da largura da tela em dispositivos móveis */
+  }
+
+  .user-info h1 {
+    font-size: 16px; /* Diminui o tamanho da fonte do título para 20px em dispositivos móveis */
+  }
+
+  .user-info p {
+    font-size: 12px; /* Diminui o tamanho da fonte do parágrafo para 16px em dispositivos móveis */
+  }
+}

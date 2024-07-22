@@ -1,122 +1,58 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Mercado On-line - Login</title>
-    <link rel="stylesheet" href="css/login.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="meu-container">
-      <div style="width: 250px; max-width: 350px">
-        <div class="popup" style="display: none">
-          <div class="popup-icon">
-            <img src="" alt="icon" />
-          </div>
-          <div class="message"></div>
-          <div class="close-icon">
-            <img src="icons/close.svg" class="close-svg" alt="close icon" />
-          </div>
-        </div>
-        <div id="login" class="mt-2">
-          <form id="loginForm" class="form">
-            <p class="form-title">Login</p>
-            <div class="input-container">
-              <input
-                class="form-control"
-                type="email"
-                id="email"
-                name="email"
-                required
-                placeholder="E-mail"
-              />
-              <span> </span>
-            </div>
-            <div class="input-container">
-              <input
-                class="form-control"
-                type="password"
-                id="senha"
-                name="senha"
-                required
-                placeholder="Senha"
-              />
-            </div>
-            <button type="submit" class="submit">Logar</button>
-            <p class="signup-link">
-              Não tem Login?
-              <a id="mostrarCadastro" href="">Cadastre-se</a>
-            </p>
-          </form>
-        </div>
-
-        <div id="cadastro" class="mt-2" style="display: none">
-          <form id="cadastroForm" class="form">
-            <p class="form-title">Cadastrar</p>
-            <div class="input-container">
-              <input
-                class="form-control"
-                type="text"
-                id="nome"
-                name="nome"
-                required
-                placeholder="Nome"
-              />
-              <span> </span>
-            </div>
-            <div class="input-container">
-              <input
-                class="form-control"
-                type="email"
-                id="novo-email"
-                name="novo-email"
-                required
-                placeholder="E-mail"
-              />
-              <span> </span>
-            </div>
-            <div class="input-container">
-              <input
-                class="form-control"
-                type="password"
-                id="nova_senha"
-                name="nova_senha"
-                required
-                placeholder="Senha"
-              />
-            </div>
-            <div class="checkbox-container">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="tipo_admin"
-                name="tipo_admin"
-              />
-              <label class="form-check-label" for="tipo_admin">
-                É administrador
-              </label>
-            </div>
-            <div class="input-container" id="input_admin" style="display: none">
-              <input
-                class="form-control"
-                type="password"
-                id="password_admin"
-                name="password_admin"
-                placeholder="Senha do administrador"
-              />
-            </div>
-            <button type="submit" class="submit">Cadastrar</button>
-            <p class="signup-link">
-              Já tem Login?
-              <a id="mostrarLogin" href="">Logar-se</a>
-            </p>
-          </form>
-        </div>
+<script src="js/login.js"></script>
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<div class="user-info">
+  <div class="meu-container" id="local_login">
+    <form id="loginForm" class="form">
+      <p class="form-title">Login</p>
+      <div class="input-container">
+        <input
+          class="form-control"
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="E-mail"
+        />
       </div>
-    </div>
-    <script src="js/AjaxRequest.js"></script>
-    <script src="js/login.js"></script>
-  </body>
-</html>
+      <div class="input-container">
+        <input
+          class="form-control"
+          type="password"
+          id="senha"
+          name="senha"
+          required
+          placeholder="Senha"
+        />
+      </div>
+      <button type="submit" class="submit">Logar</button>
+      <p class="signup-link">
+        Esqueceu a senha?
+        <a id="recuperar_senha" href="#">Recuperar Senha</a>
+      </p>
+      <p class="signup-link">
+        Não tem Login?
+        <a onclick="abrirPagina('editar_dados_usuario.html'); return false;" href="">Cadastrar-se</a>
+      </p>
+    </form>
+  </div>
+  <div class="meu-container" id="local_resenha" style="display: none">
+    <form id="resenhaForm" class="form">
+      <p class="form-title">Recuperar Senha</p>
+      <div class="input-container">
+        <input
+          class="form-control"
+          type="email"
+          id="email_recuperacao"
+          name="email_recuperacao"
+          placeholder="Email para recuperação"
+        />
+      </div>
+      <button type="submit" class="submit">Recuperar Senha</button>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+  if (typeof isMainPage === "undefined") {
+    window.location.href = "index.html";
+  }
+</script>

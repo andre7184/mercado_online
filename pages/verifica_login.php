@@ -11,20 +11,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'logout') {
         $autenticacao->logout();
         $data['status'] = 'logged_out';
+
     }else {
         // Verifica se o usuário está logado
-        if ($autenticacao->estaLogado()) {
-            $data['login'] = 'logado';
-
+        $dados_user = array();
+        $islogado = $autenticacao->getSession();
+        if ($islogado) {
+            $data['logado'] = true;
+            $dados_user['email_user'] = $islogado['email'];
+            $dados_user['id_user'] = $islogado['id'];
             // Verifica se o usuário é um administrador
-            if ($autenticacao->eAdmin()) {
-                $data['admin'] = 'sim';
+            if ($islogado['admin']) {
+                $admin_user='Administrador';
+                $data['menu'] = '<a class="menu-link" href="lista_produtos.html">Produtos</a>
+                <a class="menu-link" href="historico_vendas.html">Histórico de Vendas</a>
+                <a class="menu-link" href="lista_usuarios.html">Usuários</a>
+                <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
+                <a href="#" onclick="menuDropdown(); return false;">
+                <img class="img-account" src="icons/user.svg" alt="Logo"/></a>';
             } else {
-                $data['admin'] = 'nao';
+                $admin_user='';
+                $data['menu'] = '<a class="menu-link" href="produtos.html">Produtos Disponíveis</a>
+                <a class="menu-link" href="historico_compras.html">Histórico de Compras</a>
+                <a class="menu-link" href="carrinho.html">Carrinho</a>
+                <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
+                <a href="#" onclick="menuDropdown(); return false;">
+                <img class="img-account" src="icons/user.svg" alt="Logo"/></a>';
             }
+            $dados_user['admin_user'] = $admin_user;
         } else {
-            $data['login'] = 'nao_logado';
+            $data['logado'] = false;
+            $dados_user['email_user'] = '';
+            $dados_user['id_user'] = '';
+            $dados_user['admin_user'] = '';
+            $data['menu'] = '<a class="menu-link" href="lista_produtos.html">Produtos</a>
+            <a class="menu-link" href="login.html">Login</a>
+            <a class="menu-link" href="editar_dados_usuario.html">Cadastrar</a>';
         }
+        $data['user']=$dados_user;
     }
 }
 

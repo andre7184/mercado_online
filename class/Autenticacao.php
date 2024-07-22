@@ -31,5 +31,17 @@ class Autenticacao {
     public function estaLogado(){
         return isset($_SESSION['email']);
     }
+
+    public function getSession() {
+        if ($this->estaLogado()) {
+            return array(
+                'id' => $_SESSION['id'],
+                'email' => $_SESSION['email'],
+                'admin' => $_SESSION['admin']
+            );
+        } else {
+            return null;
+        }
+    }
 }
 ?>

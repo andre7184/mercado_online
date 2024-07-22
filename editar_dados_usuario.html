@@ -1,0 +1,67 @@
+<script src="js/editar_dados_usuario.js"></script>
+<link rel="stylesheet" type="text/css" href="css/editar_dados_usuario.css" />
+<div class="user-info">
+  <div class="meu-container">
+    <form id="cadastroForm" class="form">
+      <p class="form-title">
+        <span class="tipo_dados">Cadastrar</span> Usuário
+      </p>
+      <div class="input-container">
+        <p id="nome_atual"></p>
+        <input
+          type="text"
+          class="form-control"
+          id="novo_nome"
+          name="novo_nome"
+          placeholder="Nome"
+          required
+        />
+      </div>
+      <div class="input-container">
+        <p id="email_atual"></p>
+        <input
+          type="email"
+          class="form-control"
+          id="novo_email"
+          name="novo_email"
+          placeholder="Email"
+          required
+        />
+      </div>
+      <div class="input-container" id="input_nova_senha">
+        <input
+          type="password"
+          class="form-control"
+          id="nova_senha"
+          name="nova_senha"
+          placeholder="Senha"
+          required
+        />
+      </div>
+      <div class="input-container"id="input_nova_senha2">
+        <input
+          type="password"
+          class="form-control"
+          id="nova_senha2"
+          name="nova_senha2"
+          placeholder="Confirme a Senha"
+          required
+          oninput="this.setCustomValidity('')"
+        />
+      </div>
+      <input type="hidden" id="id_usuario" value="">
+      <button type="submit" class="submit">
+        <span class="tipo_dados">Cadastrar</span> Dados
+      </button>
+      <p class="signup-link">
+        Já é Cadastrado
+        <a id="abrir_login" href="">Logar-se</a>
+      </p>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+  if (typeof isMainPage === "undefined") {
+    window.location.href = "index.html";
+  }
+</script>

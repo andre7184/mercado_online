@@ -17,36 +17,63 @@ $dados = array();
 // Verifica se a solicitação é uma solicitação POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtém o tipo de conteúdo da solicitação POST
-    $pagina = $_POST['pagina'];
-    
-    // Verifica o tipo de conteúdo
-    if ($pagina === 'dados_do_usuario') {
-        if (!$autenticacao->estaLogado()){
-            $dados=['naoautenticado' => true];
-        } else {
+    if (!$autenticacao->estaLogado()){
+        $dados=['naoautenticado' => true];
+    } else {
+        $acao = $_POST['acao'];
+        // Verifica o tipo de conteúdo
+        if ($acao === 'dados_do_usuario') {
             // Busca os dados do usuário
             $conditions = ['id' => $_SESSION['id']];
             $usuario = $crud->read('usuario', $conditions);
-            
-            // Pega o primeiro usuário do array de resultados
             $usuario = $usuario[0];
-
-            // Remove a senha do array do usuário
             unset($usuario['senha']);
-            
-            // Verifica se o usuário é admin
             if ($usuario['admin'] == 1) {
                 $usuario['admin'] = 'Admin';
-                // Adiciona a quantidade de transações ao usuário admin
                 $usuario['qtd_historico'] = $crud->count('transacoes');  
             } else {
                 $usuario['admin'] = 'Normal';
-                // Adiciona a quantidade de transações ao usuário normal
                 $usuario['qtd_historico'] = $crud->count('transacoes', ['id_usuario' => $_SESSION['id']]);  
             }
-
-            // Retorna os dados do usuário como JSON
             $dados=$usuario;
+        } else if ($acao === 'alterar_usuario'){
+            $nome = $db->sanitize($_POST['nome']);
+            $email = $db->sanitize($_POST['email']);
+            $id = $db->sanitize($_POST['id']);
+            $data= ['nome'=>$nome,'email'=>$email];
+            $conditions = ['id' => $id];
+            $usuario = $crud->update('usuario',$data,$conditions);      
+            if ($usuario){
+                $dados['status'] = 'success';
+                $dados['message'] = 'Usuário alterado com sucesso.';
+            }else{
+                $dados['status'] = 'error';
+                $dados['message'] = 'Falha na alteração.';
+            }
+
+        } else if ($acao === 'alterar_senha'){
+            $senha = $db->sanitize($_POST['senha']);
+            $id = $db->sanitize($_POST['id']); 
+            $senha = password_hash($senha, PASSWORD_DEFAULT); 
+            $data = ['senha'=>$senha];
+            $conditions = ['id' => $id];
+            $usuario = $crud->update('usuario', $data, $conditions);      
+            if ($usuario){
+                $dados['status'] = 'success';
+                $dados['message'] = 'Senha alterada com sucesso.';
+            }else{
+                $dados['status'] = 'error';
+                $dados['message'] = 'Falha na alteração.';
+            }
+
+        } else if ($acao === 'listar_usuarios'){
+            if ($autenticacao.eAdmin()){
+                $dados['status'] = 'success';
+                $dados['usuarios'] = $crud->read('usuario');
+            }else {
+                $dados['status'] = 'error';
+                $dados['message'] = 'Não permitido.';
+            }
         }
     }
 }

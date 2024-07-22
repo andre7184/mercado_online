@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/cores.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <button onclick="showPopup('sucess','Cadastro efetuado com sucesso')" class="agreen">Mostrar Verde</button>
+    <button onclick="showPopup('error','Não foi possivel efetuar o cadastro')" class="ared">Mostrar Vermelho</button>
+    <button onclick="showPopup('alert','Cuidado com as informações postadas')" class="aorange">
+      Mostrar Laranja
+    </button>
+    <button onclick="showPopup('infor','Sua senha gerada é: 142536')" class="ablue">Mostrar Blue</button>
+    <button onclick="showPopup('load','');setTimeout(hidePopup, 3000);" class="ablue">Mostrar Loading</button>
+    <!-- Botão para ativar o popup -->
+    <div class="overlay"></div>
+    <!-- Overlay adicionado -->
+    <div class="popup-message agreen">
+      <div class="popup-icon">
+        <img src="icons/sucess.svg" alt="icon" />
+      </div>
+      <div class="message">Este é um teste de mensagem!</div>
+      <div class="close-icon">
+        <button onclick="hidePopup()">X</button>
+      </div>
+    </div>
+    <script src="js/index.js"></script>
+  </body>
+</html>

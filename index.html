@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Mercado On-line</title>
+    <link rel="stylesheet" href="css/cores.css" />
     <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
+    <div class="overlay"></div>
+    <div class="popup-message agreen">
+      <div class="popup-icon">
+        <img src="icons/sucess.svg" alt="icon" />
+      </div>
+      <div class="message">Este é um teste de mensagem!</div>
+      <div class="close-icon">
+        <button onclick="hidePopup()">X</button>
+      </div>
+    </div>
+    <div id="userDropdown" class="dropdown-content"></div>
     <div class="navbar">
       <a href="#"><img class="img-logo" src="icons/shops.png" alt="Logo" /></a>
       <input type="checkbox" id="checkbox-menu" />
@@ -21,7 +33,6 @@
     <div id="conteudo">
       <!-- Conteúdo da página aqui -->
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/AjaxRequest.js"></script>
     <script src="js/index.js"></script>
   </body>
