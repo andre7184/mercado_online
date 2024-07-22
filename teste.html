@@ -67,7 +67,7 @@
       }
 
       /* Estilos para telas pequenas */
-      @media (max-width: 500px) {
+      @media (max-width: 600px) {
         .table__row {
           flex-direction: column;
         }
@@ -85,7 +85,12 @@
           justify-content: space-between; /* Isso alinhará os itens em lados opostos */
         }
         .table__column-title {
+          display: none; /* Esconda os títulos das colunas */
+        }
+        .table__item::before {
+          content: attr(data-title); /* Adicione um título antes de cada item */
           flex-basis: 50%; /* Isso garantirá que o título ocupe metade do espaço disponível */
+          color: red; /* Escolha a cor que você quiser */
         }
       }
     </style>
@@ -96,21 +101,21 @@
       <div class="table__data">
         <div class="table__column">
           <div class="table__item table__column-title">couna1</div>
-          <div class="table__item">linha1-couna1</div>
-          <div class="table__item">linha2-couna1</div>
-          <div class="table__item">linha3-couna1</div>
+          <div class="table__item" data-title="couna1">linha1-couna1</div>
+          <div class="table__item" data-title="couna1">linha2-couna1</div>
+          <div class="table__item" data-title="couna1">linha3-couna1</div>
         </div>
         <div class="table__column">
           <div class="table__item table__column-title">coluna2</div>
-          <div class="table__item">linha1-coluna2</div>
-          <div class="table__item">linha2-coluna2</div>
-          <div class="table__item">linha3-coluna2</div>
+          <div class="table__item" data-title="coluna2">linha1-coluna2</div>
+          <div class="table__item" data-title="coluna2">linha2-coluna2</div>
+          <div class="table__item" data-title="coluna2">linha3-coluna2</div>
         </div>
         <div class="table__column">
           <div class="table__item table__column-title">coluna3</div>
-          <div class="table__item">linha1-coluna3</div>
-          <div class="table__item">linha2-coluna3</div>
-          <div class="table__item">linha3-coluna3</div>
+          <div class="table__item" data-title="coluna3">linha1-coluna3</div>
+          <div class="table__item" data-title="coluna3">linha2-coluna3</div>
+          <div class="table__item" data-title="coluna3">linha3-coluna3</div>
         </div>
       </div>
     </div>
