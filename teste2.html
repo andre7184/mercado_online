@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Minha Página</title>
+    <link rel="stylesheet" href="css/cores.css" />
+    <style>
+      .table {
+        width: 100%;
+        background: var(--cor-fundo-form);
+        font-family: "Courier New", Courier, monospace;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .table__title {
+        color: var(--cor-text-link-navbar);
+        font-weight: bold;
+        padding: 5px 10px;
+        font-size: 0.95rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+        border: 1px solid var(--cor-border-menu);
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 3px 0;
+        text-align: end;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        border-right: 1px solid var(--cor-border-menu); /* Adiciona bordas */
+      }
+
+      th p {
+        text-align: center;
+        margin: 0;
+      }
+
+      td p {
+        text-align: left;
+        margin: 0;
+      }
+
+      tr:nth-child(even) td {
+        background: var(--cor-popup-fundo);
+      }
+
+      tr:nth-child(odd) td {
+        background: var(--cor-fundo-input-form);
+      }
+
+      th {
+        border-right: 1px solid var(--cor-border-menu); /* Adiciona bordas verticais */
+        background: var(--cor-popup-fundo); /* Cor de fundo amarela */
+      }
+
+      th:last-child,
+      td:last-child {
+        border-right: none; /* Remove a borda direita da última célula */
+      }
+      @media screen and (max-width: 600px) {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          border: 1px solid var(--cor-border-menu);
+          margin-bottom: 1em;
+        }
+
+        td {
+          border: none;
+          border-bottom: 1px solid var(--cor-border-menu);
+          position: relative;
+          padding-left: 50%;
+        }
+
+        td:before {
+          content: attr(data-label);
+          position: absolute;
+          top: 50%;
+          left: 6px;
+          width: 45%;
+          padding-right: 10px;
+          white-space: nowrap;
+          transform: translateY(-50%);
+          font-weight: bold;
+        }
+
+        tr:nth-child(even) td {
+          background: var(--cor-popup-fundo);
+        }
+
+        tr:nth-child(odd) td {
+          background: var(--cor-fundo-input-form);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="table">
+      <div class="table__title">table</div>
+      <table role="table">
+        <thead role="rowgroup">
+          <tr role="row" class="special-row">
+            <th role="columnheader"><p>coluna1</p></th>
+            <th role="columnheader"><p>coluna2</p></th>
+            <th role="columnheader"><p>coluna3</p></th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr role="row">
+            <td role="cell" data-label="coluna1"><p>linha1-coluna1</p></td>
+            <td role="cell" data-label="coluna2"><p>linha1-coluna2</p></td>
+            <td role="cell" data-label="coluna3"><p>linha1-coluna3</p></td>
+          </tr>
+          <tr role="row">
+            <td role="cell" data-label="coluna1"><p>linha2-coluna1</p></td>
+            <td role="cell" data-label="coluna2"><p>linha2-coluna2</p></td>
+            <td role="cell" data-label="coluna3"><p>linha2-coluna3</p></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+<script>
+  function preencherTabela(dados) {
+    var tabela = document.querySelector("table");
+    var corpoTabela = tabela.querySelector("tbody");
+    var cabecalhoTabela = tabela.querySelector("thead tr");
+    cabecalhoTabela.innerHTML = "";
+    corpoTabela.innerHTML = "";
+
+    dados.usuarios.forEach(function (usuario, index) {
+      var linha = document.createElement("tr");
+      for (var prop in usuario) {
+        if (index === 0) {
+          var celulaCabecalho = document.createElement("th");
+          celulaCabecalho.innerText = prop;
+          cabecalhoTabela.appendChild(celulaCabecalho);
+        }
+        var celula = document.createElement("td");
+        celula.innerText = usuario[prop];
+        celula.setAttribute("data-label", prop);
+        linha.appendChild(celula);
+      }
+      corpoTabela.appendChild(linha);
+    });
+  }
+
+  // Dados de exemplo
+  var dados = {
+    usuarios: [
+      {
+        id: 6,
+        nome: "andre",
+        email: "amb7184@gmail.com",
+        admin: 1,
+      },
+      {
+        id: 7,
+        nome: "Andr\u00e9",
+        email: "tubarao84@gmail.com",
+        admin: 0,
+      },
+      {
+        id: 11,
+        nome: "JOAO",
+        email: "joao@gmail.com",
+        admin: 0,
+      },
+      {
+        id: 12,
+        nome: "ANDR\u00c9 BRAND\u00c3O",
+        email: "amb84@ig.com",
+        admin: 0,
+      },
+    ],
+  };
+
+  // Chama a função para preencher a tabela
+  preencherTabela(dados);
+</script>

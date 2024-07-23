@@ -2,11 +2,18 @@
 var ajaxRequest = new AjaxRequest("pages/verifica_conteudo.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
+valor_argumento=retornaArgsHtml('editar_dados_usuario','id_usuario');
+if (valor_argumento) {
+  var dados = { acao: "dados_do_usuario", id: valor_argumento };
+}else{
+  var dados = { acao: "dados_do_usuario" };
+}
 ajaxRequest
-  .send({ acao: "dados_do_usuario" })
+  .send(dados)
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado) {
+
       document.querySelector(".signup-link").style.display = "none";
       document.getElementById("nova_senha").required = false;
       document.getElementById("nova_senha2").required = false;

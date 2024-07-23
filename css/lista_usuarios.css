@@ -1,9 +1,7 @@
-@import url("cores.css");
-
 .user-info {
   background-color: var(--cor-fundo-input-form);
-  padding: 20px;
-  width: 90%; /* Ocupa 90% da largura da tela */
+  padding-top: 20px;
+  width: 100%; /* Ocupa 90% da largura da tela */
   box-sizing: border-box; /* Inclui padding e borda na largura total */
   text-align: center;
 }
@@ -14,66 +12,107 @@
   margin-bottom: 20px;
 }
 
-.user-info p {
-  color: var(--cor-titulo-form);
-  word-wrap: break-word; /* Quebra de linha para palavras longas */
+.table {
+  width: 100%;
+  background: var(--cor-botao-form);
+  font-family: "Courier New", Courier, monospace;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
 }
 
-.user-info .conteudo {
-  font-weight: bold; /* Faz o conteúdo em negrito */
-  color: #000; /* Cor do conteúdo */
-}
-
-.user-info a,
-.user-info .link {
-  /* Adicione a classe .link aqui */
-  color: var(--cor-text-links);
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 10px;
-  border-radius: 5px; /* Adiciona bordas arredondadas */
-  padding: 10px 20px; /* Adicione o padding aqui */
-  border: none; /* Adicione a borda aqui */
-  background-color: var(--cor-fundo-navbar); /* Adicione a cor de fundo aqui */
-  color: var(--cor-text-link-navbar); /* Adicione a cor do texto aqui */
-  cursor: pointer; /* Adicione o cursor aqui */
-}
-
-.user-info a:hover,
-.user-info .link:hover {
-  /* Adicione a classe .link aqui */
-  background-color: var(--cor-fundo-input-form);
-  color: var(--cor-fundo-navbar);
-  border: 1px solid var(--cor-fundo-navbar);
-}
-
-.user-info a.small-button {
-  display: inline-block;
+.table__title {
+  color: var(--cor-text-link-navbar);
+  font-weight: bold;
   padding: 5px 10px;
-  text-decoration: none;
-  background-color: var(--cor-text-links);
-  color: var(--cor-fundo-input-form);
-  border-radius: 5px;
-  font-size: 0.8em;
+  font-size: 0.95rem;
 }
 
-.user-info a.small-button:hover {
-  background-color: var(--cor-fundo-input-form);
-  color: var(--cor-fundo-navbar);
-  border: 1px solid var(--cor-fundo-navbar);
+table {
+  font-size: 0.8rem;
+  border: 1px solid var(--cor-border-menu);
+  width: 100%;
+  border-collapse: collapse;
 }
 
-/* Regras de mídia para telas menores (menos de 600px) */
-@media only screen and (max-width: 600px) {
-  .user-info {
-    width: 100%; /* Ocupa 100% da largura da tela em dispositivos móveis */
+th,
+td {
+  padding: 3px 0;
+  text-align: left;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  border-right: 1px solid var(--cor-border-menu); /* Adiciona bordas */
+}
+
+th p {
+  text-align: center;
+  margin: 0;
+}
+
+td p {
+  text-align: left;
+  margin: 0;
+}
+
+tr:nth-child(even) td {
+  background: var(--cor-popup-fundo);
+}
+
+tr:nth-child(odd) td {
+  background: var(--cor-fundo-input-form);
+}
+
+th {
+  border-right: 1px solid var(--cor-border-menu); /* Adiciona bordas verticais */
+  background: var(--cor-popup-fundo); /* Cor de fundo amarela */
+}
+
+th:last-child,
+td:last-child {
+  border-right: none; /* Remove a borda direita da última célula */
+}
+@media screen and (max-width: 600px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
   }
 
-  .user-info h1 {
-    font-size: 16px; /* Diminui o tamanho da fonte do título para 20px em dispositivos móveis */
+  thead {
+    display: none;
   }
 
-  .user-info p {
-    font-size: 12px; /* Diminui o tamanho da fonte do parágrafo para 16px em dispositivos móveis */
+  tr {
+    border: 1px solid var(--cor-border-menu);
+    margin-bottom: 1em;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid var(--cor-border-menu);
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    content: attr(data-label);
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    transform: translateY(-50%);
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--cor-popup-fundo);
+  }
+
+  tr:nth-child(odd) td {
+    background: var(--cor-fundo-input-form);
   }
 }

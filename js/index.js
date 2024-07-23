@@ -1,11 +1,13 @@
 var isMainPage = true;
 let dadosUser = {};
+let atributoshtml = {};
 document.addEventListener("DOMContentLoaded", function () {
   // Cria uma nova instância da classe AjaxRequest
   var pagina_atual = localStorage.getItem("pagina_atual");
   verificarLogin(pagina_atual);
 });
 function abrirPagina(pagina) {
+  pagina = salvaArgsHtml(pagina);
   localStorage.setItem("pagina_atual", pagina);
   var link = document.querySelector('a[href="' + pagina + '"]');
   if (link) {
@@ -150,4 +152,52 @@ function menuDropdown() {
 
   // Mostre o menu suspenso
   dropdown.classList.toggle("show");
+}
+
+function preencherTabela(dados) {
+  var tabela = document.querySelector("table");
+  var corpoTabela = tabela.querySelector("tbody");
+  var cabecalhoTabela = tabela.querySelector("thead tr");
+  cabecalhoTabela.innerHTML = "";
+  corpoTabela.innerHTML = "";
+  dados.forEach(function(itens, index) {
+    var linha = document.createElement("tr");
+    for (var prop in itens) {
+      if (index === 0) {
+        var celulaCabecalho = document.createElement("th");
+        celulaCabecalho.innerText = prop;
+        cabecalhoTabela.appendChild(celulaCabecalho);
+      }
+      var celula = document.createElement("td");
+      celula.innerHTML = itens[prop];
+      celula.setAttribute("data-label", prop);
+      linha.appendChild(celula);
+    }
+    corpoTabela.appendChild(linha);
+  });
+}
+
+function salvaArgsHtml(pagina){
+  if (pagina.indexOf("?") > 0) {
+    var pgs = pagina.split("?");
+    pagina = pgs[0];
+    var argumentos = {};
+    var args = pgs[1].split("&");
+    for (var i = 0; i < args.length; i++) {
+      var arg = args[i].split("=");
+      argumentos[arg[0]] = arg[1];
+    }
+    atributoshtml[pagina.split(".")[0]] = argumentos;
+  }
+  return pagina
+}
+//em relacao a function acima, preciso agora criar uma função que retorna esses argumentos que foram salvos na variavel atributoshtml
+function retornaArgsHtml(nome_pagina,argumento){
+  if (nome_pagina.indexOf(".") > 0) {
+    nome_pagina = pagina.split(".")[0];
+  }
+  if (argumento && nome_pagina && atributoshtml && atributoshtml[nome_pagina] && argumento in atributoshtml[nome_pagina]) {
+    return atributoshtml[nome_pagina][argumento];
+  }
+  return false;
 }
