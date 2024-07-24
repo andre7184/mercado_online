@@ -39,13 +39,13 @@ function abrirPagina(pagina) {
 }
 
 function logout() {
-  var ajaxRequest = new AjaxRequest("pages/verifica_login.php");
+  var ajaxRequest = new AjaxRequest("pages/usuario.php");
   ajaxRequest
-    .send({ action: "logout" })
+    .send({ acao: "logout" })
     .then(function (response) {
       if (response.status === "logged_out") {
         localStorage.setItem("pagina_atual", "home.html");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
       }
     })
     .catch(function (error) {

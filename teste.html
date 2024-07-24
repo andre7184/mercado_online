@@ -1,96 +1,160 @@
-
 <!DOCTYPE html>
 <html>
   <head>
     <title>Minha Página</title>
     <style>
-      .table {
-        width: 100%;
-        background: rgb(44, 44, 44);
-        font-family: "Courier New", Courier, monospace;
-        border-radius: 12px;
-        overflow: hidden;
-      }
-
-      .table__title {
-        color: white;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-bottom: 1px solid rgb(167, 159, 159);
-        font-size: 0.95rem;
-      }
-
-      .table__data {
-        font-size: 0.8rem;
+      .cards-container {
         display: flex;
         flex-wrap: wrap;
+        gap: 10px; /* Espaço entre os cards */
+        justify-content: center; /* Centraliza os cards horizontalmente */
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: space-between;
-        border: 1px solid rgb(203, 203, 203);
+        width: 120px;
+        height: 180px;
       }
 
-      .table__row {
-        display: flex;
-        flex-direction: column;
+      .card-imagem {
+        /* Estilos para a moldura interna (imagem) */
+        margin-top: 5px;
         width: 100%;
+        height: 55%;
+        background: #4f46e5;
+        border-radius: 5px 5px 0 0;
+        border: 1px 1px 1px 0 solid #ccc;
       }
 
-      .table__column {
-        flex: 1; /* Isso fará com que cada coluna se expanda para preencher o espaço disponível */
-        border-right: 1px solid rgb(203, 203, 203);
-        text-align: end;
-      }
-
-      /* Remove a borda direita da última coluna */
-      .table__column:last-child {
-        border-right: none;
-      }
-
-      .table__item {
-        padding: 3px 0;
-        background-color: white;
+      .image {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         display: flex;
-        flex-direction: column;
-        align-items: start;
+        align-items: center;
+        justify-content: center;
       }
 
-      .table__column .table__item {
-        padding-left: 0.8em;
-        padding-right: 0.8em;
+      .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        box-sizing: border-box; /* Adicionado para incluir o padding no tamanho total */
+        padding: 5px; /* Adicionado para criar um espaço ao redor da imagem */
       }
 
-      .table__item:nth-child(even) {
-        background: rgb(234, 235, 234);
+      .productTitle {
+        background: #4f46e5;
+        border: 0 1px 1px 0 solid #ccc;
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        color: #000;
+        font-family: Arial, sans-serif;
+        width: 100%;
+        height: 10%;
       }
 
-      /* Nova classe para os títulos das colunas */
-      .table__column-title {
-        color: red; /* Escolha a cor que você quiser */
+      .cost {
+        background: #4f46e5;
+        border: 0 1px 1px 0 solid #ccc;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        font-family: Arial, sans-serif;
+        width: 100%;
+        height: 15%;
+      }
+
+      .addtocart {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        border-top: 2px solid #ffffff;
+        background-color: #4f46e5;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+        border-radius: 0px 0px 20px 20px;
+        transition: 0.2s;
+        width: 100%;
+        height: 20%;
+      }
+
+      .addtocart:hover {
+        background-color: #f58a33;
+        border-top: 2px solid transparent;
+        color: #ffffff;
       }
     </style>
   </head>
   <body>
-    <div class="table">
-      <div class="table__title">table</div>
-      <div class="table__data">
-        <div class="table__column">
-          <div class="table__item table__column-title">couna1</div>
-          <div class="table__item" data-title="couna1">linha1-couna1</div>
-          <div class="table__item" data-title="couna1">linha2-couna1</div>
-          <div class="table__item" data-title="couna1">linha3-couna1</div>
+    <div class="cards-container" id="cards-container">
+      <div class="card">
+        <div class="card-imagem">
+          <div class="image">
+            <img src="imgs/arroz-agulhinha.webp" alt="Descrição da Imagem" />
+          </div>
         </div>
-        <div class="table__column">
-          <div class="table__item table__column-title">coluna2</div>
-          <div class="table__item" data-title="coluna2">linha1-coluna2</div>
-          <div class="table__item" data-title="coluna2">linha2-coluna2</div>
-          <div class="table__item" data-title="coluna2">linha3-coluna2</div>
-        </div>
-        <div class="table__column">
-          <div class="table__item table__column-title">coluna3</div>
-          <div class="table__item" data-title="coluna3">linha1-coluna3</div>
-          <div class="table__item" data-title="coluna3">linha2-coluna3</div>
-          <div class="table__item" data-title="coluna3">linha3-coluna3</div>
-        </div>
+        <div class="productTitle">Arroz Agulhinha 5kg</div>
+        <div class="cost">R$29,90</div>
+        <button class="addtocart">Adicionar ao Carrinho</button>
       </div>
     </div>
   </body>
 </html>
+<script>
+  // Seus dados do banco de dados
+  var data = [
+    {
+      nome: "Arroz Agulhinha 5kg",
+      valor: "R$29,90",
+      imagem: "imgs/arroz-agulhinha.webp",
+      id: "1",
+    },
+    {
+      nome: "Feijão Carioca",
+      valor: "R$9,99",
+      imagem: "imgs/feijao-carioca.webp",
+      id: "2",
+    },
+    {
+      nome: "Açucar Cristal",
+      valor: "R$5,99",
+      imagem: "imgs/acucar-cristal.png",
+      id: "3",
+    },
+  ];
+  // Chamar a função quando a página carregar
+  window.onload = preencherCards(data);
+  // Função para criar um card
+  function criarCard(dado) {
+    var text_card = `
+    <div class="card">
+      <div class="card-imagem">
+        <div class="image">
+          <img src="${dado.imagem}" alt="${dado.nome}" />
+        </div>
+      </div>
+      <div class="productTitle">${dado.nome}</div>
+      <div class="cost">${dado.valor}</div>
+      <button class="addtocart" onclick="adicionarCarrinho('${dado.id}')">Adicionar ao Carrinho</button>
+    </div>
+  `;
+    return text_card;
+  }
+
+  // Função para preencher os cards na página
+  function preencherCards(dados) {
+    var cardsContainer = document.getElementById("cards-container");
+    for (var i = 0; i < dados.length; i++) {
+      var card = criarCard(dados[i]);
+      // cardsContainer.appendChild(card);
+      cardsContainer.insertAdjacentHTML('beforeend', card);
+    }
+  }
+</script>

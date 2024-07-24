@@ -1,5 +1,5 @@
 // Cria uma nova instância da classe AjaxRequest
-var ajaxRequest = new AjaxRequest("pages/verifica_conteudo.php");
+var ajaxRequest = new AjaxRequest("pages/usuario.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
 valor_argumento=retornaArgsHtml('editar_dados_usuario','id_usuario');
@@ -59,7 +59,6 @@ document
           .setCustomValidity("As senhas não conferem!");
         return false;
       }
-      var page_remoto = "cadastrar_usuario.php";
       var dados = {
         acao: "cadastrar_usuario",
         nome: nome,
@@ -68,11 +67,10 @@ document
         id: id
       };
     } else {
-      var page_remoto = "verifica_conteudo.php";
       var dados = { acao: "alterar_usuario", nome: nome, email: email, id: id };
     }
 
-    var cadastrar = new AjaxRequest("pages/" + page_remoto);
+    var cadastrar = new AjaxRequest("pages/usuario.php");
     showPopup("load", "");
     cadastrar
       .send(dados)

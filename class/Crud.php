@@ -1,9 +1,13 @@
 <?php
+require_once 'Database.php';
+
 class Crud {
     private $conn;
+    private $db;
 
-    public function __construct($db){
-        $this->conn = $db;
+    public function __construct(){
+        $this->db = new Database();
+        $this->conn = $this->db->dbConnection();
     }
 
     public function create($table, $data){
@@ -48,6 +52,10 @@ class Crud {
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($conditions);
         return $stmt->fetchColumn();
+    }
+
+    public function sanitize($data) {
+        return $this->db->sanitize($data);
     }
 }
 ?>

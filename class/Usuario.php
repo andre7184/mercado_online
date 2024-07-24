@@ -1,100 +1,88 @@
 <?php
-class Usuario {
-    private $conn;
+require_once 'Crud.php';
 
-    public function __construct($db){
-        $this->conn = $db;
+class Usuario {
+    private $crud;
+
+    public function __construct(){
+        $this->crud = new Crud();
     }
 
     public function emailCadastrado($email){
-        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email=:email");
-        $stmt->execute(array(":email"=>$email));
-        $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        if($stmt->rowCount() > 0){
-            return true;
-        } else {
-            return false;
-        }
+        $usuarios = $this->crud->read('usuario', ['email' => $email]);
+        return count($usuarios) > 0;
     }
 
     public function verificaLogin($email, $senha){
-        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email=:email");
-        $stmt->execute(array(":email"=>$email));
-        $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        if($stmt->rowCount() > 0){
-            // O e-mail está registrado, agora vamos verificar a senha
+        $usuarios = $this->crud->read('usuario', ['email' => $email]);
+        if (count($usuarios) > 0) {
+            $userRow = $usuarios[0];
             if(password_verify($senha, $userRow['senha'])){
-                // A senha está correta, retorna o ID do usuário
                 return $userRow['id'];
-            } else {
-                // A senha está incorreta
-                return false;
             }
-        } else {
-            // O e-mail não está registrado
-            return false;
         }
+        return false;
     }
 
     public function Admin($email){
-        $stmt = $this->conn->prepare("SELECT admin FROM usuario WHERE email=:email");
-        $stmt->execute(array(":email"=>$email));
-        $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        if($stmt->rowCount() > 0){
-            return $userRow['admin'] == 1;
-        } else {
-            return false;
+        $usuarios = $this->crud->read('usuario', ['email' => $email]);
+        if (count($usuarios) > 0) {
+            return $usuarios[0]['admin'] == 1;
         }
+        return false;
     }
 
     public function cadastraUsuario($nome, $email, $senha, $admin){
         $senha = password_hash($senha, PASSWORD_DEFAULT);
-        $stmt = $this->conn->prepare("INSERT INTO usuario(nome, email, senha, admin) VALUES(:nome, :email, :senha, :admin)");
-        if($stmt->execute(array(":nome"=>$nome, ":email"=>$email, ":senha"=>$senha, ":admin"=>$admin))){
-            return true;
-        } else {
-            return false;
-        }
+        return $this->crud->create('usuario', [
+            'nome' => $nome,
+            'email' => $email,
+            'senha' => $senha,
+            'admin' => $admin
+        ]);
+    }
+
+    public function AlterarUsuario($data,$filtros) {
+        return $this->crud->update('usuario', $data, $filtros);
+    }
+
+    public function listarUsuario($filtros = []) {
+        return $this->crud->read('usuario', $filtros);
+    }
+
+    public function listarHistorico($filtros = []) {
+        return $this->crud->read('transacoes', $filtros);
+    }
+
+    public function qtdTransacoes($filtros = []) {
+        return $this->crud->count('transacoes', $filtros);
     }
 
     public function recuperarSenha($email){
-        // Busca o usuário com o e-mail fornecido
-        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email=:email");
-        $stmt->execute(array(":email"=>$email));
-        $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if($stmt->rowCount() > 0){
-            // O usuário existe, então podemos gerar uma nova senha
-            $novaSenha = $this->gerarNovaSenha(); // Função que você precisa criar para gerar uma nova senha
-            
-            // Atualiza a senha do usuário no banco de dados
+        $usuarios = $this->crud->read('usuario', ['email' => $email]);
+        if (count($usuarios) > 0) {
+            $novaSenha = $this->gerarNovaSenha();
             $senhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
-            $stmt = $this->conn->prepare("UPDATE usuario SET senha=:senha WHERE email=:email");
-            $stmt->execute(array(":senha"=>$senhaHash, ":email"=>$email));
-            
-            // Retorna a nova senha
+            $this->crud->update('usuario', ['senha' => $senhaHash], ['email' => $email]);
             return $novaSenha;
-        } else {
-            // O usuário não existe
-            return false;
         }
-    }  
+        return false;
+    }
 
     public function getNome($email){
-        $stmt = $this->conn->prepare("SELECT nome FROM usuario WHERE email=:email");
-        $stmt->execute(array(":email"=>$email));
-        $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        if($stmt->rowCount() > 0){
-            return $userRow['nome'];
-        } else {
-            return '';
+        $usuarios = $this->crud->read('usuario', ['email' => $email]);
+        if (count($usuarios) > 0) {
+            return $usuarios[0]['nome'];
         }
+        return '';
     }
 
     private function gerarNovaSenha(){
-        // Gera uma nova senha aleatória
-        // Você pode modificar esta função para atender aos seus requisitos de segurança
         return substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
+    }
+
+    public function sanitize($data) {
+        return $this->crud->sanitize($data);
     }
 }
 ?>

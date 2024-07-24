@@ -1,5 +1,5 @@
 // Cria uma nova instância da classe AjaxRequest
-var ajaxRequest = new AjaxRequest("pages/verifica_conteudo.php");
+var ajaxRequest = new AjaxRequest("pages/usuario.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
 ajaxRequest
@@ -29,7 +29,7 @@ document
         .setCustomValidity("As senhas não conferem!");
       return false;
     }
-    var cadastrar = new AjaxRequest("pages/verifica_conteudo.php");
+    var cadastrar = new AjaxRequest("pages/usuario.php");
     showPopup("load", "");
     cadastrar
       .send({

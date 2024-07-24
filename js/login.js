@@ -4,7 +4,7 @@ document
     event.preventDefault();
     var email = document.getElementById("email").value;
     var senha = document.getElementById("senha").value;
-    var logar = new AjaxRequest("pages/logar.php");
+    var logar = new AjaxRequest("pages/autenticacao.php");
 
     showPopup('load','');
     logar
@@ -31,7 +31,7 @@ document
   .addEventListener("submit", function (event) {
     event.preventDefault();
     var email = document.getElementById("email_recuperacao").value;
-    var resenha = new AjaxRequest("pages/cadastrar_usuario.php");
+    var resenha = new AjaxRequest("pages/usuario.php");
 
     showPopup('load','');
     resenha
