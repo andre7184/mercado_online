@@ -1,0 +1,142 @@
+.user-info {
+    background-color: var(--cor-fundo-input-form);
+    padding-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .user-info h1 {
+    color: var(--cor-titulo-form);
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .table {
+    width: 100%;
+    background: var(--cor-botao-form);
+    font-family: "Courier New", Courier, monospace;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .table__title {
+    color: var(--cor-text-link-navbar);
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 0.95rem;
+  }
+
+  .table__title .tex-qtd-itens {
+    font-size: 10px;
+  }
+
+  table {
+    font-size: 0.8rem;
+    border: 1px solid var(--cor-border-menu);
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 3px 0;
+    text-align: left;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    border-right: 1px solid var(--cor-border-menu);
+  }
+
+  th p {
+    text-align: center;
+    margin: 0;
+  }
+
+  td p {
+    text-align: left;
+    margin: 0;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--cor-popup-fundo);
+  }
+
+  tr:nth-child(odd) td {
+    background: var(--cor-fundo-input-form);
+  }
+
+  th {
+    border-right: 1px solid var(--cor-border-menu);
+    background: var(--cor-popup-fundo);
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: none;
+  }
+
+  .total {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .checkout-button {
+    background-color: var(--cor-botao-form);
+    color: var(--cor-text-botao-form);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .checkout-button:hover {
+    background-color: var(--cor-botao-hover);
+    color: var(--cor-texto-botao-hover);
+  }
+
+  @media screen and (max-width: 600px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      border: 1px solid var(--cor-border-menu);
+      margin-bottom: 1em;
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid var(--cor-border-menu);
+      position: relative;
+      padding-left: 50%;
+    }
+
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      top: 50%;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      transform: translateY(-50%);
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cor-popup-fundo);
+    }
+
+    tr:nth-child(odd) td {
+      background: var(--cor-fundo-input-form);
+    }
+  }

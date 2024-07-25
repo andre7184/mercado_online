@@ -131,6 +131,7 @@
   ];
   // Chamar a função quando a página carregar
   window.onload = preencherCards(data);
+
   // Função para criar um card
   function criarCard(dado) {
     var text_card = `
@@ -147,13 +148,22 @@
   `;
     return text_card;
   }
-
-  // Função para preencher os cards na página
   function preencherCards(dados) {
     var cardsContainer = document.getElementById("cards-container");
     for (var i = 0; i < dados.length; i++) {
-      var card = criarCard(dados[i]);
-      // cardsContainer.appendChild(card);
+      //var card = criarCard(dados[i]);
+      var card = `
+      <div class="card">
+        <div class="card-imagem">
+          <div class="image">
+            <img src="${dados[i].imagem}" alt="${dados[i].nome}" />
+          </div>
+        </div>
+        <div class="productTitle">${dados[i].nome}</div>
+        <div class="cost">${dados[i].valor}</div>
+        <button class="addtocart" onclick="adicionarCarrinho('${dados[i].id}')">Adicionar ao Carrinho</button>
+      </div>
+    `;
       cardsContainer.insertAdjacentHTML('beforeend', card);
     }
   }

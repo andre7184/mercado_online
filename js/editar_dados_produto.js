@@ -1,12 +1,12 @@
 // Cria uma nova instância da classe AjaxRequest
-var ajaxRequest = new AjaxRequest("pages/verifica_conteudo.php");
+var ajaxRequest = new AjaxRequest("pages/produto.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
 valor_argumento = retornaArgsHtml("editar_dados_produto", "id_produto");
 if (valor_argumento) {
   var dados = { acao: "dados_do_produto", id: valor_argumento };
 } else {
-  var dados = { acao: "dados_do_produto" };
+  var dados = { acao: "retorno_vazio" };
 }
 ajaxRequest
   .send(dados)
@@ -15,25 +15,36 @@ ajaxRequest
     if (data.naoautenticado) {
       window.location.href = "index.html";
     }
-    if (data.length > 0) {
+    if (data.alterar == undefined) {
       document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
         elemento.innerHTML = "Alterar";
       });
+      alert(data.nome)
+      document.getElementById("nome_atual").required = false;
+      document.getElementById("qtd_atual").required = false;
+      document.getElementById("valor_atual").required = false;
+      document.getElementById("imagem_atual").required = false;
       document.getElementById("nome_atual").textContent = data.nome;
       document.getElementById("qtd_atual").textContent = data.qtd;
       document.getElementById("valor_atual").textContent = data.valor;
+      document.getElementById("imagem_atual").innerHTML = '<img width="30" height="20" src="'+ data.imagem +'" alt="'+ data.nome +'"/>';
       
-      document.getElementById("novo_nome").textContent = data.nome;
-      document.getElementById("nova_qtd").textContent = data.qtd;
-      document.getElementById("novo_valor").textContent = data.valor;
-      document.getElementById("id_produto").textContent = data.id;
+      document.getElementById("novo_nome").value = data.nome;
+      document.getElementById("nova_qtd").value = data.qtd;
+      document.getElementById("novo_valor").value = data.valor;
+      document.getElementById("id_produto").value = data.id;
     } else {
+      document.getElementById("nome_atual").required = true;
+      document.getElementById("qtd_atual").required = true;
+      document.getElementById("valor_atual").required = true;
+      document.getElementById("imagem_atual").required = true;
       document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
         elemento.innerHTML = "Cadastrar";
       });
     }
   })
   .catch(function (error) {
+    console.log(error)
     showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
   });
 
@@ -45,15 +56,23 @@ document
     var qtd = document.getElementById("nova_qtd").value;
     var valor = document.getElementById("novo_valor").value;
     var id = document.getElementById("id_produto").value;
+    var imagemElement = document.getElementById("nova_imagem");
+    var imagem = imagemElement.files[0];
+    if (!id) {
+      var acao = "cadastrar_produto";
+    }else{
+      var acao = "alterar_produto";
+    }
 
-    var cadastrar = new AjaxRequest("pages/cadastrar.php");
+    var cadastrar = new AjaxRequest("pages/produto.php");
     showPopup("load", "");
     cadastrar
       .send({
-        acao: "cadastrar_produto",
+        acao: acao,
         nome: nome,
         qtd: qtd,
         valor: valor,
+        imagem: imagem,
         id: id,
       })
       .then(function (response) {

@@ -67,14 +67,24 @@ function showPopup(type, message) {
   } else if (type == "load") {
     document.querySelector(".popup-icon img").src = "icons/loading.svg";
     document.querySelector(".popup-message").classList.add("aload");
+  } else if (type == "form") {
+    document.querySelector(".popup-icon img").src = "icons/question.svg";
+    document.querySelector(".popup-message").classList.add("question");
   } else {
     document.querySelector(".popup-icon img").src = "icons/infor.svg";
     document.querySelector(".popup-message").classList.add("ablue");
   }
   if (type == "load") {
+    if(!message){
+      message = "Carregando..."
+    }
     document.querySelector(".message").innerHTML =
-      '<div style="display: flex; align-items: center;"><span>Processando..</span><div class="loading"></div></div>';
+      '<div style="display: flex; align-items: center;"><span>'+message+'..</span><div class="loading"></div></div>';
     document.querySelector(".close-icon").style.display = "none"; // Esconde o botão de fechar
+  } else if (type == "form") {
+      // inserir dentro da variavel message um input com o texto de quantidade e um botão de confirmar
+      document.querySelector(".message").innerHTML = message;
+      document.querySelector(".close-icon").style.display = "block";
   } else {
     document.querySelector(".message").textContent = message;
     document.querySelector(".close-icon").style.display = "block";
@@ -200,4 +210,24 @@ function retornaArgsHtml(nome_pagina,argumento){
     return atributoshtml[nome_pagina][argumento];
   }
   return false;
+}
+
+function preencherCards(dados) {
+  var cardsContainer = document.getElementById("cards-container");
+  for (var i = 0; i < dados.length; i++) {
+    //var card = criarCard(dados[i]);
+    var card = `
+    <div class="card">
+      <div class="card-imagem">
+        <div class="image">
+          <img src="${dados[i].imagem}" alt="${dados[i].nome}" />
+        </div>
+      </div>
+      <div class="productTitle">${dados[i].nome}</div>
+      <div class="cost">${dados[i].valor}</div>
+      <button class="addtocart" onclick="adicionarCarrinho('${dados[i].id}','${dados[i].nome}')">Adicionar ao Carrinho</button>
+    </div>
+  `;
+    cardsContainer.insertAdjacentHTML('beforeend', card);
+  }
 }

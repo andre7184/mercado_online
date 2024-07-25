@@ -13,7 +13,6 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado) {
-
       document.querySelector(".signup-link").style.display = "none";
       document.getElementById("nova_senha").required = false;
       document.getElementById("nova_senha2").required = false;
