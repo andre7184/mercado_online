@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dados_user['email_user'] = '';
         $dados_user['id_user'] = '';
         $dados_user['admin_user'] = '';
-        $data['menu'] = '<a class="menu-link" href="lista_produtos.html">Produtos</a>
+        $data['menu'] = '<a class="menu-link" href="produtos.html">Produtos</a>
         <a class="menu-link" href="login.html">Login</a>
         <a class="menu-link" href="editar_dados_usuario.html">Cadastrar</a>';
     }
