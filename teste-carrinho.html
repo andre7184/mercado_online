@@ -4,157 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carrinho de Compras</title>
-    <style>
-      .user-info {
-        background-color: var(--cor-fundo-input-form);
-        padding-top: 20px;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-      }
-
-      .user-info h1 {
-        color: var(--cor-titulo-form);
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
-
-      .table {
-        width: 100%;
-        background: var(--cor-botao-form);
-        font-family: "Courier New", Courier, monospace;
-        border-radius: 0 0 12px 12px;
-        overflow: hidden;
-      }
-
-      .table__title {
-        color: var(--cor-text-link-navbar);
-        font-weight: bold;
-        padding: 5px 10px;
-        font-size: 0.95rem;
-      }
-
-      .table__title .tex-qtd-itens {
-        font-size: 10px;
-      }
-
-      table {
-        font-size: 0.8rem;
-        border: 1px solid var(--cor-border-menu);
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      th,
-      td {
-        padding: 3px 0;
-        text-align: left;
-        padding-left: 0.8em;
-        padding-right: 0.8em;
-        border-right: 1px solid var(--cor-border-menu);
-      }
-
-      th p {
-        text-align: center;
-        margin: 0;
-      }
-
-      td p {
-        text-align: left;
-        margin: 0;
-      }
-
-      tr:nth-child(even) td {
-        background: var(--cor-popup-fundo);
-      }
-
-      tr:nth-child(odd) td {
-        background: var(--cor-fundo-input-form);
-      }
-
-      th {
-        border-right: 1px solid var(--cor-border-menu);
-        background: var(--cor-popup-fundo);
-      }
-
-      th:last-child,
-      td:last-child {
-        border-right: none;
-      }
-
-      .total {
-        text-align: center;
-        margin: 20px 0;
-      }
-
-      .checkout-button {
-        background-color: var(--cor-botao-form);
-        color: var(--cor-text-botao-form);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .checkout-button:hover {
-        background-color: var(--cor-botao-hover);
-        color: var(--cor-texto-botao-hover);
-      }
-
-      @media screen and (max-width: 600px) {
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-          display: block;
-        }
-
-        thead {
-          display: none;
-        }
-
-        tr {
-          border: 1px solid var(--cor-border-menu);
-          margin-bottom: 1em;
-        }
-
-        td {
-          border: none;
-          border-bottom: 1px solid var(--cor-border-menu);
-          position: relative;
-          padding-left: 50%;
-        }
-
-        td:before {
-          content: attr(data-label);
-          position: absolute;
-          top: 50%;
-          left: 6px;
-          width: 45%;
-          padding-right: 10px;
-          white-space: nowrap;
-          transform: translateY(-50%);
-          font-weight: bold;
-        }
-
-        tr:nth-child(even) td {
-          background: var(--cor-popup-fundo);
-        }
-
-        tr:nth-child(odd) td {
-          background: var(--cor-fundo-input-form);
-        }
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/cores.css" />
+    <link rel="stylesheet" type="text/css" href="css/carrinho.css" />
   </head>
   <body>
     <div class="user-info">
       <div class="table">
         <div class="table__title">
           <span>Itens no Carrinho</span>
-          <span class="tex-qtd-itens">(3 itens)</span>
+          <span class="tex-qtd-itens">(0 itens)</span>
         </div>
         <table>
           <thead>
@@ -163,34 +21,101 @@
               <th>Quantidade</th>
               <th>Preço</th>
               <th>Total</th>
+              <th>Ações</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Produto 1</td>
-              <td>2</td>
-              <td>R$ 50,00</td>
-              <td>R$ 100,00</td>
-            </tr>
-            <tr>
-              <td>Produto 2</td>
-              <td>1</td>
-              <td>R$ 30,00</td>
-              <td>R$ 30,00</td>
-            </tr>
-            <tr>
-              <td>Produto 3</td>
-              <td>3</td>
-              <td>R$ 20,00</td>
-              <td>R$ 60,00</td>
-            </tr>
+          <tbody id="cart-items">
+            <!-- Itens do carrinho serão adicionados aqui -->
           </tbody>
         </table>
       </div>
       <div class="total">
-        <h2>Total: R$ 190,00</h2>
+        <h2>Total: R$ <span id="cart-total">0,00</span></h2>
         <button class="checkout-button">Finalizar Compra</button>
       </div>
     </div>
   </body>
 </html>
+<script>
+function preencherCarrinho(carrinho) {
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartTotalElement = document.getElementById("cart-total");
+  const cartQuantityElement = document.querySelector(".tex-qtd-itens");
+
+  cartItemsContainer.innerHTML = ""; // Limpa os itens existentes
+
+  let totalCarrinho = 0;
+  let totalItens = 0;
+
+  carrinho.forEach((item, index) => {
+    const totalProduto = item.quantidade * item.preco;
+    totalCarrinho += totalProduto;
+    totalItens += item.quantidade;
+
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `
+        <td>${item.nome}</td>
+        <td>
+          <input type="number" value="${
+            item.quantidade
+          }" min="1" data-index="${index}" class="quantidade-input">
+        </td>
+        <td>R$ ${item.preco.toFixed(2)}</td>
+        <td>R$ ${totalProduto.toFixed(2)}</td>
+        <td>
+          <button class="remove-button" data-index="${index}">Remover</button>
+        </td>
+      `;
+    cartItemsContainer.appendChild(itemRow);
+  });
+
+  cartTotalElement.textContent = totalCarrinho.toFixed(2);
+  cartQuantityElement.textContent = `(${totalItens} itens)`;
+
+  // Adiciona eventos para alterar a quantidade e remover itens
+  document.querySelectorAll(".quantidade-input").forEach((input) => {
+    input.addEventListener("change", (event) => {
+      const index = event.target.getAttribute("data-index");
+      const novaQuantidade = parseInt(event.target.value);
+      atualizarQuantidade(index, novaQuantidade);
+    });
+  });
+
+  document.querySelectorAll(".remove-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const index = event.target.getAttribute("data-index");
+      removerItem(index);
+    });
+  });
+}
+
+function atualizarQuantidade(index, novaQuantidade) {
+  // Atualiza a quantidade do item no carrinho
+  carrinho[index].quantidade = novaQuantidade;
+  // Atualiza o localStorage
+  localStorage.setItem("cart", JSON.stringify(carrinho));
+  // Recalcula e atualiza o carrinho
+  preencherCarrinho(carrinho);
+}
+
+function removerItem(index) {
+  // Remove o item do carrinho
+  carrinho.splice(index, 1);
+  // Atualiza o localStorage
+  localStorage.setItem("cart", JSON.stringify(carrinho));
+  // Recalcula e atualiza o carrinho
+  preencherCarrinho(carrinho);
+}
+const carrinho = [
+  { id: 1, nome: 'Produto 1', quantidade: 2, preco: 50.00 },
+  { id: 2, nome: 'Produto 2', quantidade: 1, preco: 90.00 },
+  { id: 3, nome: 'Produto 3', quantidade: 3, preco: 30.00 }
+];
+
+// Salvar no localStorage para teste
+localStorage.setItem('cart', JSON.stringify(carrinho));
+// Exemplo de uso com dados do localStorage ou remoto
+let localCart = JSON.parse(localStorage.getItem("cart")) || [];
+preencherCarrinho(localCart);
+
+</script>

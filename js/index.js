@@ -107,9 +107,6 @@ function verificarLogin(pagina_atual) {
       if (response.menu) {
         document.getElementById("menu").innerHTML = response.menu;
       }
-      if (!response.logado) {
-        pagina_atual = "login.html";
-      }
       if (response.user) {
         dadosUser = response.user;
         var menu_usuario = "";
@@ -212,22 +209,6 @@ function retornaArgsHtml(nome_pagina,argumento){
   return false;
 }
 
-function preencherCards(dados) {
-  var cardsContainer = document.getElementById("cards-container");
-  for (var i = 0; i < dados.length; i++) {
-    //var card = criarCard(dados[i]);
-    var card = `
-    <div class="card">
-      <div class="card-imagem">
-        <div class="image">
-          <img src="${dados[i].imagem}" alt="${dados[i].nome}" />
-        </div>
-      </div>
-      <div class="productTitle">${dados[i].nome}</div>
-      <div class="cost">${dados[i].valor}</div>
-      <button class="addtocart" onclick="adicionarCarrinho('${dados[i].id}','${dados[i].nome}')">Adicionar ao Carrinho</button>
-    </div>
-  `;
-    cardsContainer.insertAdjacentHTML('beforeend', card);
-  }
+function formatarValor(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }

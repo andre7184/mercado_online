@@ -6,23 +6,33 @@ document
     var senha = document.getElementById("senha").value;
     var logar = new AjaxRequest("pages/autenticacao.php");
 
-    showPopup('load','');
+    showPopup("load", "");
     logar
       .send({ email: email, senha: senha })
       .then(function (response) {
         hidePopup();
         if (response.success) {
-          showPopup('sucess',response.message)
-          if (typeof dadosUser !== 'undefined' && dadosUser.hasOwnProperty('acao_login_pg'))
-            verificarLogin(dadosUser.acao_login_pg)
-          else
-            verificarLogin("home.html")
+          showPopup("sucess", response.message);
+          if (
+            typeof dadosUser !== "undefined" &&
+            dadosUser.hasOwnProperty("acao_login_pg")
+          ) {
+            verificarLogin(dadosUser.acao_login_pg);
+          } else {
+            verificarLogin("home.html");
+          }
         } else {
-          showPopup('error',response.message)
+          showPopup(
+            "error",
+            "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente"
+          );
         }
       })
       .catch(function (error) {
-          showPopup('error','Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.')
+        showPopup(
+          "error",
+          "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente."
+        );
       });
   });
 
@@ -33,22 +43,25 @@ document
     var email = document.getElementById("email_recuperacao").value;
     var resenha = new AjaxRequest("pages/usuario.php");
 
-    showPopup('load','');
+    showPopup("load", "");
     resenha
       .send({ acao: "recuperar_senha", email: email })
       .then(function (response) {
         hidePopup();
-        if (response.status=='success') {
-          showPopup('success',response.message)
-          dadosUser.acao_login_pg = 'alterar_senha.html';
-          abrirPagina("login.html");
+        if (response.status) {
+          if (response.status == "success") {
+            showPopup("sucess", response.message);
+            dadosUser.acao_login_pg = "alterar_senha.html";
+            abrirPagina("login.html");
+          } else {
+            showPopup("error", response.message);
+          }
         } else {
-          showPopup('error',response.message)
+          showPopup("error", "Resposta inválida do servidor");
         }
-
       })
       .catch(function (error) {
-        showPopup('error','Ocorreu um erro. Por favor, tente novamente.')
+        showPopup("error", "Ocorreu um erro. Por favor, tente novamente.");
       });
   });
 

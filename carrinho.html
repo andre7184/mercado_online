@@ -1,50 +1,33 @@
 <script src="js/carrinho.js"></script>
 <link rel="stylesheet" type="text/css" href="css/carrinho.css" />
 <div class="user-info">
-    <div class="table">
-      <div class="table__title">
-        <span>Itens no Carrinho</span>
-        <span class="tex-qtd-itens">(3 itens)</span>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Preço</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Produto 1</td>
-            <td>2</td>
-            <td>R$ 50,00</td>
-            <td>R$ 100,00</td>
-          </tr>
-          <tr>
-            <td>Produto 2</td>
-            <td>1</td>
-            <td>R$ 30,00</td>
-            <td>R$ 30,00</td>
-          </tr>
-          <tr>
-            <td>Produto 3</td>
-            <td>3</td>
-            <td>R$ 20,00</td>
-            <td>R$ 60,00</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="table">
+    <div class="table__title">
+      <span>Itens no Carrinho</span>
+      <span class="tex-qtd-itens">(0 itens)</span>
     </div>
-    <div class="total">
-      <h2>Total: R$ 190,00</h2>
-      <button class="checkout-button">Finalizar Compra</button>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Preço</th>
+          <th>Total</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- Itens do carrinho serão adicionados aqui -->
+      </tbody>
+    </table>
   </div>
+  <div class="total">
+    <h2>Total: <span id="cart-total">0,00</span></h2>
+    <button class="checkout-button" onclick="abrirPagina('produtos.html')">Continuar Comprando</button>  <button class="checkout-button" onclick="finalizarCompra('finalizar_compra.html')">Finalizar Compra</button>
+  </div>
+</div>
 <script type="text/javascript">
   if (typeof isMainPage === "undefined") {
     window.location.href = "index.html";
   }
 </script>
-

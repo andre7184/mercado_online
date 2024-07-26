@@ -13,38 +13,44 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (data.naoautenticado) {
-      window.location.href = "index.html";
-    }
-    if (data.alterar == undefined) {
-      document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
-        elemento.innerHTML = "Alterar";
-      });
-      alert(data.nome)
-      document.getElementById("nome_atual").required = false;
-      document.getElementById("qtd_atual").required = false;
-      document.getElementById("valor_atual").required = false;
-      document.getElementById("imagem_atual").required = false;
-      document.getElementById("nome_atual").textContent = data.nome;
-      document.getElementById("qtd_atual").textContent = data.qtd;
-      document.getElementById("valor_atual").textContent = data.valor;
-      document.getElementById("imagem_atual").innerHTML = '<img width="30" height="20" src="'+ data.imagem +'" alt="'+ data.nome +'"/>';
-      
-      document.getElementById("novo_nome").value = data.nome;
-      document.getElementById("nova_qtd").value = data.qtd;
-      document.getElementById("novo_valor").value = data.valor;
-      document.getElementById("id_produto").value = data.id;
+      abrirPagina("login.html");
     } else {
-      document.getElementById("nome_atual").required = true;
-      document.getElementById("qtd_atual").required = true;
-      document.getElementById("valor_atual").required = true;
-      document.getElementById("imagem_atual").required = true;
-      document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
-        elemento.innerHTML = "Cadastrar";
-      });
+      if (data.alterar == undefined) {
+        document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
+          elemento.innerHTML = "Alterar";
+        });
+        alert(data.nome);
+        document.getElementById("nome_atual").required = false;
+        document.getElementById("qtd_atual").required = false;
+        document.getElementById("valor_atual").required = false;
+        document.getElementById("imagem_atual").required = false;
+        document.getElementById("nome_atual").textContent = data.nome;
+        document.getElementById("qtd_atual").textContent = data.qtd;
+        document.getElementById("valor_atual").textContent = data.valor;
+        document.getElementById("imagem_atual").innerHTML =
+          '<img width="30" height="20" src="' +
+          data.imagem +
+          '" alt="' +
+          data.nome +
+          '"/>';
+
+        document.getElementById("novo_nome").value = data.nome;
+        document.getElementById("nova_qtd").value = data.qtd;
+        document.getElementById("novo_valor").value = data.valor;
+        document.getElementById("id_produto").value = data.id;
+      } else {
+        document.getElementById("nome_atual").required = true;
+        document.getElementById("qtd_atual").required = true;
+        document.getElementById("valor_atual").required = true;
+        document.getElementById("imagem_atual").required = true;
+        document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
+          elemento.innerHTML = "Cadastrar";
+        });
+      }
     }
   })
   .catch(function (error) {
-    console.log(error)
+    console.log(error);
     showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
   });
 
@@ -60,7 +66,7 @@ document
     var imagem = imagemElement.files[0];
     if (!id) {
       var acao = "cadastrar_produto";
-    }else{
+    } else {
       var acao = "alterar_produto";
     }
 
@@ -92,9 +98,12 @@ document
 document.getElementById("novo_nome").addEventListener("input", function () {
   this.value = this.value.toUpperCase();
 });
-document.getElementById('novo_valor').addEventListener('input', function(e) {
+document.getElementById("novo_valor").addEventListener("input", function (e) {
   var valor = e.target.value;
   valor = valor.replace(/\D/g, ""); // Remove tudo o que não é dígito
   valor = Number(valor) / 100; // Divide por 100 para obter as casas decimais
-  e.target.value = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  e.target.value = valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 });

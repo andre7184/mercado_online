@@ -7,7 +7,7 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (data.naoautenticado) {
-      window.location.href = "index.html";
+      abrirPagina("login.html");
     } else if (data.usuarios && Array.isArray(data.usuarios)) {
       if (data.usuarios.length == 0) {
         document.getElementById("qtd_itens").innerHTML =

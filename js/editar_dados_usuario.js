@@ -75,15 +75,19 @@ document
       .send(dados)
       .then(function (response) {
         hidePopup();
-        if (response.status == "success") {
-          showPopup("sucess", response.message);
-          if (id) {
-            abrirPagina("home.html");
+        if (response.status) {
+          if (response.status == "success") {
+            showPopup("sucess", response.message);
+            if (id) {
+              abrirPagina("home.html");
+            } else {
+              abrirPagina("login.html");
+            }
           } else {
-            abrirPagina("login.html");
+            showPopup("error", response.message);
           }
         } else {
-          showPopup("error", response.message);
+          showPopup("error", "Resposta inválida do servidor");
         }
       })
       .catch(function (error) {

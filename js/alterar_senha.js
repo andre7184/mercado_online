@@ -7,7 +7,11 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado) {
-      document.getElementById("id_usuario").value = data.id;
+      if (data.id) {
+        document.getElementById("id_usuario").value = data.id;
+      } else {
+        showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
+      }
     } else {
       abrirPagina("login.html");
     }
@@ -39,11 +43,15 @@ document
       })
       .then(function (response) {
         hidePopup();
-        if (response.status == "success") {
-          showPopup("sucess", response.message);
-          abrirPagina("home.html");
+        if (response.status) {
+          if (response.status == "success") {
+            showPopup("sucess", response.message);
+            abrirPagina("home.html");
+          } else {
+            showPopup("error", response.message);
+          }
         } else {
-          showPopup("error", response.message);
+          showPopup("error", "Resposta inválida do servidor");
         }
       })
       .catch(function (error) {
