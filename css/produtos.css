@@ -54,7 +54,9 @@
   height: 55%;
   background: var(--cor-bord-input-botao);
   border-radius: 5px 5px 0 0;
-  border: 1px 1px 1px 0 solid var(--cor-botao-form);
+  border-top: 1px solid var(--cor-botao-form);
+  border-width: 1px solid var(--cor-botao-form);
+  border-left: 1px solid var(--cor-botao-form);
 }
 
 .image {
@@ -76,7 +78,8 @@
 
 .productTitle {
   background: var(--cor-bord-input-botao);
-  border: 0 1px 1px 0 solid var(--cor-botao-form);
+  border-width: 1px solid var(--cor-botao-form);
+  border-left: 1px solid var(--cor-botao-form);
   text-align: center;
   font-size: 10px;
   font-weight: bold;
@@ -88,7 +91,8 @@
 
 .cost {
   background: var(--cor-bord-input-botao);
-  border: 0 1px 1px 0 solid var(--cor-botao-form);
+  border-width: 1px solid var(--cor-botao-form);
+  border-left: 1px solid var(--cor-botao-form);
   text-align: center;
   font-weight: bold;
   color: var(--cor-fundo-form);
@@ -102,6 +106,9 @@
   padding: 5px;
   border: none;
   border-top: 2px solid var(--cor-fundo-input-form);
+  border-width: 1px solid var(--cor-botao-form);
+  border-left: 1px solid var(--cor-botao-form);
+  border-bottom: 1px solid var(--cor-botao-form);
   background-color: var(--cor-bord-input-botao);
   color: var(--cor-botao-form);
   font-weight: bold;

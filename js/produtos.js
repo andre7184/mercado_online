@@ -86,6 +86,7 @@ function preencherCardsProdutos(dados) {
   var cardsContainer = document.getElementById("cards-container");
   for (var i = 0; i < dados.length; i++) {
     //var card = criarCard(dados[i]);
+    var valor = parseFloat(dados[i].valor); // Certifique-se de que o valor é um número
     var card = `
     <div class="card">
       <div class="card-imagem">
@@ -94,10 +95,13 @@ function preencherCardsProdutos(dados) {
         </div>
       </div>
       <div class="productTitle">${dados[i].nome}</div>
-      <div class="cost">${formatarValor(dados[i].valor)}</div>
+      <div class="cost">${formatarValor(valor)}</div>
       <button class="addtocart" onclick="adicionarAoCarrinho('${dados[i].id}','${dados[i].nome}','${dados[i].valor}')">Adicionar ao Carrinho</button>
     </div>
   `;
     cardsContainer.insertAdjacentHTML("beforeend", card);
   }
+}
+function formatarValor(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
