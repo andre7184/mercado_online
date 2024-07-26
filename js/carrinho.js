@@ -85,13 +85,13 @@ function preencherCarrinho(carrinho) {
 
     const itemRow = document.createElement("tr");
     itemRow.innerHTML = `
-        <td>${item.nome}</td>
-        <td>
+        <td data-label="Nome">${item.nome}</td>
+        <td data-label="Qtd">
           <input type="number" value="${qtd}" min="1" data-index="${index}" class="quantidade-input">
         </td>
-        <td>${formatarValor(valor)}</td>
-        <td>${formatarValor(totalProduto)}</td>
-        <td>
+        <td data-label="Valor">${formatarValor(valor)}</td>
+        <td data-label="Total">${formatarValor(totalProduto)}</td>
+        <td data-label="Opções">
           <button class="remove-button" data-index="${index}">Remover</button>
         </td>
       `;
@@ -120,7 +120,7 @@ function preencherCarrinho(carrinho) {
 
 function atualizarQuantidade(index, novaQuantidade) {
   // Atualiza a quantidade do item no carrinho
-  car[index].quantidade = novaQuantidade;
+  car[index].qtd = novaQuantidade;
   // Atualiza o localStorage
   localStorage.setItem("cart", JSON.stringify(car));
   // Recalcula e atualiza o carrinho
