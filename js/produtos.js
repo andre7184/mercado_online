@@ -94,7 +94,7 @@ function preencherCardsProdutos(dados) {
         </div>
       </div>
       <div class="productTitle">${dados[i].nome}</div>
-      <div class="cost">${dados[i].valor}</div>
+      <div class="cost">${formatarValor(dados[i].valor)}</div>
       <button class="addtocart" onclick="adicionarAoCarrinho('${dados[i].id}','${dados[i].nome}','${dados[i].valor}')">Adicionar ao Carrinho</button>
     </div>
   `;
