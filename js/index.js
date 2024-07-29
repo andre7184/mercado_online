@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   verificarLogin(pagina_atual);
 });
 function abrirPagina(pagina) {
+  var checkbox = document.getElementById("checkbox-menu");
+  // Verifica se o checkbox está marcado
+  if (checkbox.checked) {
+    // Desmarca o checkbox
+    checkbox.checked = false;
+  }
   pagina = salvaArgsHtml(pagina);
   localStorage.setItem("pagina_atual", pagina);
   var link = document.querySelector('a[href="' + pagina + '"]');
@@ -75,16 +81,18 @@ function showPopup(type, message) {
     document.querySelector(".popup-message").classList.add("ablue");
   }
   if (type == "load") {
-    if(!message){
-      message = "Carregando..."
+    if (!message) {
+      message = "Carregando...";
     }
     document.querySelector(".message").innerHTML =
-      '<div style="display: flex; align-items: center;"><span>'+message+'..</span><div class="loading"></div></div>';
+      '<div style="display: flex; align-items: center;"><span>' +
+      message +
+      '..</span><div class="loading"></div></div>';
     document.querySelector(".close-icon").style.display = "none"; // Esconde o botão de fechar
   } else if (type == "form") {
-      // inserir dentro da variavel message um input com o texto de quantidade e um botão de confirmar
-      document.querySelector(".message").innerHTML = message;
-      document.querySelector(".close-icon").style.display = "block";
+    // inserir dentro da variavel message um input com o texto de quantidade e um botão de confirmar
+    document.querySelector(".message").innerHTML = message;
+    document.querySelector(".close-icon").style.display = "block";
   } else {
     document.querySelector(".message").textContent = message;
     document.querySelector(".close-icon").style.display = "block";
@@ -106,19 +114,6 @@ function verificarLogin(pagina_atual) {
     .then(function (response) {
       if (response.menu) {
         document.getElementById("menu").innerHTML = response.menu;
-      }
-      if (response.user) {
-        dadosUser = response.user;
-        var menu_usuario = "";
-        if (dadosUser.email_user)
-          menu_usuario += `<p id="email_usuario">${dadosUser.email_user}</p>`;
-        if (dadosUser.admin_user)
-          menu_usuario += `<p id="tipo_usuario">${dadosUser.admin_user}</p>`;
-        menu_usuario += `<a href="#" onclick="abrirPagina('editar_dados_usuario.html'); return false;">Alterar Dados</a>
-          <a href="#" onclick="abrirPagina('alterar_senha.html'); return false;">Alterar Senha</a>
-          <a href="#" onclick="logout(); return false;">Sair</a>
-        `;
-        document.getElementById("userDropdown").innerHTML = menu_usuario;
       }
       var menuLinks = document.querySelectorAll(".menu-link");
       menuLinks.forEach(function (link) {
@@ -167,7 +162,7 @@ function preencherTabela(dados) {
   var cabecalhoTabela = tabela.querySelector("thead tr");
   cabecalhoTabela.innerHTML = "";
   corpoTabela.innerHTML = "";
-  dados.forEach(function(itens, index) {
+  dados.forEach(function (itens, index) {
     var linha = document.createElement("tr");
     for (var prop in itens) {
       if (index === 0) {
@@ -184,7 +179,7 @@ function preencherTabela(dados) {
   });
 }
 
-function salvaArgsHtml(pagina){
+function salvaArgsHtml(pagina) {
   if (pagina.indexOf("?") > 0) {
     var pgs = pagina.split("?");
     pagina = pgs[0];
@@ -196,19 +191,25 @@ function salvaArgsHtml(pagina){
     }
     atributoshtml[pagina.split(".")[0]] = argumentos;
   }
-  return pagina
+  return pagina;
 }
 //em relacao a function acima, preciso agora criar uma função que retorna esses argumentos que foram salvos na variavel atributoshtml
-function retornaArgsHtml(nome_pagina,argumento){
+function retornaArgsHtml(nome_pagina, argumento) {
   if (nome_pagina.indexOf(".") > 0) {
     nome_pagina = pagina.split(".")[0];
   }
-  if (argumento && nome_pagina && atributoshtml && atributoshtml[nome_pagina] && argumento in atributoshtml[nome_pagina]) {
+  if (
+    argumento &&
+    nome_pagina &&
+    atributoshtml &&
+    atributoshtml[nome_pagina] &&
+    argumento in atributoshtml[nome_pagina]
+  ) {
     return atributoshtml[nome_pagina][argumento];
   }
   return false;
 }
 
 function formatarValor(valor) {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Mercado On-line</title>
+    <link rel="stylesheet" href="css/cores.css" />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      .navbar {
+        background-color: var(--cor-fundo-navbar);
+        padding: 5px;
+        position: fixed;
+        width: 100%;
+        display: flex;
+        height: 45px;
+        justify-content: space-between;
+        z-index: 1;
+      }
+
+      .img-logo {
+        width: 40px;
+      }
+
+      #checkbox-menu {
+        position: absolute;
+        opacity: 0;
+      }
+
+      .navbar label {
+        cursor: pointer;
+        position: relative;
+        display: block;
+        height: 22px;
+        width: 60px;
+        margin-right: 10px;
+      }
+
+      .navbar label span {
+        position: absolute;
+        display: block;
+        height: 8px;
+        width: 100%;
+        border-radius: 30px;
+        background: var(--cor-hamburguer);
+        transition: 0.25s ease-in-out;
+      }
+
+      .navbar label span:nth-child(1) {
+        top: 3;
+      }
+
+      .navbar label span:nth-child(2) {
+        top: 16px;
+      }
+
+      .navbar label span:nth-child(3) {
+        top: 32px;
+      }
+
+      #checkbox-menu:checked + label span:nth-child(1) {
+        transform: rotate(-45deg);
+        top: 18px;
+      }
+
+      #checkbox-menu:checked + label span:nth-child(2) {
+        opacity: 0;
+      }
+
+      #checkbox-menu:checked + label span:nth-child(3) {
+        transform: rotate(45deg);
+        top: 18px;
+      }
+
+      .navbar .navbar-links {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        margin-right: 10px;
+        width: 100%;
+      }
+
+      .menu-link {
+        margin: 0 15px;
+        color: var(--cor-text-link-navbar);
+        text-decoration: none;
+        margin-right: 10px;
+        font-size: 22px;
+      }
+
+      .menu-text {
+        color: black;
+        padding: 0;
+        font-size: 20px;
+        margin-top: 2px;
+        margin-bottom: 0;
+        margin-left: 20px;
+      }
+
+      .menu-link:hover {
+        color: var(--cor-text-links);
+      }
+
+      @media (max-width: 700px) {
+        .navbar div {
+          display: none;
+        }
+
+        .dropdown-content {
+          position: relative;
+          top: auto;
+          right: auto;
+        }
+
+        #menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          right: 0;
+          top: 100%;
+          background-color: var(--cor-fundo-navbar);
+          width: 100%;
+          padding: 0;
+          border: 1px solid var(--cor-border-menu);
+        }
+
+        #menu a {
+          display: block;
+          border-bottom: 1px solid var(--cor-border-menu);
+          padding: 5px 10px;
+        }
+      }
+
+      #checkbox-menu:checked ~ #menu {
+        display: block;
+      }
+
+      #checkbox-menu:checked ~ .navbar-links .dropdown-content {
+        display: block;
+      }
+
+      @media (min-width: 700px) {
+        label[for="checkbox-menu"] {
+          display: none;
+        }
+
+        .dropdown-text {
+            display: none;
+        }
+
+        #menu {
+          display: flex;
+          flex-direction: row;
+          position: static;
+          border: none;
+          background-color: transparent;
+          width: auto;
+          padding: 0;
+        }
+
+        #menu a {
+          border: none;
+          padding: 0;
+        }
+      }
+
+      .botton-dropdown {
+        margin: 0;
+        text-decoration: none;
+      }
+      .img-account {
+        display: inline-block;
+        position: relative;
+      }
+      .img-overlap {
+        display: inline-block;
+        position: relative;
+        left: -15px;
+      }
+
+      .botton-dropdown:hover .img-overlap {
+        filter: invert(25%) sepia(95%) saturate(7500%) hue-rotate(245deg)
+          brightness(90%);
+      }
+
+      .dropdown-content {
+        position: absolute;
+        background-color: var(--cor-fundo-navbar);
+        right: 5px;
+        margin: 0;
+        min-width: 220px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 0 10px;
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: var(--cor-text-link-navbar);
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+      }
+      .dropdown-content p {
+        color: black;
+        padding: 5px;
+        font-size: 16px;
+        margin: 0;
+        margin-top: 8px;
+      }
+
+      .dropdown-content a:hover {
+        background-color: var(--cor-text-links);
+        border-radius: 0 0 0 10px;
+      }
+
+      #conteudo {
+        padding-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <img class="img-logo" src="icons/shops.png" alt="Logo" />
+      <input type="checkbox" id="checkbox-menu" />
+      <label for="checkbox-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <div id="menu" class="navbar-links">
+        <a class="menu-link" href="lista_produtos.html">Produtos</a>
+        <a class="menu-link" href="editar_dados_produto.html"
+          >Cadastrar Produto</a
+        >
+        <a class="menu-link" href="lista_historico.html">Histórico de Vendas</a>
+        <a class="menu-link" href="lista_usuarios.html">Usuários</a>
+        <p class="menu-text dropdown-text">Menu do Usúario</p>
+        <p class="menu-text dropdown-text">amb7184@gmail.com</p>
+        <p class="menu-text dropdown-text">Administrador</p>
+        <a class="menu-link dropdown-text" href="#" onclick="abrirPagina('dados_usuario.html'); return false;"
+          >Meus Dados</a
+        >
+        <a class="menu-link dropdown-text"
+          href="#"
+          onclick="abrirPagina('editar_dados_usuario.html'); return false;"
+          >Alterar Dados</a
+        >
+        <a class="menu-link dropdown-text" href="#" onclick="abrirPagina('alterar_senha.html'); return false;"
+          >Alterar Senha</a
+        >
+        <a class="menu-link dropdown-text" href="#" onclick="logout(); return false;">Sair</a>
+      </div>
+      <div class="dropdown">
+        <a
+          class="botton-dropdown"
+          id="user-icon"
+          href="#"
+          onclick="menuDropdown(); return false;"
+        >
+          <img class="img-account" src="icons/user.svg" alt="User" />
+          <img
+            class="img-account img-overlap"
+            src="icons/caret-down.svg"
+            alt="Dropdown"
+          />
+        </a>
+        <div
+          id="dropdown-content"
+          class="dropdown-content"
+          style="display: none"
+        >
+          <p>amb7184@gmail.com</p>
+          <p>Administrador</p>
+          <a href="#" onclick="abrirPagina('dados_usuario.html'); return false;"
+            >Meus Dados</a
+          >
+          <a
+            href="#"
+            onclick="abrirPagina('editar_dados_usuario.html'); return false;"
+            >Alterar Dados</a
+          >
+          <a href="#" onclick="abrirPagina('alterar_senha.html'); return false;"
+            >Alterar Senha</a
+          >
+          <a href="#" onclick="logout(); return false;">Sair</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  function menuDropdown() {
+    var dropdownContent = document.querySelector(".dropdown-content");
+    if (dropdownContent.style.display == "none") {
+      dropdownContent.style.display = "block";
+    } else {
+      dropdownContent.style.display = "none";
+    }
+  }
+</script>

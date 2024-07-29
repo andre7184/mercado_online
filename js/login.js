@@ -24,7 +24,7 @@ document
         } else {
           showPopup(
             "error",
-            "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente"
+            response.message
           );
         }
       })

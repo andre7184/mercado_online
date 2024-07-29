@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data['logado'] = true;
         $dados_user['email_user'] = $islogado['email'];
         $dados_user['id_user'] = $islogado['id'];
-        // Verifica se o usuário é um administrador
         if ($islogado['admin']) {
             $admin_user='Administrador';
             $data['menu'] = '<a class="menu-link" href="lista_produtos.html">Produtos</a>
@@ -23,7 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a class="menu-link" href="lista_usuarios.html">Usuários</a>
             <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
             <a href="#" onclick="menuDropdown(); return false;">
-            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>';
+            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>
+            <div id="userDropdown" class="dropdown-content">
+            <p id="email_usuario">'.$dados_user['email_user'].'</p>
+            <p id="tipo_usuario">Administrador</p>
+            <a href="#" onclick="abrirPagina(\'editar_dados_usuario.html\'); return false;">Alterar Dados</a>
+            <a href="#" onclick="abrirPagina(\'alterar_senha.html\'); return false;">Alterar Senha</a>
+            <a href="#" onclick="logout(); return false;">Sair</a>
+            </div>
+            ';
+            
         } else {
             $admin_user='';
             $data['menu'] = '<a class="menu-link" href="produtos.html">Produtos Disponíveis</a>
@@ -31,7 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a class="menu-link" href="carrinho.html">Carrinho</a>
             <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
             <a href="#" onclick="menuDropdown(); return false;">
-            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>';
+            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>
+            <div id="userDropdown" class="dropdown-content">
+            <p id="email_usuario">'.$dados_user['email_user'].'</p>
+            <a href="#" onclick="abrirPagina(\'editar_dados_usuario.html\'); return false;">Alterar Dados</a>
+            <a href="#" onclick="abrirPagina(\'alterar_senha.html\'); return false;">Alterar Senha</a>
+            <a href="#" onclick="logout(); return false;">Sair</a>
+            </div>
+            ';
         }
         $dados_user['admin_user'] = $admin_user;
     } else {
