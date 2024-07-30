@@ -19,16 +19,36 @@
         <button onclick="hidePopup()">X</button>
       </div>
     </div>
-    <div id="userDropdown" class="dropdown-content"></div>
     <div class="navbar">
-      <a href="#"><img class="img-logo" src="icons/shops.png" alt="Logo" /></a>
+      <img class="img-logo" src="icons/shops.png" alt="Logo" />
       <input type="checkbox" id="checkbox-menu" />
       <label for="checkbox-menu">
         <span></span>
         <span></span>
         <span></span>
       </label>
-      <div id="menu"></div>
+      <div id="menu" class="navbar-links"></div>
+      <div class="dropdown">
+        <a
+          class="botton-dropdown"
+          id="user-icon"
+          href="#"
+          onclick="menuDropdown(); return false;"
+          style="display: none"
+        >
+          <img class="img-account" src="icons/user.svg" alt="User" />
+          <img
+            class="img-account img-overlap"
+            src="icons/caret-down.svg"
+            alt="Dropdown"
+          />
+        </a>
+        <div
+          id="dropdown-content"
+          class="dropdown-content"
+          style="display: none"
+        ></div>
+      </div>
     </div>
     <div id="conteudo">
       <!-- Conteúdo da página aqui -->

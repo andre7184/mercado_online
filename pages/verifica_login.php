@@ -20,16 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a class="menu-link" href="editar_dados_produto.html">Cadastrar Produto</a>
             <a class="menu-link" href="lista_historico.html">Histórico de Vendas</a>
             <a class="menu-link" href="lista_usuarios.html">Usuários</a>
-            <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
-            <a href="#" onclick="menuDropdown(); return false;">
-            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>
-            <div id="userDropdown" class="dropdown-content">
-            <p id="email_usuario">'.$dados_user['email_user'].'</p>
-            <p id="tipo_usuario">Administrador</p>
-            <a href="#" onclick="abrirPagina(\'editar_dados_usuario.html\'); return false;">Alterar Dados</a>
-            <a href="#" onclick="abrirPagina(\'alterar_senha.html\'); return false;">Alterar Senha</a>
-            <a href="#" onclick="logout(); return false;">Sair</a>
-            </div>
+            <p class="menu-text dropdown-text"><b>MINHA CONTA</b></p>
+            <p class="menu-text dropdown-text">'.$dados_user['email_user'].'</p>
+            <p class="menu-text dropdown-text">Administrador</p>
+            <a class="menu-link dropdown-text" href="dados_usuario.html" >Meus Dados</a>
+            <a class="menu-link dropdown-text" href="editar_dados_usuario.html" >Alterar Dados</a>
+            <a class="menu-link dropdown-text" href="alterar_senha.html" >Alterar Senha</a>
+            <a class="menu-link dropdown-text" href="#" onclick="logout(); return false;">Sair</a>
+            ';
+
+            $data['menu_dropdown'] = '<p class="menu-text"><center><b>MINHA CONTA</b></center></p>
+            <p class="menu-text">'.$dados_user['email_user'].'</p>
+            <p class="menu-text">Administrador</p>
+            <a class="menu-link" href="dados_usuario.html" >Meus Dados</a>
+            <a class="menu-link" href="editar_dados_usuario.html" >Alterar Dados</a>
+            <a class="menu-link" href="alterar_senha.html" >Alterar Senha</a>
+            <a class="menu-link" href="#" onclick="logout(); return false;">Sair</a>
             ';
             
         } else {
@@ -37,15 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data['menu'] = '<a class="menu-link" href="produtos.html">Produtos Disponíveis</a>
             <a class="menu-link" href="lista_historico.html">Histórico de Compras</a>
             <a class="menu-link" href="carrinho.html">Carrinho</a>
-            <a class="menu-link" href="dados_usuario.html">Meus Dados</a>
-            <a href="#" onclick="menuDropdown(); return false;">
-            <img class="img-account" src="icons/user.svg" alt="Logo"/></a>
-            <div id="userDropdown" class="dropdown-content">
-            <p id="email_usuario">'.$dados_user['email_user'].'</p>
-            <a href="#" onclick="abrirPagina(\'editar_dados_usuario.html\'); return false;">Alterar Dados</a>
-            <a href="#" onclick="abrirPagina(\'alterar_senha.html\'); return false;">Alterar Senha</a>
-            <a href="#" onclick="logout(); return false;">Sair</a>
-            </div>
+            <p class="menu-text dropdown-text">Minha Conta</p>
+            <p class="menu-text dropdown-text">'.$dados_user['email_user'].'</p>
+            <a class="menu-link dropdown-text" href="dados_usuario.html" >Meus Dados</a>
+            <a class="menu-link dropdown-text" href="editar_dados_usuario.html" >Alterar Dados</a>
+            <a class="menu-link dropdown-text" href="alterar_senha.html" >Alterar Senha</a>
+            <a class="menu-link dropdown-text" href="#" onclick="logout(); return false;">Sair</a>
+            ';
+            $data['menu_dropdown'] = '<p class="menu-text"><center>Minha Conta</center></p>
+            <p class="menu-text">'.$dados_user['email_user'].'</p>
+            <a class="menu-link" href="dados_usuario.html" >Meus Dados</a>
+            <a class="menu-link" href="editar_dados_usuario.html" >Alterar Dados</a>
+            <a class="menu-link" href="alterar_senha.html" >Alterar Senha</a>
+            <a class="menu-link" href="#" onclick="logout(); return false;">Sair</a>
             ';
         }
         $dados_user['admin_user'] = $admin_user;
@@ -58,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a class="menu-link" href="carrinho.html">Carrinho</a>
         <a class="menu-link" href="login.html">Login</a>
         <a class="menu-link" href="editar_dados_usuario.html">Cadastrar</a>';
+        $data['menu_dropdown'] =' ';
     }
     $data['user']=$dados_user;
 }

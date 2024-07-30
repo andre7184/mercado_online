@@ -29,10 +29,11 @@ function adicionarAoCarrinho(id, nome,valor,qtd) {
   console.log(qtd);
   message = `
     <form id="cadastroQtdProduto" class="form">
-    <p class="form-title"><b>Qtd do Produto</b><br>${nome}</p>
+    <p class="form-title"><b>Qtd do Produto</b><br><br>${nome}</p>
     <div class="input-container">
         <input type="number" min="1" max="${qtd}" placeholder="Quantidade" name="qtd_produto" id="qtd_produto" value="1"/>
     </div>
+    <input type="hidden" id="qtd_produto_estoque" value="${qtd}" />
     <input type="hidden" id="id_produto" value="${id}" />
     <input type="hidden" id="nome_produto" value="${nome}" />
     <input type="hidden" id="valor_produto" value="${valor}" />
@@ -44,6 +45,7 @@ function adicionarAoCarrinho(id, nome,valor,qtd) {
 function salvarProdutos() {
   hidePopup();
   var id = parseInt(document.getElementById("id_produto").value);
+  var qtd_estoque = parseInt(document.getElementById("qtd_produto_estoque").value);
   var qtd = parseInt(document.getElementById("qtd_produto").value);
   var nome = document.getElementById("nome_produto").value;
   var valor = parseFloat(document.getElementById("valor_produto").value);
@@ -72,7 +74,7 @@ function salvarProdutos() {
         if (productIndex !== -1) {
           cart[productIndex].qtd += parseInt(qtd);
         } else {
-          cart.push({ id: id, nome: nome, qtd: parseInt(qtd), valor: valor });
+          cart.push({ id: id, nome: nome, qtd_estoque:qtd_estoque, qtd: parseInt(qtd), valor: valor });
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         showPopup("sucess", "Produto adicionado ao carrinho.");

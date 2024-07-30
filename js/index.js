@@ -13,6 +13,7 @@ function abrirPagina(pagina) {
     // Desmarca o checkbox
     checkbox.checked = false;
   }
+  fecharMenuDropdown();
   pagina = salvaArgsHtml(pagina);
   localStorage.setItem("pagina_atual", pagina);
   var link = document.querySelector('a[href="' + pagina + '"]');
@@ -78,7 +79,7 @@ function showPopup(type, message) {
     document.querySelector(".popup-message").classList.add("question");
   } else {
     document.querySelector(".popup-icon img").src = "icons/infor.svg";
-    document.querySelector(".popup-message").classList.add("ablue");
+    document.querySelector(".popup-message").classList. img-overla("ablue");
   }
   if (type == "load") {
     if (!message) {
@@ -115,6 +116,15 @@ function verificarLogin(pagina_atual) {
       if (response.menu) {
         document.getElementById("menu").innerHTML = response.menu;
       }
+      if (response.menu_dropdown) {
+        document.getElementById("dropdown-content").innerHTML =
+          response.menu_dropdown;
+      }
+      if (response.logado) {
+        document.getElementById("user-icon").style.display = "block";
+      } else {
+        document.getElementById("user-icon").style.display = "none";
+      }
       var menuLinks = document.querySelectorAll(".menu-link");
       menuLinks.forEach(function (link) {
         link.addEventListener("click", function (e) {
@@ -143,17 +153,19 @@ function verificarLogin(pagina_atual) {
 }
 
 function menuDropdown() {
-  var dropdown = document.getElementById("userDropdown");
-  var icon = document.querySelector(".img-account");
+  var dropdownContent = document.querySelector(".dropdown-content");
+  if (dropdownContent.style.display == "none") {
+    dropdownContent.style.display = "block";
+    document.querySelector(".img-overlap").classList.add("dropdown_ativo");
+  } else {
+    dropdownContent.style.display = "none";
+    document.querySelector(".img-overlap").classList.remove("dropdown_ativo");
+  }
+}
 
-  // Obtenha a posição do ícone
-  var iconRect = icon.getBoundingClientRect();
-  // Posicione o menu suspenso abaixo do ícone
-  dropdown.style.top = iconRect.bottom + window.scrollY + "px";
-  dropdown.style.left = iconRect.left + window.scrollX - 100 + "px";
-
-  // Mostre o menu suspenso
-  dropdown.classList.toggle("show");
+function fecharMenuDropdown() {
+    document.querySelector(".dropdown-content").style.display = "none";
+    document.querySelector(".img-overlap").classList.remove("dropdown_ativo");
 }
 
 function preencherTabela(dados) {
@@ -190,6 +202,8 @@ function salvaArgsHtml(pagina) {
       argumentos[arg[0]] = arg[1];
     }
     atributoshtml[pagina.split(".")[0]] = argumentos;
+  } else {
+    atributoshtml[pagina.split(".")[0]] = {};
   }
   return pagina;
 }

@@ -79,6 +79,7 @@ function preencherCarrinho(carrinho) {
   car.forEach((item, index) => {
     const valor = parseFloat(item.valor);
     const qtd = parseInt(item.qtd);
+    const qtd_estoque = parseInt(item.qtd_estoque);
     const totalProduto = qtd * valor;
     totalCarrinho += totalProduto;
     totalItens += qtd;
@@ -87,7 +88,7 @@ function preencherCarrinho(carrinho) {
     itemRow.innerHTML = `
         <td data-label="Nome">${item.nome}</td>
         <td data-label="Qtd">
-          <input type="number" value="${qtd}" min="1" data-index="${index}" class="quantidade-input">
+          <input type="number" value="${qtd}" min="1" max="${qtd_estoque}" data-index="${index}" class="quantidade-input">
         </td>
         <td data-label="Valor">${formatarValor(valor)}</td>
         <td data-label="Total">${formatarValor(totalProduto)}</td>

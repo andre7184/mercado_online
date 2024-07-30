@@ -3,6 +3,7 @@ var ajaxRequest = new AjaxRequest("pages/produto.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
 valor_argumento = retornaArgsHtml("editar_dados_produto", "id_produto");
+console.log(valor_argumento)
 if (valor_argumento) {
   var dados = { acao: "dados_do_produto", id: valor_argumento };
 } else {
@@ -19,7 +20,6 @@ ajaxRequest
         document.querySelectorAll(".tipo_dados").forEach(function (elemento) {
           elemento.innerHTML = "Alterar";
         });
-        alert(data.nome);
         document.getElementById("nome_atual").required = false;
         document.getElementById("qtd_atual").required = false;
         document.getElementById("valor_atual").required = false;
