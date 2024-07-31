@@ -25,13 +25,12 @@ ajaxRequest
     console.error(error);
     showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
   });
-function adicionarAoCarrinho(id, nome,valor,qtd) {
-  console.log(qtd);
+function adicionarAoCarrinho(id, nome, valor, qtd) {
   message = `
     <form id="cadastroQtdProduto" class="form">
     <p class="form-title"><b>Qtd do Produto</b><br><br>${nome}</p>
     <div class="input-container">
-        <input type="number" min="1" max="${qtd}" placeholder="Quantidade" name="qtd_produto" id="qtd_produto" value="1"/>
+        <input type="number" min="1" max="${qtd}" placeholder="Quantidade" name="qtd_produto" id="qtd_produto" onchange="verificarValor(this)" value="1"/>
     </div>
     <input type="hidden" id="qtd_produto_estoque" value="${qtd}" />
     <input type="hidden" id="id_produto" value="${id}" />
@@ -45,7 +44,9 @@ function adicionarAoCarrinho(id, nome,valor,qtd) {
 function salvarProdutos() {
   hidePopup();
   var id = parseInt(document.getElementById("id_produto").value);
-  var qtd_estoque = parseInt(document.getElementById("qtd_produto_estoque").value);
+  var qtd_estoque = parseInt(
+    document.getElementById("qtd_produto_estoque").value
+  );
   var qtd = parseInt(document.getElementById("qtd_produto").value);
   var nome = document.getElementById("nome_produto").value;
   var valor = parseFloat(document.getElementById("valor_produto").value);
@@ -60,21 +61,29 @@ function salvarProdutos() {
     })
     .then(function (response) {
       hidePopup();
-      if (!response.naoautenticado && response.status) {
-          if (response.status == "success") {
-            showPopup("sucess", response.message);
-            abrirPagina("carrinho.html");
-          } else {
-            showPopup("error", response.message);
-          }
+      if (
+        !response.naoautenticado &&
+        response.status &&
+        response.status == "success"
+      ) {
+        showPopup("sucess", response.message);
+        abrirPagina("carrinho.html");
       } else {
-        // Usuário não logado: salvar no localStorage
+        // Usuário não logado ou resposta invalida: salvar no localStorage
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         let productIndex = cart.findIndex((item) => parseInt(item.id) === id);
         if (productIndex !== -1) {
-          cart[productIndex].qtd += parseInt(qtd);
+          if (cart[productIndex].qtd + parseInt(qtd) <= parseInt(qtd_estoque)) {
+            cart[productIndex].qtd += parseInt(qtd);
+          }
         } else {
-          cart.push({ id: id, nome: nome, qtd_estoque:qtd_estoque, qtd: parseInt(qtd), valor: valor });
+          cart.push({
+            id: id,
+            nome: nome,
+            qtd_estoque: qtd_estoque,
+            qtd: parseInt(qtd),
+            valor: valor,
+          });
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         showPopup("sucess", "Produto adicionado ao carrinho.");
@@ -100,12 +109,16 @@ function preencherCardsProdutos(dados) {
       </div>
       <div class="productTitle">${dados[i].nome}</div>
       <div class="cost">${formatarValor(valor)}</div>
-      <button class="addtocart" onclick="adicionarAoCarrinho('${dados[i].id}','${dados[i].nome}','${dados[i].valor}','${qtd}')">Adicionar ao Carrinho</button>
+      <button class="addtocart" onclick="adicionarAoCarrinho('${
+        dados[i].id
+      }','${dados[i].nome}','${
+      dados[i].valor
+    }','${qtd}')">Adicionar ao Carrinho</button>
     </div>
   `;
     cardsContainer.insertAdjacentHTML("beforeend", card);
   }
 }
 function formatarValor(valor) {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }

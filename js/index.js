@@ -6,6 +6,23 @@ document.addEventListener("DOMContentLoaded", function () {
   var pagina_atual = localStorage.getItem("pagina_atual");
   verificarLogin(pagina_atual);
 });
+document.querySelectorAll("input[max]").forEach(function (input) {
+  input.addEventListener('change', function(e) {
+    console.log("ok");
+    verificarValor(e.target);
+  });
+});
+
+function verificarValor(input) {
+  var max = parseInt(input.max);
+  var min = parseInt(input.min);
+  if (input.value > max) {
+    input.value = max;
+  }
+  if (input.value < min) {
+    input.value = min;
+  }
+}
 function abrirPagina(pagina) {
   var checkbox = document.getElementById("checkbox-menu");
   // Verifica se o checkbox está marcado
@@ -79,7 +96,7 @@ function showPopup(type, message) {
     document.querySelector(".popup-message").classList.add("question");
   } else {
     document.querySelector(".popup-icon img").src = "icons/infor.svg";
-    document.querySelector(".popup-message").classList. img-overla("ablue");
+    document.querySelector(".popup-message").classList.img - overla("ablue");
   }
   if (type == "load") {
     if (!message) {
@@ -164,8 +181,8 @@ function menuDropdown() {
 }
 
 function fecharMenuDropdown() {
-    document.querySelector(".dropdown-content").style.display = "none";
-    document.querySelector(".img-overlap").classList.remove("dropdown_ativo");
+  document.querySelector(".dropdown-content").style.display = "none";
+  document.querySelector(".img-overlap").classList.remove("dropdown_ativo");
 }
 
 function preencherTabela(dados) {

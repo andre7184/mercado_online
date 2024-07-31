@@ -3,168 +3,53 @@
   <head>
     <title>Minha Página</title>
     <style>
-      .cards-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px; /* Espaço entre os cards */
-        justify-content: center; /* Centraliza os cards horizontalmente */
-      }
-
-      .card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        width: 120px;
-        height: 180px;
-      }
-
-      .card-imagem {
-        /* Estilos para a moldura interna (imagem) */
-        margin-top: 5px;
-        width: 100%;
-        height: 55%;
-        background: #4f46e5;
-        border-radius: 5px 5px 0 0;
-        border: 1px 1px 1px 0 solid #ccc;
-      }
-
-      .image {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+      .number-input {
         display: flex;
         align-items: center;
-        justify-content: center;
       }
 
-      .image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        box-sizing: border-box; /* Adicionado para incluir o padding no tamanho total */
-        padding: 5px; /* Adicionado para criar um espaço ao redor da imagem */
-      }
-
-      .productTitle {
-        background: #4f46e5;
-        border: 0 1px 1px 0 solid #ccc;
-        text-align: center;
-        font-size: 10px;
-        font-weight: bold;
-        color: #000;
-        font-family: Arial, sans-serif;
-        width: 100%;
-        height: 10%;
-      }
-
-      .cost {
-        background: #4f46e5;
-        border: 0 1px 1px 0 solid #ccc;
-        text-align: center;
-        font-weight: bold;
-        color: white;
-        font-family: Arial, sans-serif;
-        width: 100%;
-        height: 15%;
-      }
-
-      .addtocart {
-        width: 100%;
-        padding: 5px;
+      .number-input button {
+        width: 30px;
+        height: 30px;
+        background-color: #ddd;
         border: none;
-        border-top: 2px solid #ffffff;
-        background-color: #4f46e5;
-        color: #ffffff;
-        font-weight: bold;
-        font-size: 12px;
-        font-family: Arial, sans-serif;
-        border-radius: 0px 0px 20px 20px;
-        transition: 0.2s;
-        width: 100%;
-        height: 20%;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
       }
 
-      .addtocart:hover {
-        background-color: #f58a33;
-        border-top: 2px solid transparent;
-        color: #ffffff;
+      .number-input input[type="number"] {
+        border: 2px solid #fa7202;
+        box-sizing: border-box;
+        background-color: #ddd;
+        padding: 5px;
+        padding-right: 10px;
+        font-size: 16px;
+        line-height: 10px;
+        width: 50px;
+        border-radius: 5px;
       }
     </style>
   </head>
   <body>
-    <div class="cards-container" id="cards-container">
-      <div class="card">
-        <div class="card-imagem">
-          <div class="image">
-            <img src="imgs/arroz-agulhinha.webp" alt="Descrição da Imagem" />
-          </div>
-        </div>
-        <div class="productTitle">Arroz Agulhinha 5kg</div>
-        <div class="cost">R$29,90</div>
-        <button class="addtocart">Adicionar ao Carrinho</button>
-      </div>
+    <div class="number-input">
+      <button
+        onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+      >-</button>
+      <input
+        class="quantity"
+        min="1"
+        max="5"
+        name="quantity"
+        value="1"
+        type="number"
+      />
+      <button
+        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+        class="plus"
+      >+</button>
     </div>
   </body>
 </html>
-<script>
-  // Seus dados do banco de dados
-  var data = [
-    {
-      nome: "Arroz Agulhinha 5kg",
-      valor: "R$29,90",
-      imagem: "imgs/arroz-agulhinha.webp",
-      id: "1",
-    },
-    {
-      nome: "Feijão Carioca",
-      valor: "R$9,99",
-      imagem: "imgs/feijao-carioca.webp",
-      id: "2",
-    },
-    {
-      nome: "Açucar Cristal",
-      valor: "R$5,99",
-      imagem: "imgs/acucar-cristal.png",
-      id: "3",
-    },
-  ];
-  // Chamar a função quando a página carregar
-  window.onload = preencherCards(data);
-
-  // Função para criar um card
-  function criarCard(dado) {
-    var text_card = `
-    <div class="card">
-      <div class="card-imagem">
-        <div class="image">
-          <img src="${dado.imagem}" alt="${dado.nome}" />
-        </div>
-      </div>
-      <div class="productTitle">${dado.nome}</div>
-      <div class="cost">${dado.valor}</div>
-      <button class="addtocart" onclick="adicionarCarrinho('${dado.id}')">Adicionar ao Carrinho</button>
-    </div>
-  `;
-    return text_card;
-  }
-  function preencherCards(dados) {
-    var cardsContainer = document.getElementById("cards-container");
-    for (var i = 0; i < dados.length; i++) {
-      //var card = criarCard(dados[i]);
-      var card = `
-      <div class="card">
-        <div class="card-imagem">
-          <div class="image">
-            <img src="${dados[i].imagem}" alt="${dados[i].nome}" />
-          </div>
-        </div>
-        <div class="productTitle">${dados[i].nome}</div>
-        <div class="cost">${dados[i].valor}</div>
-        <button class="addtocart" onclick="adicionarCarrinho('${dados[i].id}')">Adicionar ao Carrinho</button>
-      </div>
-    `;
-      cardsContainer.insertAdjacentHTML('beforeend', card);
-    }
-  }
-</script>
+<script></script>

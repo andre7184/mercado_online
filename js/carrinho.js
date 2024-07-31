@@ -7,6 +7,7 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado && data.carrinho) {
+      console.log(data.carrinho.length);
       if (data.carrinho.length == 0) {
         let localCart = JSON.parse(localStorage.getItem("cart")) || [];
         if (localCart.length > 0) {
@@ -16,46 +17,55 @@ ajaxRequest
             "<br>Carrinho vazio!";
         }
       } else {
+        console.log(data.carrinho);
         preencherCarrinho(data.carrinho);
         document.querySelector(".tex-qtd-itens").innerHTML =
           "<br>" + data.carrinho.length + " Itens";
       }
     } else {
       // Se não estiver autenticado, chama o carrinho local para preencher o carrinho com dados
-      let localCart = JSON.parse(localStorage.getItem("cart")) || [];
-      if (localCart.length > 0) {
-        document.querySelector(".tex-qtd-itens").innerHTML =
-          "<br>" + localCart.length + " Itens";
-        preencherCarrinho(localCart);
-      } else {
-        document.querySelector(".tex-qtd-itens").innerHTML =
-          "<br>Carrinho vazio!";
-      }
+      syncronizeCarrinhoLocal();
     }
   })
   .catch(function (error) {
     console.error(error);
-    showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
+    showPopup("error", "Ocorreu um erro ao buscar os dados do carrinho:");
   });
+
+function syncronizeCarrinhoLocal() {
+  let localCart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (localCart.length > 0) {
+    document.querySelector(".tex-qtd-itens").innerHTML =
+      "<br>" + localCart.length + " Itens";
+    console.log(localCart.length);
+    console.log(localCart);
+    preencherCarrinho(localCart);
+  } else {
+    document.querySelector(".tex-qtd-itens").innerHTML = "<br>Carrinho vazio!";
+  }
+}
 
 // Função para sincronizar o carrinho local com o servidor
 function syncLocalCartToServer(localCart) {
+  console.log("sincronizando carrinho");
+  showPopup("load", "Sincronizando Carrinho");
   var syncRequest = new AjaxRequest("pages/carrinho.php");
   syncRequest
     .send({
       acao: "sincronizar_carrinho",
       carrinho: localCart,
     })
-    .then(function (response) {
-      if (response.status) {
-        if (response.status === "success") {
+    .then(function (data) {
+      hidePopup();
+      if (data.carrinho) {
+        if (data.carrinho.length > 0) {
           localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
-          showPopup("sucess", "Carrinho sincronizado com sucesso.");
+          preencherCarrinho(data.carrinho);
         } else {
-          showPopup("error", "Erro ao sincronizar o carrinho.");
+          syncronizeCarrinhoLocal();
         }
       } else {
-        showPopup("error", "não foi possivel buscar produtos:");
+        syncronizeCarrinhoLocal();
       }
     })
     .catch(function (error) {
@@ -65,7 +75,6 @@ function syncLocalCartToServer(localCart) {
 }
 var car = {};
 function preencherCarrinho(carrinho) {
-   console.log(carrinho)
   car = carrinho;
   const cartItemsContainer = document.getElementById("cart-items");
   const cartTotalElement = document.getElementById("cart-total");
@@ -88,7 +97,7 @@ function preencherCarrinho(carrinho) {
     itemRow.innerHTML = `
         <td data-label="Nome">${item.nome}</td>
         <td data-label="Qtd">
-          <input type="number" value="${qtd}" min="1" max="${qtd_estoque}" data-index="${index}" class="quantidade-input">
+          <input type="number" value="${qtd}" min="1" max="${qtd_estoque}" data-index="${index}" onchange="verificarValor(this)" class="quantidade-input">
         </td>
         <td data-label="Valor">${formatarValor(valor)}</td>
         <td data-label="Total">${formatarValor(totalProduto)}</td>
