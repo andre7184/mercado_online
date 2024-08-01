@@ -13,6 +13,8 @@ class Crud {
     public function create($table, $data){
         $fields = implode(", ", array_keys($data));
         $values = ":" . implode(", :", array_keys($data));
+        // echo "create:".$table."<br>";
+        // print_r($data);
         $stmt = $this->conn->prepare("INSERT INTO $table ($fields) VALUES ($values)");
         $success = $stmt->execute($data);
         if ($success) {
@@ -46,14 +48,18 @@ class Crud {
         foreach ($data as $key => $value) {
             $fields .= "$key = :$key, ";
         }
+        // echo "update:".$table."<br>";
+        // print_r($data);
+        // print_r($conditions);
         $fields = rtrim($fields, ", ");
         $sql = "UPDATE $table SET $fields WHERE " . key($conditions) . " = :" . key($conditions);
         $stmt = $this->conn->prepare($sql);
-        print_r($conditions);
         return $stmt->execute(array_merge($data, $conditions));
     }
 
     public function delete($table, $conditions){
+        // echo "delete:".$table."<br>";
+        // print_r($conditions);
         $sql = "DELETE FROM $table WHERE " . key($conditions) . " = :" . key($conditions);
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($conditions);

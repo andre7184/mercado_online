@@ -7,7 +7,6 @@ ajaxRequest
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado && data.carrinho) {
-      console.log(data.carrinho.length);
       if (data.carrinho.length == 0) {
         let localCart = JSON.parse(localStorage.getItem("cart")) || [];
         if (localCart.length > 0) {
@@ -17,8 +16,8 @@ ajaxRequest
             "<br>Carrinho vazio!";
         }
       } else {
-        console.log(data.carrinho);
         preencherCarrinho(data.carrinho);
+        localStorage.setItem("cart", JSON.stringify(data.carrinho));
         document.querySelector(".tex-qtd-itens").innerHTML =
           "<br>" + data.carrinho.length + " Itens";
       }
@@ -33,11 +32,11 @@ ajaxRequest
   });
 
 function syncronizeCarrinhoLocal() {
+  console.log("sincronizando carrinho local");
   let localCart = JSON.parse(localStorage.getItem("cart")) || [];
   if (localCart.length > 0) {
     document.querySelector(".tex-qtd-itens").innerHTML =
       "<br>" + localCart.length + " Itens";
-    console.log(localCart.length);
     console.log(localCart);
     preencherCarrinho(localCart);
   } else {
@@ -47,19 +46,32 @@ function syncronizeCarrinhoLocal() {
 
 // Função para sincronizar o carrinho local com o servidor
 function syncLocalCartToServer(localCart) {
-  console.log("sincronizando carrinho");
+  if (!localCart) {
+    localCart = JSON.parse(localStorage.getItem("cart")) || [];
+    localStorage.removeItem("cart");
+    var forma_pagamento = document.getElementById("forma_pagamento").value;
+    var dataform = {
+      acao: "sincronizar_carrinho",
+      carrinho: localCart,
+      forma_pagamento: forma_pagamento,
+      finalizado: true,
+    };
+  } else {
+    var dataform = {
+      acao: "sincronizar_carrinho",
+      carrinho: localCart,
+    };
+  }
+  console.log("sincronizando carrinho remoto");
   showPopup("load", "Sincronizando Carrinho");
   var syncRequest = new AjaxRequest("pages/carrinho.php");
   syncRequest
-    .send({
-      acao: "sincronizar_carrinho",
-      carrinho: localCart,
-    })
+    .send(dataform)
     .then(function (data) {
       hidePopup();
       if (data.carrinho) {
         if (data.carrinho.length > 0) {
-          localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
+          //localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
           preencherCarrinho(data.carrinho);
         } else {
           syncronizeCarrinhoLocal();
@@ -135,6 +147,7 @@ function atualizarQuantidade(index, novaQuantidade) {
   localStorage.setItem("cart", JSON.stringify(car));
   // Recalcula e atualiza o carrinho
   preencherCarrinho(car);
+  syncLocalCartToServer(car);
 }
 
 function removerItem(index) {
@@ -144,4 +157,27 @@ function removerItem(index) {
   localStorage.setItem("cart", JSON.stringify(car));
   // Recalcula e atualiza o carrinho
   preencherCarrinho(car);
+  syncLocalCartToServer(car);
+}
+
+function finalizarCompra() {
+  var valor_total = document.getElementById("cart-total").innerHTML;
+  message = `
+    <form id="cadastroVendas" class="form">
+    <p class="form-title"><b>Finalizar Compra</b><br><br>${valor_total}<br><br></p>
+    <div class="input-container">
+      <label for="pagamento">Escolha a forma de pagamento:</label>
+      <select id="forma_pagamento" name="forma_pagamento">
+          <option value="cartao_credito">Cartão de Crédito</option>
+          <option value="cartao_debito">Cartão de Débito</option>
+          <option value="boleto">Boleto</option>
+          <option value="pix">PIX</option>
+          <option selected value="dinheiro">Dinheiro</option>
+      </select>
+    </div>
+    <input type="hidden" id="finalizado" value=true />
+    <button type="button" onclick="syncLocalCartToServer(false)" class="submit">Confirmar</button>
+    </form>
+    `;
+  showPopup("form", message);
 }

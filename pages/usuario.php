@@ -123,12 +123,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $historicos = $usuario->listarHistorico(['id_usuario' => $_SESSION['id']]);
                 }
                 $dados['status'] = 'success';
-                
+                $lista_historico = array();
                 foreach ($historicos as $i => $historico) {
-                    $historicos[$i]['editar'] = '<a href="#" onclick="abrirPagina(\'editar_dados_produto.html?id_produto='.$historico['id'].'\'); return false;"><img src="icons/edit.svg" alt="icon" /></a>';
-                                        
+                    $lista_historico[$i]['Nome user']=$historico['nome_usuario'];
+                    $lista_historico[$i]['Total']=number_format($historico['valor_total_carrinho'], 2, ',', '.'); 
+                    $lista_historico[$i]['Form Pg']=$historico['forma_pagamento_carrinho'];      
+                    $lista_historico[$i]['Data']=date("d/m/Y", strtotime($historico['data_transacao']));
+                    $lista_historico[$i]['Id Produtos']=str_replace(',', '<br>', $historico['id_produtos']);
+                    $lista_historico[$i]['Nome Produtos']=str_replace(',', '<br>', $historico['produtos']);   
+                    $lista_historico[$i]['Qtd Produtos']=str_replace(',', '<br>', $historico['qtd_produtos']); 
+                    $lista_historico[$i]['Valor Produtos']=str_replace(',', '<br>', $historico['valor_unitario_produtos']);              
+                    $lista_historico[$i]['Total Produtos'] = preg_replace_callback('/\b\d+\.\d+\b/', function ($matches) { return number_format($matches[0], 2, ',', '.');}, str_replace(',', '<br>', $historico['valor_total_produtos']));
+                    $lista_historico[$i]['Del']='<a href="#" onclick="abrirPagina(\'cancelar_transacao.html?id_carrinho='.$historico['id_transacao'].'\'); return false;"><img src="icons/dell.svg" alt="Cancelar Venda" /></a>';  
                 }
-                $dados['historico'] = $historicos;
+                $dados['historico'] = $lista_historico;
             }else if ($acao === 'logout'){
                 $autenticacao->logout();
                 $dados['status'] = 'logged_out';

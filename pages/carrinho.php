@@ -35,10 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $forma_pagamento = isset($_POST['forma_pagamento']) ? $carrinho->sanitize($_POST['forma_pagamento']) : '';
             $finalizado = isset($_POST['finalizado']) ? $carrinho->sanitize($_POST['finalizado']) : '';
             // Atualiza ou cria a tabela carrinho
+            $dados['carrinho']=[];
             if (isset($_SESSION['id'])){
-                $dados['carrinho']=$carrinho->sincronizaCarrinho($_SESSION['id'],$forma_pagamento,$finalizado,$carrinho_items);
-            }else{
-                $dados['carrinho']=[];
+                if (!empty($carrinho_items)){
+                    $id_carrinho=$carrinho->sincronizaCarrinho($_SESSION['id'],$forma_pagamento,$finalizado);
+                    if (!empty($id_carrinho)){
+                        $dados['carrinho'] = $carrinho->sincronizaItensCarrinho($id_carrinho,$carrinho_items);
+                        $success = $carrinho->alteraCarrinho(['atualizando' => false], ['id' => $id_carrinho]);
+                    }
+                } else {
+                    $linha_carrinho = $carrinho->listarCarrinho(['id_usuario' => $_SESSION['id'], 'finalizado' => 0])[0];
+                    $success = $carrinho->removeItemCarrinho(['id_carrinho' => $linha_carrinho['id']]);
+                }
             }
         } else if ($acao == 'adicionar_carrinho') {
             require_once '../class/Produto.php';
@@ -53,14 +61,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($qtd_produto > 0 && $qtd_produto <= $produto_existente[0]['qtd']) {
                         // Adiciona o produto ao carrinho
                         $valor_total=$produto_existente[0]['valor']*$qtd_produto;
-                        $carrinho_items = array(
-                            'id' => $produto_existente[0]['id'],
-                            'nome' => $produto_existente[0]['nome'],
-                            'qtd_estoque' => $produto_existente[0]['qtd'],
-                            'qtd' => $qtd_produto,
-                            'valor' => $produto_existente[0]['valor'],
-                        );
-                        $dados['carrinho']=$carrinho->sincronizaCarrinho($_SESSION['id'],'','',$carrinho_items);
+                        $id_produto = $produto_existente[0]['id'];
+                        $qtd = $qtd_produto;
+                        $valor_unitario = $produto_existente[0]['valor'];
+                        $id_carrinho=$carrinho->sincronizaCarrinho($_SESSION['id'],'','');
+                        if (!empty($id_carrinho)){
+                            $item_carrinho = $carrinho->listarItensCarrinho(['id_carrinho' => $id_carrinho, 'id_produto' => $id_produto]);
+                            if (!empty($item_carrinho)) {
+                                $update_itens_carrinho = $carrinho->alteraItemCarrinho(['id' => $item_carrinho[0]['id']],['qtd' => $qtd, 'valor_unitario' => $valor_unitario, 'valor_total' => $valor_total]);
+                            } else {
+                                $create_itens_carrinho = $carrinho->cadastraItemCarrinho($id_carrinho, $id_produto, $qtd, $valor_unitario, $valor_total);
+                            }
+                            $dados['status'] = 'success';
+                            $dados['message'] = 'Produto Adicionado com Sucesso.';
+                        } else {
+                            $dados['status'] = 'error';
+                            $dados['message'] = 'Não foi possivel adicionar produto.';
+                        }
                         // ...
                     } else {
                         $dados['status'] = 'error';

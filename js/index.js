@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.querySelectorAll("input[max]").forEach(function (input) {
   input.addEventListener('change', function(e) {
-    console.log("ok");
     verificarValor(e.target);
   });
 });

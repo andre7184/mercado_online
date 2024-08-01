@@ -24,15 +24,15 @@
   color: var(--cor-text-link-navbar);
   font-weight: bold;
   padding: 5px 10px;
-  font-size: 0.95rem;
+  font-size: 20px;
 }
 
 .table__title .tex-qtd-itens {
-  font-size: 10px;
+  font-size: 16px;
 }
 
 table {
-  font-size: 0.8rem;
+  font-size: 16px;
   border: 1px solid var(--cor-border-menu);
   width: 100%;
   border-collapse: collapse;
@@ -74,7 +74,7 @@ th:last-child,
 td:last-child {
   border-right: none; /* Remove a borda direita da última célula */
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   table,
   thead,
   tbody,

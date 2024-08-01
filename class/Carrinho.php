@@ -39,39 +39,32 @@ class Carrinho {
         }
     }
 
-    public function sincronizaCarrinho($id_usuario,$forma_pagamento,$finalizado,$carrinho_items){
-        $conditions_carrinho = ['id_usuario' => $id_usuario, 'finalizado' => false];
-        $existing_carrinho = $this->listarCarrinho($conditions_carrinho);
+    public function sincronizaCarrinho($id_usuario,$forma_pagamento,$finalizado){
+        $existing_carrinho = $this->listarCarrinho(['id_usuario' => $id_usuario, 'finalizado' => false]);
         if (!empty($existing_carrinho)) {
-            echo "existe carrinho<br>";
             // Se o carrinho existir, atualiza
             if (!empty($finalizado)) {
                 $data_carrinho = array(
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => true,
                     'forma_pagamento' => $forma_pagamento,
-                    'atualizar' => true,
+                    'atualizando' => true,
                 );
             } else {
-                echo "nao finalizar<br>";
                 $data_carrinho = array(
                     'data_update' => date('Y-m-d H:i:s'),
-                    'atualizar' => true,
+                    'atualizando' => true,
                 );    
             }
-            $success = $this->alteraCarrinho($data_carrinho, $conditions_carrinho);
+            $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
             if ($success) {
-                echo "Carrinho atualizado<br>";
                 $id_carrinho=$existing_carrinho[0]['id'];
             } else {
-                echo "Carrinho não atualizado<br>";
                 $id_carrinho='';
             }            
         } else {
-            echo "não existe carrrinho<br>";
             // Se for para finalizar a compra
             if (!empty($finalizado)) {
-                echo "finalizar compra<br>";
                 $data_carrinho = array_filter([
                     'id_usuario' => $id_usuario,
                     'data' => date('Y-m-d H:i:s'),
@@ -80,7 +73,6 @@ class Carrinho {
                     'forma_pagamento' => $forma_pagamento
                 ]);
             } else {
-                echo "atualizar carrinho<br>";
                 $data_carrinho = array_filter([
                     'id_usuario' => $id_usuario,
                     'data' => date('Y-m-d H:i:s'),
@@ -89,21 +81,22 @@ class Carrinho {
                 ]); 
             }
             $id_carrinho = $this->cadastraCarrinho($data_carrinho);
-            echo "carrrinho cadastrado<br>";
         }
+        return $id_carrinho;
+    }
+
+    public function sincronizaItensCarrinho($id_carrinho,$carrinho_items){
         // Cria a tabela itens_carrinho
         $sucess_itens_carrinho=array();
         if (!empty($id_carrinho)) {
             $remove_itensCarrinhho = $this->removeItemCarrinho(['id_carrinho' => $id_carrinho]);
-            echo "itens carrrinho removidos<br>";
             foreach ($carrinho_items as $item) {
-                $id_produto = $this->sanitize($item['id']);
+                $id_produto = $item['id'];
                 $qtd = isset($item['qtd']) ? $this->sanitize($item['qtd']) : '';
                 $valor_unitario = isset($item['valor']) ? str_replace("R\$ ", "", str_replace(',', '.', $this->sanitize($item['valor']))): '';
                 $valor_total = isset($item['valor']) && isset($item['qtd']) ? str_replace("R\$ ", "", str_replace(',', '.', $this->sanitize($item['valor']))) * $this->sanitize($item['qtd']) : '';
                 $cadastra_itensCarrinhho = $this->cadastraItemCarrinho($id_carrinho, $id_produto, $qtd, $valor_unitario, $valor_total);
                 if ($cadastra_itensCarrinhho) {
-                    echo "item carrrinho cadastrado<br>";
                     array_push($sucess_itens_carrinho, $item);
                 }
             }
@@ -113,6 +106,10 @@ class Carrinho {
 
     public function removeItemCarrinho($filtros) {
         return $this->crud->delete('itens_carrinho', $filtros);
+    }
+
+    public function alteraItemCarrinho($data, $filtros) {
+        return $this->crud->update('itens_carrinho', $data, $filtros);
     }
 
     public function listarItensCarrinho($filtros = []) {

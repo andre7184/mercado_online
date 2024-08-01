@@ -172,3 +172,74 @@ td:last-child {
     background: var(--cor-fundo-input-form);
   }
 }
+
+.form {
+  display: block;
+  padding: 2px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.question {
+  width: 400px;
+}
+
+.form button:hover {
+  background-color: var(--cor-titulo-form); 
+  color: var(--cor-fundo-form); 
+  cursor: pointer;
+}
+
+.form-title {
+  margin: 2px;
+  font-size: 20px;
+  line-height: 10px;
+  text-align: center;
+  width: 100%;
+  color: var(--cor-titulo-form);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.input-container {
+  font-size: 16px;
+}
+.input-container label {
+  position: relative;
+}
+
+.input-container select,
+.form button {
+  outline: none;
+  border: 1px solid var(--cor-bord-input-botao);
+  margin: 8px 0;
+}
+
+.input-container select {
+  box-sizing: border-box;
+  background-color: var(--cor-fundo-input-form);
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 18px;
+  line-height: 10px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 var(--cor-input-container-box);
+}
+
+.submit {
+  display: block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: var(--cor-botao-form);
+  color: var(--cor-text-botao-form);
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 500;
+  width: 95%;
+  border-radius: 8px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
