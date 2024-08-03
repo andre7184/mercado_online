@@ -4,7 +4,6 @@ require_once '../class/Autenticacao.php';
 
 $produto = new Produto();
 $autenticacao = new Autenticacao($produto);
-
 $dados = array();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = isset($_POST['acao']) ? $produto->sanitize($_POST['acao']) : '';

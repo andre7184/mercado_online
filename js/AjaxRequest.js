@@ -8,10 +8,12 @@ class AjaxRequest {
 
     // Adiciona os dados ao objeto FormData
     for (let key in data) {
-      if (typeof data[key] === "object") {
-        formData.append(key, JSON.stringify(data[key]));
+      if (data[key] instanceof File) {
+        formData.append(key, data[key]); // formnato para envio de arquivos
+      } else if (typeof data[key] === "object") {
+        formData.append(key, JSON.stringify(data[key])); // formnato para envio de json
       } else {
-        formData.append(key, data[key]);
+        formData.append(key, data[key]); // formnato para envio de html
       }
     }
 

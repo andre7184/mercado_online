@@ -17,8 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($islogado['admin']) {
             $admin_user='Administrador';
             $data['menu'] = '<a class="menu-link" href="lista_produtos.html">Produtos</a>
-            <a class="menu-link" href="editar_dados_produto.html">Cadastrar Produto</a>
-            <a class="menu-link" href="lista_historico.html">Histórico de Vendas</a>
+            <a class="menu-link" href="lista_historico.html">Históricos</a>
             <a class="menu-link" href="lista_usuarios.html">Usuários</a>
             <p class="menu-text dropdown-text"><b>MINHA CONTA</b></p>
             <p class="menu-text dropdown-text">'.$dados_user['email_user'].'</p>
@@ -41,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $admin_user='';
             $data['menu'] = '<a class="menu-link" href="produtos.html">Produtos Disponíveis</a>
-            <a class="menu-link" href="lista_historico.html">Histórico de Compras</a>
+            <a class="menu-link" href="lista_historico.html">Histórico</a>
             <a class="menu-link" href="carrinho.html">Carrinho</a>
             <p class="menu-text dropdown-text">Minha Conta</p>
             <p class="menu-text dropdown-text">'.$dados_user['email_user'].'</p>

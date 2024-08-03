@@ -36,7 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $usuario->sanitize($_POST['nome']);
         $email = $usuario->sanitize($_POST['email']);
         $senha = $usuario->sanitize($_POST['senha']);
-        $tipo_admin = false;
+        // verificar se o usuario logado é admin
+        if ($autenticacao->estaLogado() && $autenticacao->eAdmin()) {
+            $tipo_admin = true;
+        } else {
+            $tipo_admin = false;
+        }
         if ($usuario->emailCadastrado($email)) {
             $dados['status'] = 'error';
             $dados['message'] = 'Email já está registrado.';

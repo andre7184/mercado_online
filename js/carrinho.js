@@ -43,7 +43,18 @@ function syncronizeCarrinhoLocal() {
     document.querySelector(".tex-qtd-itens").innerHTML = "<br>Carrinho vazio!";
   }
 }
-
+function verificaLogin() {
+  var syncRequest = new AjaxRequest("pages/carrinho.php");
+  syncRequest.send({ acao: "verificar_logado" }).then(function (data) {
+    hidePopup();
+    if (data.naoautenticado) {
+      showPopup("error", "Você precisa estar logado para Finalizar a Compra:");
+      abrirPagina("login.html");
+    } else {
+      return true;
+    }
+  });
+}
 // Função para sincronizar o carrinho local com o servidor
 function syncLocalCartToServer(localCart) {
   if (!localCart) {
@@ -69,7 +80,7 @@ function syncLocalCartToServer(localCart) {
     .send(dataform)
     .then(function (data) {
       hidePopup();
-      if (data.carrinho) {
+      if (!data.naoautenticado && data.carrinho) {
         if (data.carrinho.length > 0) {
           //localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
           preencherCarrinho(data.carrinho);
@@ -161,23 +172,33 @@ function removerItem(index) {
 }
 
 function finalizarCompra() {
-  var valor_total = document.getElementById("cart-total").innerHTML;
-  message = `
-    <form id="cadastroVendas" class="form">
-    <p class="form-title"><b>Finalizar Compra</b><br><br>${valor_total}<br><br></p>
-    <div class="input-container">
-      <label for="pagamento">Escolha a forma de pagamento:</label>
-      <select id="forma_pagamento" name="forma_pagamento">
-          <option value="cartao_credito">Cartão de Crédito</option>
-          <option value="cartao_debito">Cartão de Débito</option>
-          <option value="boleto">Boleto</option>
-          <option value="pix">PIX</option>
-          <option selected value="dinheiro">Dinheiro</option>
-      </select>
-    </div>
-    <input type="hidden" id="finalizado" value=true />
-    <button type="button" onclick="syncLocalCartToServer(false)" class="submit">Confirmar</button>
-    </form>
-    `;
-  showPopup("form", message);
+  var syncRequest = new AjaxRequest("pages/carrinho.php");
+  syncRequest.send({ acao: "verificar_logado" }).then(function (data) {
+    hidePopup();
+    if (data.naoautenticado) {
+      showPopup("error", "Você precisa estar logado para Finalizar a Compra:");
+      dadosUser['acao_login_pg'] = 'carrinho.html';
+      abrirPagina("login.html");
+    } else {
+      var valor_total = document.getElementById("cart-total").innerHTML;
+      message = `
+      <form id="cadastroVendas" class="form">
+      <p class="form-title"><b>Finalizar Compra</b><br><br>${valor_total}<br><br></p>
+      <div class="input-container">
+        <label for="pagamento">Escolha a forma de pagamento:</label>
+        <select id="forma_pagamento" name="forma_pagamento">
+            <option value="cartao_credito">Cartão de Crédito</option>
+            <option value="cartao_debito">Cartão de Débito</option>
+            <option value="boleto">Boleto</option>
+            <option value="pix">PIX</option>
+            <option selected value="dinheiro">Dinheiro</option>
+        </select>
+      </div>
+      <input type="hidden" id="finalizado" value=true />
+      <button type="button" onclick="syncLocalCartToServer(false)" class="submit">Confirmar</button>
+      </form>
+      `;
+      showPopup("form", message);
+    }
+  });
 }

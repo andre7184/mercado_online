@@ -88,9 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dados['message'] = 'Produto não encontrado.';
                 }
             }
+        }else{
+            $dados['status'] = 'sucess';
         }
     }else{
-        $dados=['naoautenticado' => true];
+        $dados=['naoautenticado' => true, 'acao' => $acao];
     }
 } else {
     $dados['status'] = 'error';
