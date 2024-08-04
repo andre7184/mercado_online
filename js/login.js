@@ -13,6 +13,7 @@ document
         hidePopup();
         if (response.success) {
           showPopup("sucess", response.message);
+          console.log(dadosUser['acao_login_pg'])
           if (
             typeof dadosUser !== "undefined" &&
             dadosUser.hasOwnProperty("acao_login_pg")

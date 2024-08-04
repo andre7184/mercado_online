@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: space-between;
   width: 180px;
-  height: 220px;
+  height: 230px;
   background: var(--cor-popup-fundo);
   border: 1px solid var(--cor-botao-form);
   border-radius: 5px;
@@ -56,7 +56,7 @@
   /* Estilos para a moldura interna (imagem) */
   margin-top: 5px;
   width: 100%;
-  height: 55%;
+  height: 50%;
 }
 
 .image {
@@ -83,7 +83,7 @@
   color: var(--cor-titulo-form);
   font-family: Arial, sans-serif;
   width: 100%;
-  height: 10%;
+  height: 9%;
 }
 
 .cost {
@@ -91,9 +91,18 @@
   font-weight: bold;
   color: var(--cor-popup-green-text);
   font-family: Arial, sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   width: 100%;
-  height: 15%;
+  height: 13%;
+}
+.qtd-estoque {
+  text-align: center;
+  font-weight: bold;
+  color: var(--cor-popup-btclose);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  height: 8%;
 }
 
 .addtocart {
@@ -117,6 +126,11 @@
   color: var(--cor-fundo-input-form);
   /* mudar o curdor do mouse */
   cursor: pointer;
+}
+
+.desativado {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .form {

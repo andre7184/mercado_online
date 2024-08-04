@@ -48,11 +48,15 @@ class Crud {
         foreach ($data as $key => $value) {
             $fields .= "$key = :$key, ";
         }
-        // echo "update:".$table."<br>";
-        // print_r($data);
-        // print_r($conditions);
         $fields = rtrim($fields, ", ");
-        $sql = "UPDATE $table SET $fields WHERE " . key($conditions) . " = :" . key($conditions);
+    
+        $where = "";
+        foreach ($conditions as $key => $value) {
+            $where .= "$key = :$key AND ";
+        }
+        $where = rtrim($where, " AND ");
+    
+        $sql = "UPDATE $table SET $fields WHERE $where";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute(array_merge($data, $conditions));
     }

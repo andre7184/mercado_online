@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   verificarLogin(pagina_atual);
 });
 document.querySelectorAll("input[max]").forEach(function (input) {
-  input.addEventListener('change', function(e) {
-    verificarValor(e.target);
+  input.addEventListener("change", function (e) {
+    verificarValorMax(e.target);
   });
 });
 
-function verificarValor(input) {
+function verificarValorMax(input) {
   var max = parseInt(input.max);
   var min = parseInt(input.min);
   if (input.value > max) {
@@ -76,46 +76,71 @@ function logout() {
     });
 }
 function showPopup(type, message) {
-  var popup = document.querySelector(".popup-message");
-  popup.classList.remove("agreen", "ared", "aorange", "ablue", "aload");
+  // Remove o elemento anterior, se existir
+  var oldPopup = document.querySelector(".popup-message");
+  if (oldPopup) oldPopup.remove();
+
+  // Cria os elementos
+  var popup = document.createElement("div");
+  var popupIcon = document.createElement("div");
+  var img = document.createElement("img");
+  var msg = document.createElement("div");
+  var closeIcon = document.createElement("div");
+  var btn = document.createElement("button");
+
+  // Define as classes e atributos
+  popup.className = "popup-message";
+  popupIcon.className = "popup-icon";
+  img.src = "icons/" + type + ".svg";
+  msg.className = "message";
+  closeIcon.className = "close-icon";
+  btn.setAttribute("onclick", "hidePopup()");
+  btn.textContent = "X";
+
+  // Adiciona os elementos ao DOM
+  closeIcon.appendChild(btn);
+  popupIcon.appendChild(img);
+  popup.appendChild(popupIcon);
+  popup.appendChild(msg);
+  popup.appendChild(closeIcon);
+  document.body.appendChild(popup);
+
+  // Adiciona a classe correta ao popup
   if (type == "sucess") {
-    document.querySelector(".popup-icon img").src = "icons/sucess.svg";
-    document.querySelector(".popup-message").classList.add("agreen");
+    popup.classList.add("agreen");
   } else if (type == "error") {
-    document.querySelector(".popup-icon img").src = "icons/error.svg";
-    document.querySelector(".popup-message").classList.add("ared");
+    popup.classList.add("ared");
   } else if (type == "alert") {
-    document.querySelector(".popup-icon img").src = "icons/alert.svg";
-    document.querySelector(".popup-message").classList.add("aorange");
+    popup.classList.add("aorange");
   } else if (type == "load") {
-    document.querySelector(".popup-icon img").src = "icons/loading.svg";
-    document.querySelector(".popup-message").classList.add("aload");
+    popup.classList.add("aload");
   } else if (type == "form") {
-    document.querySelector(".popup-icon img").src = "icons/question.svg";
-    document.querySelector(".popup-message").classList.add("question");
+    popup.classList.add("question");
   } else {
-    document.querySelector(".popup-icon img").src = "icons/infor.svg";
-    document.querySelector(".popup-message").classList.img - overla("ablue");
+    popup.classList.add("ablue");
   }
+
+  // Define a mensagem correta
   if (type == "load") {
     if (!message) {
       message = "Carregando...";
     }
-    document.querySelector(".message").innerHTML =
+    msg.innerHTML =
       '<div style="display: flex; align-items: center;"><span>' +
       message +
       '..</span><div class="loading"></div></div>';
-    document.querySelector(".close-icon").style.display = "none"; // Esconde o botão de fechar
+    closeIcon.style.display = "none"; // Esconde o botão de fechar
   } else if (type == "form") {
     // inserir dentro da variavel message um input com o texto de quantidade e um botão de confirmar
-    document.querySelector(".message").innerHTML = message;
-    document.querySelector(".close-icon").style.display = "block";
+    msg.innerHTML = message;
+    closeIcon.style.display = "block";
   } else {
-    document.querySelector(".message").textContent = message;
-    document.querySelector(".close-icon").style.display = "block";
+    msg.textContent = message;
+    closeIcon.style.display = "block";
   }
-  document.querySelector(".popup-message").style.display = "flex";
-  document.querySelector(".overlay").style.display = "block";
+
+  // Mostra o popup
+  popup.style.display = "flex";
 }
 
 function hidePopup() {
@@ -140,6 +165,15 @@ function verificarLogin(pagina_atual) {
         document.getElementById("user-icon").style.display = "block";
       } else {
         document.getElementById("user-icon").style.display = "none";
+      }
+      var carrinho_local = JSON.parse(localStorage.getItem("cart")) || [];
+      var quantidade_carrinho = carrinho_local.length;
+      console.log(quantidade_carrinho)
+      if (quantidade_carrinho > 0) {
+        document.querySelector(
+          '.menu-link[href="carrinho.html"]'
+        ).innerHTML +=
+          '<span class="carrinho-quantidade">(0' + quantidade_carrinho + ")</span>";
       }
       var menuLinks = document.querySelectorAll(".menu-link");
       menuLinks.forEach(function (link) {

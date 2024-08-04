@@ -30,7 +30,7 @@ function adicionarAoCarrinho(id, nome, valor, qtd) {
     <form id="cadastroQtdProduto" class="form">
     <p class="form-title"><b>Qtd do Produto</b><br><br>${nome}</p>
     <div class="input-container">
-        <input type="number" min="1" max="${qtd}" placeholder="Quantidade" name="qtd_produto" id="qtd_produto" onchange="verificarValor(this)" value="1"/>
+        <input type="number" min="1" max="${qtd}" placeholder="Quantidade" name="qtd_produto" id="qtd_produto" onchange="verificarValorMax(this)" value="1"/>
     </div>
     <input type="hidden" id="qtd_produto_estoque" value="${qtd}" />
     <input type="hidden" id="id_produto" value="${id}" />
@@ -99,9 +99,13 @@ function preencherCardsProdutos(dados) {
   for (var i = 0; i < dados.length; i++) {
     //var card = criarCard(dados[i]);
     var valor = parseFloat(dados[i].valor); // Certifique-se de que o valor é um número
-    var qtd = parseInt(dados[i].qtd);
+    var qtd_estoque = parseInt(dados[i].qtd);
+    var qtdNoCarrinho = getQuantidadeNoCarrinho(dados[i].id, qtd_estoque);
+    var qtd = qtd_estoque - qtdNoCarrinho;
+    var text_qtd_estoque = qtd == 1 ? "Último Disponível" : "";
+    var desativado = qtd < 1 ? "desativado" : "";
     var card = `
-    <div class="card">
+      <div class="card ${desativado}">
       <div class="card-imagem">
         <div class="image">
           <img src="${dados[i].imagem}" alt="${dados[i].nome}" />
@@ -109,6 +113,7 @@ function preencherCardsProdutos(dados) {
       </div>
       <div class="productTitle">${dados[i].nome}</div>
       <div class="cost">${formatarValor(valor)}</div>
+      <div class="qtd-estoque">${text_qtd_estoque}</div>
       <button class="addtocart" onclick="adicionarAoCarrinho('${
         dados[i].id
       }','${dados[i].nome}','${
@@ -119,6 +124,28 @@ function preencherCardsProdutos(dados) {
     cardsContainer.insertAdjacentHTML("beforeend", card);
   }
 }
+
+function getQuantidadeNoCarrinho(id, qtd_estoque) {
+  var carrinho = JSON.parse(localStorage.getItem("cart"));
+  if (carrinho === null) {
+    return 0; // Retorna 0 se o carrinho estiver vazio
+  }
+  for (var i = 0; i < carrinho.length; i++) {
+    if (carrinho[i].id === id) {
+      if (carrinho[i].qtd > qtd_estoque) {
+        carrinho[i].qtd = qtd_estoque;
+        if (qtd_estoque <= 0) {
+          carrinho.splice(i, 1); // Remove o produto do carrinho
+        }
+        localStorage.setItem("cart", JSON.stringify(carrinho)); // Atualiza o carrinho no localStorage
+      }
+      return carrinho[i].qtd;
+    }
+  }
+  return 0; // Retorna 0 se o produto não estiver no carrinho
+}
+
+
 function formatarValor(valor) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }

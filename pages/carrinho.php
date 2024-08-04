@@ -2,7 +2,7 @@
 require_once '../class/Carrinho.php';
 require_once '../class/Autenticacao.php';
 $carrinho = new Carrinho();
-$autenticacao = new Autenticacao($carrinho);
+$autenticacao = new Autenticacao();
 $dados = array();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = isset($_POST['acao']) ? $carrinho->sanitize($_POST['acao']) : '';
@@ -42,6 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!empty($id_carrinho)){
                         $dados['carrinho'] = $carrinho->sincronizaItensCarrinho($id_carrinho,$carrinho_items);
                         $success = $carrinho->alteraCarrinho(['atualizando' => false], ['id' => $id_carrinho]);
+                        if (!empty($finalizado)) {
+                            $dados['finalizado'] = "sucess";
+                            $dados['message'] = "Compra Finalizada com Sucesso!";
+                        } else {
+                            $dados['message'] = "Carrinho Atualizado com Sucesso!";
+                        }
                     }
                 } else {
                     $linha_carrinho = $carrinho->listarCarrinho(['id_usuario' => $_SESSION['id'], 'finalizado' => 0])[0];
@@ -68,7 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (!empty($id_carrinho)){
                             $item_carrinho = $carrinho->listarItensCarrinho(['id_carrinho' => $id_carrinho, 'id_produto' => $id_produto]);
                             if (!empty($item_carrinho)) {
-                                $update_itens_carrinho = $carrinho->alteraItemCarrinho(['id' => $item_carrinho[0]['id']],['qtd' => $qtd, 'valor_unitario' => $valor_unitario, 'valor_total' => $valor_total]);
+                                $qtd_atual = $item_carrinho[0]['qtd'];
+                                $nova_qtd = $qtd_atual + $qtd;
+                                $valor_total = $nova_qtd * $valor_unitario;
+                                $update_itens_carrinho = $carrinho->alteraItemCarrinho(['qtd' => $nova_qtd, 'valor_unitario' => $valor_unitario, 'valor_total' => $valor_total],['id' => $item_carrinho[0]['id']]);
                             } else {
                                 $create_itens_carrinho = $carrinho->cadastraItemCarrinho($id_carrinho, $id_produto, $qtd, $valor_unitario, $valor_total);
                             }
@@ -98,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados['status'] = 'error';
     $dados['message'] = 'Método de solicitação inválido.';
 }
+//fazer uma pausa de 5 segundos
 header('Content-Type: application/json');
 echo json_encode($dados);
 ?>

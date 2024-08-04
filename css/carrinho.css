@@ -126,6 +126,13 @@ td:last-child {
   color: var(--cor-texto-botao-hover);
 }
 
+.checkout-button:disabled {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 600px) {
   table,
   thead,
