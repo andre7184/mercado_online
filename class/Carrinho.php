@@ -67,8 +67,8 @@ class Carrinho {
             if (!empty($finalizado)) {
                 $data_carrinho = array_filter([
                     'id_usuario' => $id_usuario,
-                    'preco' => '',
-                    'qtd' => '',
+                    'preco' => 0,
+                    'qtd' => 0,
                     'data' => date('Y-m-d H:i:s'),
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => true,
@@ -78,8 +78,8 @@ class Carrinho {
             } else {
                 $data_carrinho = array_filter([
                     'id_usuario' => $id_usuario,
-                    'preco' => '',
-                    'qtd' => '',
+                    'preco' => 0,
+                    'qtd' => 0,
                     'data' => date('Y-m-d H:i:s'),
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => false,
