@@ -53,18 +53,16 @@ class Carrinho {
              // Se o carrinho existir, atualiza
             if (!empty($finalizado)) {
                 $data_carrinho = array(
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'finalizado' => true,
+                    'finalizado' => 1,
                     'forma_pagamento' => $forma_pagamento,
-                    'atualizando' => true,
+                    'atualizando' => 1,
                 );
             } else {
                 $data_carrinho = array(
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'atualizando' => true,
+                    'atualizando' => 1,
                 );    
             }
-             $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
+            $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
             if ($success) {
                 $id_carrinho=$existing_carrinho[0]['id'];
             } else {
