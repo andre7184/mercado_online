@@ -41,48 +41,48 @@ class Carrinho {
 
     public function sincronizaCarrinho($id_usuario,$forma_pagamento,$finalizado){
         $existing_carrinho = $this->listarCarrinho(['id_usuario' => $id_usuario, 'finalizado' => false]);
-        // if (!empty($existing_carrinho)) {
-        //     // Se o carrinho existir, atualiza
-        //     if (!empty($finalizado)) {
-        //         $data_carrinho = array(
-        //             'data_update' => date('Y-m-d H:i:s'),
-        //             'finalizado' => true,
-        //             'forma_pagamento' => $forma_pagamento,
-        //             'atualizando' => true,
-        //         );
-        //     } else {
-        //         $data_carrinho = array(
-        //             'data_update' => date('Y-m-d H:i:s'),
-        //             'atualizando' => true,
-        //         );    
-        //     }
+        if (!empty($existing_carrinho)) {
+             // Se o carrinho existir, atualiza
+            if (!empty($finalizado)) {
+                $data_carrinho = array(
+                    'data_update' => date('Y-m-d H:i:s'),
+                    'finalizado' => true,
+                    'forma_pagamento' => $forma_pagamento,
+                    'atualizando' => true,
+                );
+            } else {
+                $data_carrinho = array(
+                    'data_update' => date('Y-m-d H:i:s'),
+                    'atualizando' => true,
+                );    
+            }
         //     $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
         //     if ($success) {
         //         $id_carrinho=$existing_carrinho[0]['id'];
         //     } else {
         //         $id_carrinho='';
         //     }            
-        // } else {
-        //     // Se for para finalizar a compra
-        //     if (!empty($finalizado)) {
-        //         $data_carrinho = array_filter([
-        //             'id_usuario' => $id_usuario,
-        //             'data' => date('Y-m-d H:i:s'),
-        //             'data_update' => date('Y-m-d H:i:s'),
-        //             'finalizado' => true,
-        //             'forma_pagamento' => $forma_pagamento
-        //         ]);
-        //     } else {
-        //         $data_carrinho = array_filter([
-        //             'id_usuario' => $id_usuario,
-        //             'data' => date('Y-m-d H:i:s'),
-        //             'data_update' => date('Y-m-d H:i:s'),
-        //             'forma_pagamento' => ''
-        //         ]); 
-        //     }
+        } else {
+            // Se for para finalizar a compra
+            if (!empty($finalizado)) {
+                $data_carrinho = array_filter([
+                    'id_usuario' => $id_usuario,
+                    'data' => date('Y-m-d H:i:s'),
+                    'data_update' => date('Y-m-d H:i:s'),
+                    'finalizado' => true,
+                    'forma_pagamento' => $forma_pagamento
+                ]);
+            } else {
+                $data_carrinho = array_filter([
+                    'id_usuario' => $id_usuario,
+                    'data' => date('Y-m-d H:i:s'),
+                    'data_update' => date('Y-m-d H:i:s'),
+                    'forma_pagamento' => ''
+                ]); 
+            }
         //     $id_carrinho = $this->cadastraCarrinho($data_carrinho);
-        // }
-        // return $id_carrinho;
+        }
+        //return $id_carrinho;
     }
 
     public function sincronizaItensCarrinho($id_carrinho,$carrinho_items){
