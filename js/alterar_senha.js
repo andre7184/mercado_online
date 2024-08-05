@@ -2,13 +2,20 @@
 var ajaxRequest = new AjaxRequest("pages/usuario.php");
 showPopup("load", "");
 // Envia a solicitação AJAX
+valor_argumento=retornaArgsHtml('alterar_senha','id_usuario');
+if (valor_argumento) {
+  var dados = { acao: "dados_do_usuario", id: valor_argumento };
+}else{
+  var dados = { acao: "dados_do_usuario" };
+}
 ajaxRequest
-  .send({ acao: "dados_do_usuario" })
+  .send(dados)
   .then(function (data) {
     hidePopup();
     if (!data.naoautenticado) {
       if (data.id) {
         document.getElementById("id_usuario").value = data.id;
+        document.getElementById("nome_atual").textContent = data.nome;
       } else {
         showPopup("error", "Ocorreu um erro ao buscar os dados do usuário:");
       }

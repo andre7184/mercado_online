@@ -257,6 +257,7 @@ function salvaArgsHtml(pagina) {
   } else {
     atributoshtml[pagina.split(".")[0]] = {};
   }
+  console.log(atributoshtml);
   return pagina;
 }
 //em relacao a function acima, preciso agora criar uma função que retorna esses argumentos que foram salvos na variavel atributoshtml
@@ -271,6 +272,7 @@ function retornaArgsHtml(nome_pagina, argumento) {
     atributoshtml[nome_pagina] &&
     argumento in atributoshtml[nome_pagina]
   ) {
+    console.log('id:'+atributoshtml[nome_pagina][argumento]);
     return atributoshtml[nome_pagina][argumento];
   }
   return false;

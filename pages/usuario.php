@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     foreach ($linhas_usuario as $i => $user) {
                         unset($linhas_usuario[$i]['senha']);
                         $linhas_usuario[$i]['admin'] = ($user['admin'] == 1) ? 'Sim' : 'Não';
-                        $linhas_usuario[$i]['editar'] = '<a href="#" onclick="abrirPagina(\'editar_dados_usuario.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit.svg" alt="icon" /></a>';
+                        $linhas_usuario[$i]['editar'] = '<a href="#" onclick="abrirPagina(\'editar_dados_usuario.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit.svg" alt="Editar Dados" /></a>  <a href="#" onclick="abrirPagina(\'alterar_senha.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit-lock.svg" alt="Editar Senha" /></a>';
                                             
                     }
                     $dados['usuarios'] = $linhas_usuario;
