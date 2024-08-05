@@ -9,14 +9,14 @@ class Carrinho {
     }
 
     public function cadastraCarrinho($id_usuario,$preco,$qtd,$forma_pagamento,$finalizado,$atualizando){
-        $data = array_filter([
+        $data = array(
             'id_usuario' => $id_usuario,
             'preco' => !empty($preco) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $preco))) : 0,
             'qtd' => !empty($qtd) ? $qtd : 0,
             'finalizado' => !empty($finalizado) ? $finalizado : false,
             'forma_pagamento' => !empty($forma_pagamento) ? $forma_pagamento : '',
             'atualizando' => !empty($atualizando) ? $atualizando : false
-        ]);
+        );
         if(!empty($data)){
             return $this->crud->create('carrinho', $data);
         }else{
@@ -33,13 +33,13 @@ class Carrinho {
     }
 
     public function cadastraItemCarrinho($id_carrinho, $id_produto, $qtd, $valor_unitario, $valor_total){
-        $data = array_filter([
+        $data = array(
             'id_carrinho' => !empty($id_carrinho) ? $id_carrinho : '',
             'id_produto' => !empty($id_produto) ? $id_produto : '',
             'qtd' => !empty($qtd) ? $qtd : '',
             'valor_unitario' => !empty($valor_unitario) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $valor_unitario))) : '',
             'valor_total' => !empty($valor_total) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $valor_total))) : ''
-        ]);
+        );
         if($data){
             return $this->crud->create('itens_carrinho', $data);
         }else{
