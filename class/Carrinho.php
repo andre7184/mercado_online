@@ -13,9 +13,9 @@ class Carrinho {
             'id_usuario' => $id_usuario,
             'preco' => !empty($preco) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $preco))) : 0,
             'qtd' => !empty($qtd) ? $qtd : 0,
-            'finalizado' => !empty($finalizado) ? $finalizado : false,
+            'finalizado' => !empty($finalizado) ? $finalizado : 0,
             'forma_pagamento' => !empty($forma_pagamento) ? $forma_pagamento : '',
-            'atualizando' => !empty($atualizando) ? $atualizando : false
+            'atualizando' => !empty($atualizando) ? $atualizando : 0
         );
         if(!empty($data)){
             return $this->crud->create('carrinho', $data);
