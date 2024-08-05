@@ -48,12 +48,12 @@ class Carrinho {
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => true,
                     'forma_pagamento' => $forma_pagamento,
-                    'atualizando' => true
+                    'atualizando' => true,
                 );
             } else {
                 $data_carrinho = array(
                     'data_update' => date('Y-m-d H:i:s'),
-                    'atualizando' => true
+                    'atualizando' => true,
                 );    
             }
              $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
@@ -70,19 +70,21 @@ class Carrinho {
                     'data' => date('Y-m-d H:i:s'),
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => true,
-                    'forma_pagamento' => $forma_pagamento
+                    'forma_pagamento' => $forma_pagamento,
+                    'atualizando' => false,
                 ]);
             } else {
                 $data_carrinho = array_filter([
                     'id_usuario' => $id_usuario,
                     'data' => date('Y-m-d H:i:s'),
                     'data_update' => date('Y-m-d H:i:s'),
-                    'forma_pagamento' => ''
+                    'forma_pagamento' => '',
+                    'atualizando' => false,
                 ]); 
             }
-        //     $id_carrinho = $this->cadastraCarrinho($data_carrinho);
+            $id_carrinho = $this->cadastraCarrinho($data_carrinho);
         }
-        //return $id_carrinho;
+        return $id_carrinho;
     }
 
     public function sincronizaItensCarrinho($id_carrinho,$carrinho_items){
