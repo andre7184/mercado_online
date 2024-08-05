@@ -14,7 +14,7 @@ class Crud {
         $fields = implode(", ", array_keys($data));
         $values = ":" . implode(", :", array_keys($data));
         // echo "create:".$table."<br>";
-        print_r($data);
+        // print_r($data);
         $stmt = $this->conn->prepare("INSERT INTO $table ($fields) VALUES ($values)");
         $success = $stmt->execute($data);
         if ($success) {
