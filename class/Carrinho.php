@@ -48,20 +48,20 @@ class Carrinho {
                     'data_update' => date('Y-m-d H:i:s'),
                     'finalizado' => true,
                     'forma_pagamento' => $forma_pagamento,
-                    'atualizando' => true,
+                    'atualizando' => true
                 );
             } else {
                 $data_carrinho = array(
                     'data_update' => date('Y-m-d H:i:s'),
-                    'atualizando' => true,
+                    'atualizando' => true
                 );    
             }
-        //     $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
-        //     if ($success) {
-        //         $id_carrinho=$existing_carrinho[0]['id'];
-        //     } else {
-        //         $id_carrinho='';
-        //     }            
+             $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
+            if ($success) {
+                $id_carrinho=$existing_carrinho[0]['id'];
+            } else {
+                $id_carrinho='';
+            }            
         } else {
             // Se for para finalizar a compra
             if (!empty($finalizado)) {
