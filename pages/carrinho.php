@@ -37,22 +37,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Atualiza ou cria a tabela carrinho
             $dados['carrinho']=[];
             if (isset($_SESSION['id'])){
-                // if (!empty($carrinho_items)){
-                //     $id_carrinho=$carrinho->sincronizaCarrinho($_SESSION['id'],$forma_pagamento,$finalizado);
-                //     if (!empty($id_carrinho)){
-                //         $dados['carrinho'] = $carrinho->sincronizaItensCarrinho($id_carrinho,$carrinho_items);
-                //         $success = $carrinho->alteraCarrinho(['atualizando' => false], ['id' => $id_carrinho]);
-                //         if (!empty($finalizado)) {
-                //             $dados['finalizado'] = "sucess";
-                //             $dados['message'] = "Compra Finalizada com Sucesso!";
-                //         } else {
-                //             $dados['message'] = "Carrinho Atualizado com Sucesso!";
-                //         }
-                //     }
-                // } else {
-                //     $linha_carrinho = $carrinho->listarCarrinho(['id_usuario' => $_SESSION['id'], 'finalizado' => 0])[0];
-                //     $success = $carrinho->removeItemCarrinho(['id_carrinho' => $linha_carrinho['id']]);
-                // }
+                if (!empty($carrinho_items)){
+                    $id_carrinho=$carrinho->sincronizaCarrinho($_SESSION['id'],$forma_pagamento,$finalizado);
+                    if (!empty($id_carrinho)){
+                        // $dados['carrinho'] = $carrinho->sincronizaItensCarrinho($id_carrinho,$carrinho_items);
+                        // $success = $carrinho->alteraCarrinho(['atualizando' => false], ['id' => $id_carrinho]);
+                        // if (!empty($finalizado)) {
+                        //     $dados['finalizado'] = "sucess";
+                        //     $dados['message'] = "Compra Finalizada com Sucesso!";
+                        // } else {
+                        //     $dados['message'] = "Carrinho Atualizado com Sucesso!";
+                        // }
+                    }
+                } else {
+                    $linha_carrinho = $carrinho->listarCarrinho(['id_usuario' => $_SESSION['id'], 'finalizado' => 0])[0];
+                    $success = $carrinho->removeItemCarrinho(['id_carrinho' => $linha_carrinho['id']]);
+                }
             }
         } else if ($acao == 'adicionar_carrinho') {
             require_once '../class/Produto.php';
