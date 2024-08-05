@@ -25,7 +25,6 @@ class Carrinho {
     }
 
     public function alteraCarrinho($data, $filtros) {
-        print_r($data);
         return $this->crud->update('carrinho', $data, $filtros);
     }
 

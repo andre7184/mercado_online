@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $id_carrinho=$carrinho->sincronizaCarrinho($_SESSION['id'],$forma_pagamento,$finalizado);
                     if (!empty($id_carrinho)){
                         $dados['carrinho'] = $carrinho->sincronizaItensCarrinho($id_carrinho,$carrinho_items);
-                        $success = $carrinho->alteraCarrinho(['atualizando' => false], ['id' => $id_carrinho]);
+                        $success = $carrinho->alteraCarrinho(['atualizando' => 0], ['id' => $id_carrinho]);
                         if (!empty($finalizado)) {
                             $dados['finalizado'] = "sucess";
                             $dados['message'] = "Compra Finalizada com Sucesso!";
