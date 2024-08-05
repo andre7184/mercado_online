@@ -65,7 +65,7 @@ class Carrinho {
         } else {
             // Se for para finalizar a compra
             if (!empty($finalizado)) {
-                $data_carrinho = array_filter([
+                $data_carrinho = array(
                     'id_usuario' => $id_usuario,
                     'preco' => 0,
                     'qtd' => 0,
@@ -74,9 +74,9 @@ class Carrinho {
                     'finalizado' => true,
                     'forma_pagamento' => $forma_pagamento,
                     'atualizando' => false,
-                ]);
+                );
             } else {
-                $data_carrinho = array_filter([
+                $data_carrinho = array(
                     'id_usuario' => $id_usuario,
                     'preco' => 0,
                     'qtd' => 0,
@@ -85,7 +85,7 @@ class Carrinho {
                     'finalizado' => false,
                     'forma_pagamento' => '',
                     'atualizando' => false,
-                ]); 
+                ); 
             }
             $id_carrinho = $this->cadastraCarrinho($data_carrinho);
         }
