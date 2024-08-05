@@ -40,7 +40,7 @@ class Carrinho {
     }
 
     public function sincronizaCarrinho($id_usuario,$forma_pagamento,$finalizado){
-        // $existing_carrinho = $this->listarCarrinho(['id_usuario' => $id_usuario, 'finalizado' => false]);
+        $existing_carrinho = $this->listarCarrinho(['id_usuario' => $id_usuario, 'finalizado' => false]);
         // if (!empty($existing_carrinho)) {
         //     // Se o carrinho existir, atualiza
         //     if (!empty($finalizado)) {
