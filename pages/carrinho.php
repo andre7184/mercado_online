@@ -14,20 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $dados['carrinho']=[];
                 if(!empty($linha_carrinho)){
                     $linha_itens_carrinho = $carrinho->listarItensCarrinho(['id_carrinho' => $linha_carrinho[0]['id']]);
-                    // if(!empty($linha_itens_carrinho)){
-                    //     require_once '../class/Produto.php';
-                    //     $produtos = new Produto();
-                    //     $itens_carrinho=array();
-                    //     foreach ($linha_itens_carrinho as $i => $itens) {
-                    //         $produto=$produtos->listarProdutos(['id' => $itens['id_produto']])[0];
-                    //         $itens_carrinho[$i]['id'] = $itens['id_produto'];
-                    //         $itens_carrinho[$i]['nome'] = $produto['nome'];
-                    //         $itens_carrinho[$i]['qtd'] = $itens['qtd'];
-                    //         $itens_carrinho[$i]['qtd_estoque'] = $produto['qtd'];
-                    //         $itens_carrinho[$i]['valor'] = $itens['valor_unitario'];
-                    //     }
-                    //     $dados['carrinho']=$itens_carrinho;
-                    // }
+                    if(!empty($linha_itens_carrinho)){
+                        require_once '../class/Produto.php';
+                        $produtos = new Produto();
+                        $itens_carrinho=array();
+                        foreach ($linha_itens_carrinho as $i => $itens) {
+                            $produto=$produtos->listarProdutos(['id' => $itens['id_produto']])[0];
+                            $itens_carrinho[$i]['id'] = $itens['id_produto'];
+                            $itens_carrinho[$i]['nome'] = $produto['nome'];
+                            $itens_carrinho[$i]['qtd'] = $itens['qtd'];
+                            $itens_carrinho[$i]['qtd_estoque'] = $produto['qtd'];
+                            $itens_carrinho[$i]['valor'] = $itens['valor_unitario'];
+                        }
+                        $dados['carrinho']=$itens_carrinho;
+                    }
                 }
             }
         } else if ($acao === 'sincronizar_carrinho'){
