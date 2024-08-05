@@ -8,7 +8,15 @@ class Carrinho {
         $this->crud = new Crud();
     }
 
-    public function cadastraCarrinho($data){
+    public function cadastraCarrinho($id_usuario,$preco,$qtd,$forma_pagamento,$finalizado,$atualizando){
+        $data = array_filter([
+            'id_usuario' => $id_usuario,
+            'preco' => !empty($preco) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $preco))) : 0,
+            'qtd' => !empty($qtd) ? $qtd : 0,
+            'finalizado' => !empty($finalizado) ? $finalizado : false,
+            'forma_pagamento' => !empty($forma_pagamento) ? $forma_pagamento : '',
+            'atualizando' => !empty($atualizando) ? $atualizando : false
+        ]);
         if(!empty($data)){
             return $this->crud->create('carrinho', $data);
         }else{
@@ -63,31 +71,7 @@ class Carrinho {
                 $id_carrinho='';
             }            
         } else {
-            // Se for para finalizar a compra
-            if (!empty($finalizado)) {
-                $data_carrinho = array(
-                    'id_usuario' => $id_usuario,
-                    'preco' => 0,
-                    'qtd' => 0,
-                    'data' => date('Y-m-d H:i:s'),
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'finalizado' => true,
-                    'forma_pagamento' => $forma_pagamento,
-                    'atualizando' => false,
-                );
-            } else {
-                $data_carrinho = array(
-                    'id_usuario' => $id_usuario,
-                    'preco' => 0,
-                    'qtd' => 0,
-                    'data' => date('Y-m-d H:i:s'),
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'finalizado' => false,
-                    'forma_pagamento' => '',
-                    'atualizando' => false,
-                ); 
-            }
-            $id_carrinho = $this->cadastraCarrinho($data_carrinho);
+            $id_carrinho = $this->cadastraCarrinho($id_usuario,0,0,$forma_pagamento,$finalizado,false);
         }
         return $id_carrinho;
     }
