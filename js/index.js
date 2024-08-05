@@ -169,7 +169,9 @@ function verificarLogin(pagina_atual) {
       var carrinho_local = JSON.parse(localStorage.getItem("cart")) || [];
       var quantidade_carrinho = carrinho_local.length;
       console.log(quantidade_carrinho)
-      if (quantidade_carrinho > 0) {
+      if (quantidade_carrinho > 0 && document.querySelector(
+        '.menu-link[href="carrinho.html"]'
+      ) != null) {
         document.querySelector(
           '.menu-link[href="carrinho.html"]'
         ).innerHTML +=

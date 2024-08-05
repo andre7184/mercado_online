@@ -24,7 +24,7 @@ class Crud {
         }
     }
 
-    public function read($table, $conditions = []){
+    public function read($table, $conditions = [], $operador = []){
         $sql = "SELECT * FROM $table";
         if (!empty($conditions)) {
             $sql .= " WHERE ";
@@ -35,7 +35,9 @@ class Crud {
                 } else {
                     $first = false;
                 }
-                $sql .= "$key = :$key";
+                // Use o operador correspondente ou '=' como padrão
+                $operador = isset($operador[$key]) ? $operador[$key] : '=';
+                $sql .= "$key $operador :$key";
             }
         }
         $stmt = $this->conn->prepare($sql);

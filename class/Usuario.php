@@ -46,8 +46,8 @@ class Usuario {
         return $this->crud->update('usuario', $data, $filtros);
     }
 
-    public function listarUsuario($filtros = []) {
-        return $this->crud->read('usuario', $filtros);
+    public function listarUsuario($filtros = [], $operadores = []) {
+        return $this->crud->read('usuario', $filtros, $operadores);
     }
 
     public function listarHistorico($filtros = []) {
