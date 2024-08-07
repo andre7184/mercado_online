@@ -1,6 +1,5 @@
 <?php
 include '../../../private/config.php';
-
 class Database {
     private $host;
     private $db_name;
@@ -9,10 +8,10 @@ class Database {
     public $conn;
     public function __construct() {
         global $host, $db_name, $username, $password;
-        $this->host = $host;
-        $this->db_name = $db_name;
-        $this->username = $username;
-        $this->password = $password;
+        $this->host = $host; // coloque seu host aqui
+        $this->db_name = $db_name; // coloque nome do banco de dados aqui
+        $this->username = $username; // coloque o usuario do banco de dados aqui
+        $this->password = $password; // coloque a senha do banco de dados aqui
     }
     public function dbConnection() {
         $this->conn = null;    
