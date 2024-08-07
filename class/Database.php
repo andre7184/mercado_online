@@ -1,10 +1,10 @@
 <?php
-
+include '../../../private/config.php';
 class Database {
-    private $host = "localhost";
-    private $db_name = "admin_database";
-    private $username = "admin_user";
-    private $password = "Amb@142536";
+    private $host = $host;
+    private $db_name = $db_name;
+    private $username = $username;
+    private $password = $password;
     public $conn;
 
     public function dbConnection() {
