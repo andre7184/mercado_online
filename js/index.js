@@ -122,11 +122,10 @@ function showPopup(type, message) {
 
   // Define a mensagem correta
   if (type == "load") {
-    var overlay = document.createElement("div");
-    document.body.appendChild(overlay);
-    overlay.classList.add("overlay");
-    overlay.style.display = "block";
-    alert("ativando o loading");
+    // var overlay = document.createElement("div");
+    // document.body.appendChild(overlay);
+    // overlay.classList.add("overlay");
+    // overlay.style.display = "block";
     if (!message) {
       message = "Carregando...";
     }
@@ -150,8 +149,7 @@ function showPopup(type, message) {
 
 function hidePopup() {
   document.querySelector(".popup-message").style.display = "none";
-  document.querySelector(".overlay").style.display = "none";
-  alert("fechando o loading");
+  // document.querySelector(".overlay").style.display = "none";
 }
 
 function verificarLogin(pagina_atual) {
