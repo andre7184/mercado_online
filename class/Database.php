@@ -1,5 +1,5 @@
 <?php
-include '../../../private/config.php';
+include '../../../private/config_mo.php';
 class Database {
     private $host;
     private $db_name;
