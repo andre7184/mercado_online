@@ -122,6 +122,9 @@ function showPopup(type, message) {
 
   // Define a mensagem correta
   if (type == "load") {
+    var overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    overlay.style.display = "block";
     if (!message) {
       message = "Carregando...";
     }
@@ -168,14 +171,15 @@ function verificarLogin(pagina_atual) {
       }
       var carrinho_local = JSON.parse(localStorage.getItem("cart")) || [];
       var quantidade_carrinho = carrinho_local.length;
-      console.log(quantidade_carrinho)
-      if (quantidade_carrinho > 0 && document.querySelector(
-        '.menu-link[href="carrinho.html"]'
-      ) != null) {
-        document.querySelector(
-          '.menu-link[href="carrinho.html"]'
-        ).innerHTML +=
-          '<span class="carrinho-quantidade">(0' + quantidade_carrinho + ")</span>";
+      console.log(quantidade_carrinho);
+      if (
+        quantidade_carrinho > 0 &&
+        document.querySelector('.menu-link[href="carrinho.html"]') != null
+      ) {
+        document.querySelector('.menu-link[href="carrinho.html"]').innerHTML +=
+          '<span class="carrinho-quantidade">(0' +
+          quantidade_carrinho +
+          ")</span>";
       }
       var menuLinks = document.querySelectorAll(".menu-link");
       menuLinks.forEach(function (link) {
@@ -272,7 +276,7 @@ function retornaArgsHtml(nome_pagina, argumento) {
     atributoshtml[nome_pagina] &&
     argumento in atributoshtml[nome_pagina]
   ) {
-    console.log('id:'+atributoshtml[nome_pagina][argumento]);
+    console.log("id:" + atributoshtml[nome_pagina][argumento]);
     return atributoshtml[nome_pagina][argumento];
   }
   return false;
