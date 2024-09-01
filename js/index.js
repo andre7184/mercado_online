@@ -123,6 +123,7 @@ function showPopup(type, message) {
   // Define a mensagem correta
   if (type == "load") {
     var overlay = document.createElement("div");
+    document.body.appendChild(overlay);
     overlay.classList.add("overlay");
     overlay.style.display = "block";
     if (!message) {
