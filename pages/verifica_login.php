@@ -6,6 +6,8 @@ $autenticacao = new Autenticacao();
 
 // Prepara os dados para enviar como JSON
 $data = array();
+$autenticacao->logout();
+exit;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados_user = array();
