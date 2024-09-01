@@ -19,7 +19,6 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
 } else {
     $login = false;
 }
-sleep(5);
 // Retornando o resultado como JSON
 header('Content-Type: application/json');
 if ($login) {
