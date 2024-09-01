@@ -126,6 +126,7 @@ function showPopup(type, message) {
     document.body.appendChild(overlay);
     overlay.classList.add("overlay");
     overlay.style.display = "block";
+    alert("ativando o loading");
     if (!message) {
       message = "Carregando...";
     }
@@ -150,6 +151,7 @@ function showPopup(type, message) {
 function hidePopup() {
   document.querySelector(".popup-message").style.display = "none";
   document.querySelector(".overlay").style.display = "none";
+  alert("fechando o loading");
 }
 
 function verificarLogin(pagina_atual) {
