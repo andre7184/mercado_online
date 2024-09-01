@@ -2,7 +2,7 @@
 require_once '../class/Carrinho.php';
 require_once '../class/Autenticacao.php';
 $carrinho = new Carrinho();
-$autenticacao = new Autenticacao($carrinho);
+$autenticacao = new Autenticacao();
 $dados = array();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = isset($_POST['acao']) ? $carrinho->sanitize($_POST['acao']) : '';
