@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   verificarLogin(pagina_atual);
 });
 document.querySelectorAll("input[max]").forEach(function (input) {
-  input.addEventListener('change', function(e) {
-    verificarValor(e.target);
+  input.addEventListener("change", function (e) {
+    verificarValorMax(e.target);
   });
 });
 
-function verificarValor(input) {
+function verificarValorMax(input) {
   var max = parseInt(input.max);
   var min = parseInt(input.min);
   if (input.value > max) {
@@ -166,6 +166,17 @@ function verificarLogin(pagina_atual) {
       } else {
         document.getElementById("user-icon").style.display = "none";
       }
+      var carrinho_local = JSON.parse(localStorage.getItem("cart")) || [];
+      var quantidade_carrinho = carrinho_local.length;
+      console.log(quantidade_carrinho)
+      if (quantidade_carrinho > 0 && document.querySelector(
+        '.menu-link[href="carrinho.html"]'
+      ) != null) {
+        document.querySelector(
+          '.menu-link[href="carrinho.html"]'
+        ).innerHTML +=
+          '<span class="carrinho-quantidade">(0' + quantidade_carrinho + ")</span>";
+      }
       var menuLinks = document.querySelectorAll(".menu-link");
       menuLinks.forEach(function (link) {
         link.addEventListener("click", function (e) {
@@ -246,6 +257,7 @@ function salvaArgsHtml(pagina) {
   } else {
     atributoshtml[pagina.split(".")[0]] = {};
   }
+  console.log(atributoshtml);
   return pagina;
 }
 //em relacao a function acima, preciso agora criar uma função que retorna esses argumentos que foram salvos na variavel atributoshtml
@@ -260,6 +272,7 @@ function retornaArgsHtml(nome_pagina, argumento) {
     atributoshtml[nome_pagina] &&
     argumento in atributoshtml[nome_pagina]
   ) {
+    console.log('id:'+atributoshtml[nome_pagina][argumento]);
     return atributoshtml[nome_pagina][argumento];
   }
   return false;

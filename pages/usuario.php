@@ -107,11 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else if ($acao === 'listar_usuarios'){
                 if ($autenticacao->eAdmin()){
                     $dados['status'] = 'success';
-                    $linhas_usuario = $usuario->listarUsuario();
+                    $linhas_usuario = $usuario->listarUsuario(['id' => $_SESSION['id']],['id' => '!=']);
                     foreach ($linhas_usuario as $i => $user) {
                         unset($linhas_usuario[$i]['senha']);
                         $linhas_usuario[$i]['admin'] = ($user['admin'] == 1) ? 'Sim' : 'Não';
-                        $linhas_usuario[$i]['editar'] = '<a href="#" onclick="abrirPagina(\'editar_dados_usuario.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit.svg" alt="icon" /></a>';
+                        $linhas_usuario[$i]['editar'] = '<a href="#" onclick="abrirPagina(\'editar_dados_usuario.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit.svg" alt="Editar Dados" /></a>  <a href="#" onclick="abrirPagina(\'alterar_senha.html?id_usuario='.$user['id'].'\'); return false;"><img src="icons/edit-lock.svg" alt="Editar Senha" /></a>';
                                             
                     }
                     $dados['usuarios'] = $linhas_usuario;
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $lista_historico[$i]['Qtd Produtos']=str_replace(',', '<br>', $historico['qtd_produtos']); 
                     $lista_historico[$i]['Valor Produtos']=str_replace(',', '<br>', $historico['valor_unitario_produtos']);              
                     $lista_historico[$i]['Total Produtos'] = preg_replace_callback('/\b\d+\.\d+\b/', function ($matches) { return number_format($matches[0], 2, ',', '.');}, str_replace(',', '<br>', $historico['valor_total_produtos']));
-                    $lista_historico[$i]['Del']='<a href="#" onclick="abrirPagina(\'cancelar_transacao.html?id_carrinho='.$historico['id_transacao'].'\'); return false;"><img src="icons/dell.svg" alt="Cancelar Venda" /></a>';  
+                    $lista_historico[$i]['Del']='<a href="#" onclick="cancelarTransacao(\''.$historico['id_transacao'].'\'); return false;"><img src="icons/dell.svg" alt="'.$dados['tipo_historico'].'" /></a>';  
                 }
                 $dados['historico'] = $lista_historico;
             }else if ($acao === 'logout'){

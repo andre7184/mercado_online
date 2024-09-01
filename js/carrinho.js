@@ -1,6 +1,6 @@
 // Cria uma nova instância da classe AjaxRequest
 var ajaxRequest = new AjaxRequest("pages/carrinho.php");
-showPopup("load", "");
+showPopup("load", "Buscando Carrinho");
 // Envia a solicitação AJAX
 ajaxRequest
   .send({ acao: "carrinho" })
@@ -11,11 +11,15 @@ ajaxRequest
         let localCart = JSON.parse(localStorage.getItem("cart")) || [];
         if (localCart.length > 0) {
           syncLocalCartToServer(localCart);
+          document.getElementById("bt-continuar-comprando").disabled = false;
+          document.getElementById("bt-finalizar-compra").disabled = false;
         } else {
           document.querySelector(".tex-qtd-itens").innerHTML =
             "<br>Carrinho vazio!";
         }
       } else {
+        document.getElementById("bt-continuar-comprando").disabled = false;
+        document.getElementById("bt-finalizar-compra").disabled = false;
         preencherCarrinho(data.carrinho);
         localStorage.setItem("cart", JSON.stringify(data.carrinho));
         document.querySelector(".tex-qtd-itens").innerHTML =
@@ -37,7 +41,8 @@ function syncronizeCarrinhoLocal() {
   if (localCart.length > 0) {
     document.querySelector(".tex-qtd-itens").innerHTML =
       "<br>" + localCart.length + " Itens";
-    console.log(localCart);
+    document.getElementById("bt-continuar-comprando").disabled = false;
+    document.getElementById("bt-finalizar-compra").disabled = false;
     preencherCarrinho(localCart);
   } else {
     document.querySelector(".tex-qtd-itens").innerHTML = "<br>Carrinho vazio!";
@@ -81,11 +86,17 @@ function syncLocalCartToServer(localCart) {
     .then(function (data) {
       hidePopup();
       if (!data.naoautenticado && data.carrinho) {
-        if (data.carrinho.length > 0) {
-          //localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
-          preencherCarrinho(data.carrinho);
+        if (data.message && data.finalizado) {
+          showPopup("sucess", data.message);
+          localStorage.removeItem("cart");
+          abrirPagina("lista_historico.html");
         } else {
-          syncronizeCarrinhoLocal();
+          if (data.carrinho.length > 0) {
+            //localStorage.removeItem("cart"); // Limpa o localStorage após a sincronização
+            preencherCarrinho(data.carrinho);
+          } else {
+            syncronizeCarrinhoLocal();
+          }
         }
       } else {
         syncronizeCarrinhoLocal();
@@ -120,7 +131,9 @@ function preencherCarrinho(carrinho) {
     itemRow.innerHTML = `
         <td data-label="Nome">${item.nome}</td>
         <td data-label="Qtd">
-          <input type="number" value="${qtd}" min="1" max="${qtd_estoque}" data-index="${index}" onchange="verificarValor(this)" class="quantidade-input">
+          <input type="number" value="${qtd}" min="1" max="${
+      qtd_estoque + qtd
+    }" data-index="${index}" onchange="verificarValorMax(this)" class="quantidade-input">
         </td>
         <td data-label="Valor">${formatarValor(valor)}</td>
         <td data-label="Total">${formatarValor(totalProduto)}</td>
@@ -172,16 +185,22 @@ function removerItem(index) {
 }
 
 function finalizarCompra() {
+  showPopup("load", "Verificando Autenticação do usuário");
   var syncRequest = new AjaxRequest("pages/carrinho.php");
-  syncRequest.send({ acao: "verificar_logado" }).then(function (data) {
-    hidePopup();
-    if (data.naoautenticado) {
-      showPopup("error", "Você precisa estar logado para Finalizar a Compra:");
-      dadosUser['acao_login_pg'] = 'carrinho.html';
-      abrirPagina("login.html");
-    } else {
-      var valor_total = document.getElementById("cart-total").innerHTML;
-      message = `
+  syncRequest
+    .send({ acao: "verificar_logado" })
+    .then(function (data) {
+      hidePopup();
+      if (data.naoautenticado) {
+        showPopup(
+          "error",
+          "Você precisa estar logado para Finalizar a Compra:"
+        );
+        dadosUser["acao_login_pg"] = "carrinho.html";
+        abrirPagina("login.html");
+      } else {
+        var valor_total = document.getElementById("cart-total").innerHTML;
+        message = `
       <form id="cadastroVendas" class="form">
       <p class="form-title"><b>Finalizar Compra</b><br><br>${valor_total}<br><br></p>
       <div class="input-container">
@@ -198,7 +217,11 @@ function finalizarCompra() {
       <button type="button" onclick="syncLocalCartToServer(false)" class="submit">Confirmar</button>
       </form>
       `;
-      showPopup("form", message);
-    }
-  });
+        showPopup("form", message);
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+      showPopup("error", "Ocorreu um erro ao buscar os dados do carrinho:");
+    });
 }

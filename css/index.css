@@ -103,7 +103,7 @@ html {
 }
 
 .menu-text {
-  color: black;
+  color: var(--cor-titulo-form);
   padding: 0;
   font-size: 20px;
   margin-top: 2px;
@@ -112,6 +112,12 @@ html {
 }
 
 .menu-link:hover {
+  color: var(--cor-text-links);
+}
+
+.carrinho-quantidade {
+  font-size: 12px;
+  vertical-align: super;
   color: var(--cor-text-links);
 }
 
@@ -232,7 +238,7 @@ html {
   display: none;
   justify-content: space-between;
   align-items: center;
-  width: 200px;
+  width: 300px;
   padding: 5px;
   border-radius: 10px;
   background-color: var(--cor-popup-fundo);
@@ -253,7 +259,7 @@ html {
 .message {
   flex-grow: 1;
   margin: 0 10px;
-  font-size: 11px;
+  font-size: 18px;
 }
 
 .close-icon button {

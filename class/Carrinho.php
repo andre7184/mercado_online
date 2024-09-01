@@ -8,7 +8,15 @@ class Carrinho {
         $this->crud = new Crud();
     }
 
-    public function cadastraCarrinho($data){
+    public function cadastraCarrinho($id_usuario,$preco,$qtd,$forma_pagamento,$finalizado,$atualizando){
+        $data = array(
+            'id_usuario' => $id_usuario,
+            'preco' => !empty($preco) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $preco))) : 0,
+            'qtd' => !empty($qtd) ? $qtd : 0,
+            'finalizado' => !empty($finalizado) ? $finalizado : 0,
+            'forma_pagamento' => !empty($forma_pagamento) ? $forma_pagamento : '',
+            'atualizando' => !empty($atualizando) ? $atualizando : 0
+        );
         if(!empty($data)){
             return $this->crud->create('carrinho', $data);
         }else{
@@ -25,13 +33,13 @@ class Carrinho {
     }
 
     public function cadastraItemCarrinho($id_carrinho, $id_produto, $qtd, $valor_unitario, $valor_total){
-        $data = array_filter([
+        $data = array(
             'id_carrinho' => !empty($id_carrinho) ? $id_carrinho : '',
             'id_produto' => !empty($id_produto) ? $id_produto : '',
             'qtd' => !empty($qtd) ? $qtd : '',
             'valor_unitario' => !empty($valor_unitario) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $valor_unitario))) : '',
             'valor_total' => !empty($valor_total) ? floatval(str_replace("R$ ", "", str_replace(',', '.', $valor_total))) : ''
-        ]);
+        );
         if($data){
             return $this->crud->create('itens_carrinho', $data);
         }else{
@@ -42,18 +50,16 @@ class Carrinho {
     public function sincronizaCarrinho($id_usuario,$forma_pagamento,$finalizado){
         $existing_carrinho = $this->listarCarrinho(['id_usuario' => $id_usuario, 'finalizado' => false]);
         if (!empty($existing_carrinho)) {
-            // Se o carrinho existir, atualiza
+             // Se o carrinho existir, atualiza
             if (!empty($finalizado)) {
                 $data_carrinho = array(
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'finalizado' => true,
+                    'finalizado' => 1,
                     'forma_pagamento' => $forma_pagamento,
-                    'atualizando' => true,
+                    'atualizando' => 1,
                 );
             } else {
                 $data_carrinho = array(
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'atualizando' => true,
+                    'atualizando' => 1,
                 );    
             }
             $success = $this->alteraCarrinho($data_carrinho, ['id' => $existing_carrinho[0]['id']]);
@@ -63,24 +69,7 @@ class Carrinho {
                 $id_carrinho='';
             }            
         } else {
-            // Se for para finalizar a compra
-            if (!empty($finalizado)) {
-                $data_carrinho = array_filter([
-                    'id_usuario' => $id_usuario,
-                    'data' => date('Y-m-d H:i:s'),
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'finalizado' => true,
-                    'forma_pagamento' => $forma_pagamento
-                ]);
-            } else {
-                $data_carrinho = array_filter([
-                    'id_usuario' => $id_usuario,
-                    'data' => date('Y-m-d H:i:s'),
-                    'data_update' => date('Y-m-d H:i:s'),
-                    'forma_pagamento' => ''
-                ]); 
-            }
-            $id_carrinho = $this->cadastraCarrinho($data_carrinho);
+            $id_carrinho = $this->cadastraCarrinho($id_usuario,0,0,$forma_pagamento,$finalizado,false);
         }
         return $id_carrinho;
     }

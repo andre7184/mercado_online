@@ -24,7 +24,7 @@ class Crud {
         }
     }
 
-    public function read($table, $conditions = []){
+    public function read($table, $conditions = [], $operador = []){
         $sql = "SELECT * FROM $table";
         if (!empty($conditions)) {
             $sql .= " WHERE ";
@@ -35,7 +35,9 @@ class Crud {
                 } else {
                     $first = false;
                 }
-                $sql .= "$key = :$key";
+                // Use o operador correspondente ou '=' como padrão
+                $operador = isset($operador[$key]) ? $operador[$key] : '=';
+                $sql .= "$key $operador :$key";
             }
         }
         $stmt = $this->conn->prepare($sql);
@@ -48,11 +50,15 @@ class Crud {
         foreach ($data as $key => $value) {
             $fields .= "$key = :$key, ";
         }
-        // echo "update:".$table."<br>";
-        // print_r($data);
-        // print_r($conditions);
         $fields = rtrim($fields, ", ");
-        $sql = "UPDATE $table SET $fields WHERE " . key($conditions) . " = :" . key($conditions);
+    
+        $where = "";
+        foreach ($conditions as $key => $value) {
+            $where .= "$key = :$key AND ";
+        }
+        $where = rtrim($where, " AND ");
+    
+        $sql = "UPDATE $table SET $fields WHERE $where";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute(array_merge($data, $conditions));
     }
